@@ -1,0 +1,24 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    Xima\XimaTypo3ContentAudit\:
+        resource: '../Classes/*'
+
+    Xima\XimaTypo3ContentAudit\Widgets\StalePages:
+        class: 'Xima\XimaTypo3ContentAudit\Widgets\StalePages'
+        arguments:
+            $dataProvider: '@Xima\XimaTypo3ContentAudit\Widgets\Provider\MergedPageChangeDataProvider'
+            $options:
+                refreshAvailable: true
+        tags:
+            -   name: dashboard.widget
+                identifier: 'contentAuditStalePages'
+                groupNames: 'general'
+                title: 'LLL:EXT:xima_typo3_content_audit/Resources/Private/Language/locallang.xlf:widgets.stale_pages.title'
+                description: 'LLL:EXT:xima_typo3_content_audit/Resources/Private/Language/locallang.xlf:widgets.stale_pages.description'
+                iconIdentifier: 'content-audit-widgets-stale-pages'
+                height: 'large'
+                width: 'medium'

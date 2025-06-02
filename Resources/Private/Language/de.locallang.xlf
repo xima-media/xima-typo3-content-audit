@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2025-06-02T12:00:00Z">
+        <body>
+            <trans-unit id="widgets.stale_pages.title">
+                <source />
+                <target>Veraltete Seiten</target>
+            </trans-unit>
+            <trans-unit id="widgets.stale_pages.description">
+                <source />
+                <target>Zeigt eine Liste von Seiten die länger nicht mehr verändert wurden.</target>
+            </trans-unit>
+            <trans-unit id="widgets.stale_pages.empty">
+                <source />
+                <target>Yay! Keine veralteten Seiten erkannt.</target>
+            </trans-unit>
+            <trans-unit id="widgets.stale_pages.page">
+                <source />
+                <target>Seite</target>
+            </trans-unit>
+            <trans-unit id="widgets.stale_pages.created">
+                <source />
+                <target>Erstellt</target>
+            </trans-unit>
+            <trans-unit id="widgets.stale_pages.updated">
+                <source />
+                <target>Zuletzt aktualisiert</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
