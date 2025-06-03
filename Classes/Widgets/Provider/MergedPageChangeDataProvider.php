@@ -38,6 +38,13 @@ class MergedPageChangeDataProvider implements ListDataProviderInterface
                 'title as pageTitle'
             )
             ->from('pages')
+            // Select only pages and shortcuts, no folders etc
+            ->where(
+                $queryBuilder->expr()->in(
+                    'doktype',
+                    $queryBuilder->createNamedParameter([1, 4], \TYPO3\CMS\Core\Database\Connection::PARAM_INT_ARRAY)
+                )
+            )
             ->setMaxResults(20)
             ->orderBy('tstamp', 'ASC');
 
