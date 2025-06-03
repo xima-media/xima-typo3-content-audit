@@ -48,6 +48,14 @@ class MergedPageChangeDataProvider implements ListDataProviderInterface
             ->setMaxResults(20)
             ->orderBy('tstamp', 'ASC');
 
+        // Only show pages older than x days
+        $queryBuilder->andWhere(
+            $queryBuilder->expr()->lt(
+                'crdate',
+                $queryBuilder->createNamedParameter(strtotime('-180 days'), \PDO::PARAM_INT)
+            )
+        );
+
         // Add optional page exclusions
         if (!empty($this->excludePageUids)) {
             $queryBuilder->andWhere(
