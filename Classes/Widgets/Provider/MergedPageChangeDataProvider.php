@@ -11,13 +11,26 @@ use TYPO3\CMS\Dashboard\Widgets\ListDataProviderInterface;
 class MergedPageChangeDataProvider implements ListDataProviderInterface
 {
     /**
+     * @var array<int>
+     */
+    protected array $excludePageUids = [];
+
+    /**
+     * @param array<int> $excludePageUids
+     */
+    public function setExcludePageUids(array $excludePageUids): void
+    {
+        $this->excludePageUids = $excludePageUids;
+    }
+
+    /**
     * @throws \Doctrine\DBAL\Exception
     */
     public function getItems(): array
     {
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('pages');
 
-        $results = $queryBuilder
+        $queryBuilder
             ->select(
                 'uid',
                 'crdate as created',
@@ -25,9 +38,23 @@ class MergedPageChangeDataProvider implements ListDataProviderInterface
                 'title as pageTitle'
             )
             ->from('pages')
-            // excludes deleted/hidden pages by default
             ->setMaxResults(20)
-            ->orderBy('tstamp', 'ASC')
+            ->orderBy('tstamp', 'ASC');
+
+        // Add optional page exclusions
+        if (!empty($this->excludePageUids)) {
+            $queryBuilder->andWhere(
+                $queryBuilder->expr()->notIn(
+                    'uid',
+                    $queryBuilder->createNamedParameter(
+                        $this->excludePageUids,
+                        \TYPO3\CMS\Core\Database\Connection::PARAM_INT_ARRAY
+                    )
+                )
+            );
+        }
+
+        $results = $queryBuilder
             ->executeQuery()
             ->fetchAllAssociative();
 

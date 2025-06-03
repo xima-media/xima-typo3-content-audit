@@ -1,3 +1,8 @@
+parameters:
+  xima_typo3_content_audit.widgets.stale_pages.options:
+    refreshAvailable: true
+    excludePageUids: []
+
 services:
     _defaults:
         autowire: true
@@ -11,8 +16,7 @@ services:
         class: 'Xima\XimaTypo3ContentAudit\Widgets\StalePages'
         arguments:
             $dataProvider: '@Xima\XimaTypo3ContentAudit\Widgets\Provider\MergedPageChangeDataProvider'
-            $options:
-                refreshAvailable: true
+            $options: '%xima_typo3_content_audit.widgets.stale_pages.options%'
         tags:
             -   name: dashboard.widget
                 identifier: 'contentAuditStalePages'

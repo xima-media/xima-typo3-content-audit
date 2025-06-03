@@ -36,6 +36,8 @@ class StalePages implements WidgetInterface
         $view->setPartialRootPaths(['EXT:xima_typo3_content_audit/Resources/Private/Partials/']);
         $view->setTemplatePathAndFilename($template);
 
+        $this->dataProvider->setExcludePageUids($this->options['excludePageUids'] ?? []);
+
         $view->assignMultiple([
             'configuration' => $this->configuration,
             'records' => $this->dataProvider->getItems(),
