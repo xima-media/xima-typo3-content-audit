@@ -10,6 +10,10 @@
                 <source />
                 <target>Zeigt eine Liste von Seiten die länger nicht mehr verändert wurden.</target>
             </trans-unit>
+            <trans-unit id="widgets.stale_pages.results">
+                <source />
+                <target>Seiten bei denen Eigenschaften oder Inhalte seit mehr als 180 Tagen nicht verändert wurden.</target>
+            </trans-unit>
             <trans-unit id="widgets.stale_pages.empty">
                 <source />
                 <target>Yay! Keine veralteten Seiten erkannt.</target>
@@ -25,6 +29,14 @@
             <trans-unit id="widgets.stale_pages.updated">
                 <source />
                 <target>Zuletzt aktualisiert</target>
+            </trans-unit>
+            <trans-unit id="widgets.stale_pages.last_page_change">
+                <source />
+                <target>Letzte Änderung an den Seiteneigenschaften</target>
+            </trans-unit>
+            <trans-unit id="widgets.stale_pages.last_content_change">
+                <source />
+                <target>Letzte Änderung an Seiteninhalten</target>
             </trans-unit>
         </body>
     </file>

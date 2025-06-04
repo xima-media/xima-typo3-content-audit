@@ -18,7 +18,16 @@
         <f:format.date format="d.m.Y H:i">{item.created}</f:format.date>
     </td>
     <td>
-        <f:format.date format="d.m.Y H:i">{item.updated}</f:format.date>
+        <f:variable name="changeSummary">
+            {f:translate(key: 'widgets.stale_pages.last_page_change', extensionName: 'XimaTypo3ContentAudit')}
+            {item.lastPageChange -> f:format.date(format: 'd.m.Y H:i')}
+            –
+            {f:translate(key: 'widgets.stale_pages.last_content_change', extensionName: 'XimaTypo3ContentAudit')}
+            {item.lastContentChange -> f:format.date(format: 'd.m.Y H:i')}
+        </f:variable>
+        <span title="{changeSummary}">
+            <f:format.date format="d.m.Y H:i">{item.updated}</f:format.date>
+        </span>
     </td>
 </tr>
 

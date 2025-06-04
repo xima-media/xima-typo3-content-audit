@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Xima\XimaTypo3ContentAudit\Widgets\Provider;
 
+use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Dashboard\Widgets\ListDataProviderInterface;
@@ -28,50 +29,48 @@ class MergedPageChangeDataProvider implements ListDataProviderInterface
     */
     public function getItems(): array
     {
-        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('pages');
+        $connection = GeneralUtility::makeInstance(ConnectionPool::class)
+            ->getConnectionForTable('pages');
 
-        $queryBuilder
-            ->select(
-                'uid',
-                'crdate as created',
-                'tstamp as updated',
-                'title as pageTitle'
-            )
-            ->from('pages')
-            // Select only pages and shortcuts, no folders etc
-            ->where(
-                $queryBuilder->expr()->in(
-                    'doktype',
-                    $queryBuilder->createNamedParameter([1, 4], \TYPO3\CMS\Core\Database\Connection::PARAM_INT_ARRAY)
-                )
-            )
-            ->setMaxResults(20)
-            ->orderBy('tstamp', 'ASC');
+        // TYPO3 QueryBuilder does not support subqueries in JOINs directly
+        // Fallback to raw SQL query for now and restore the query builder later if possible
+        $sql = <<<SQL
+SELECT
+    p.uid,
+    p.title as pageTitle,
+    p.crdate as created,
+    p.tstamp as lastPageChange,
+    IFNULL(content.lastContentChange, p.tstamp) as lastContentChange,
+    GREATEST(IFNULL(content.lastContentChange, 0), p.tstamp) AS updated
+FROM pages AS p
+LEFT JOIN (
+    SELECT pid, MAX(tstamp) AS lastContentChange
+    FROM tt_content
+    WHERE deleted = 0
+    GROUP BY pid
+) AS content ON content.pid = p.uid
+WHERE
+    p.sys_language_uid = 0
+    AND p.deleted = 0
+    AND p.hidden = 0
+    AND p.doktype IN (1, 4)
+    AND p.uid NOT IN (:uids)
+    AND GREATEST(IFNULL(content.lastContentChange, 0), p.tstamp) < :timestamp
+ORDER BY updated ASC
+LIMIT 20
+SQL;
 
-        // Only show pages older than x days
-        $queryBuilder->andWhere(
-            $queryBuilder->expr()->lt(
-                'crdate',
-                $queryBuilder->createNamedParameter(strtotime('-180 days'), \PDO::PARAM_INT)
-            )
-        );
-
-        // Add optional page exclusions
-        if (!empty($this->excludePageUids)) {
-            $queryBuilder->andWhere(
-                $queryBuilder->expr()->notIn(
-                    'uid',
-                    $queryBuilder->createNamedParameter(
-                        $this->excludePageUids,
-                        \TYPO3\CMS\Core\Database\Connection::PARAM_INT_ARRAY
-                    )
-                )
-            );
-        }
-
-        $results = $queryBuilder
-            ->executeQuery()
-            ->fetchAllAssociative();
+        $results = $connection->executeQuery(
+            $sql,
+            [
+                'timestamp' => strtotime('-180 days'),
+                'uids' => empty($this->excludePageUids) ? [0] : $this->excludePageUids, // »0« workaround for valid sql
+            ],
+            [
+                'timestamp' => Connection::PARAM_INT,
+                'uids' => Connection::PARAM_INT_ARRAY,
+            ]
+        )->fetchAllAssociative();
 
         return $results;
     }

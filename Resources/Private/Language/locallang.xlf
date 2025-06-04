@@ -8,6 +8,9 @@
             <trans-unit id="widgets.stale_pages.description">
                 <source>Displays a list of pages that have not been changed for a long time.</source>
             </trans-unit>
+            <trans-unit id="widgets.stale_pages.results">
+                <source>Pages whose properties or content have not been changed for more than 180 days.</source>
+            </trans-unit>
             <trans-unit id="widgets.stale_pages.empty">
                 <source>Yay! No outdated pages detected.</source>
             </trans-unit>
@@ -19,6 +22,12 @@
             </trans-unit>
             <trans-unit id="widgets.stale_pages.updated">
                 <source>Last updated</source>
+            </trans-unit>
+            <trans-unit id="widgets.stale_pages.last_page_change">
+                <source>Last change on page properties</source>
+            </trans-unit>
+            <trans-unit id="widgets.stale_pages.last_content_change">
+                <source>Last change on page content</source>
             </trans-unit>
         </body>
     </file>
