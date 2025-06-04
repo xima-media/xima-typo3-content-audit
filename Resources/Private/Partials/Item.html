@@ -15,9 +15,9 @@
         </f:if>
     </td>
     <td>
-        <f:format.date format="d.m.Y H:i">{item.created}</f:format.date>
+        {item.pageSlug}
     </td>
-    <td>
+    <td class="text-nowrap">
         <f:variable name="changeSummary">
             {f:translate(key: 'widgets.stale_pages.last_page_change', extensionName: 'XimaTypo3ContentAudit')}
             {item.lastPageChange -> f:format.date(format: 'd.m.Y H:i')}

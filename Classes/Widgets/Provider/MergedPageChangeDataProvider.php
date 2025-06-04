@@ -38,6 +38,7 @@ class MergedPageChangeDataProvider implements ListDataProviderInterface
 SELECT
     p.uid,
     p.title as pageTitle,
+    p.slug as pageSlug,
     p.crdate as created,
     p.tstamp as lastPageChange,
     IFNULL(content.lastContentChange, p.tstamp) as lastContentChange,

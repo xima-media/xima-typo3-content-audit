@@ -22,6 +22,10 @@
                 <source />
                 <target>Seite</target>
             </trans-unit>
+            <trans-unit id="widgets.stale_pages.path">
+                <source />
+                <target>Pfad</target>
+            </trans-unit>
             <trans-unit id="widgets.stale_pages.created">
                 <source />
                 <target>Erstellt</target>
