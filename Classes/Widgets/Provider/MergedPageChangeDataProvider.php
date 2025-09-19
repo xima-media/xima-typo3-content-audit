@@ -73,6 +73,13 @@ SQL;
             ]
         )->fetchAllAssociative();
 
+        // Check if user has access to edit page record
+        foreach ($results as $key => $page) {
+            if (!$GLOBALS['BE_USER']->doesUserHaveAccess($page, 2)) { // 2 = edit page
+                unset($results[$key]);
+            }
+        }
+
         return $results;
     }
 }
