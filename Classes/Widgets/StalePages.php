@@ -27,7 +27,7 @@ class StalePages implements WidgetInterface
 
     public function renderWidgetContent(): string
     {
-        $template = GeneralUtility::getFileAbsFileName('EXT:xima_typo3_content_audit/Resources/Private/Templates/List.html');
+        $template = GeneralUtility::getFileAbsFileName('EXT:xima_typo3_content_audit/Resources/Private/Templates/StalePages.html');
 
         // preparing view
         $view = GeneralUtility::makeInstance(StandaloneView::class);

@@ -25,8 +25,8 @@ class MergedPageChangeDataProvider implements ListDataProviderInterface
     }
 
     /**
-    * @throws \Doctrine\DBAL\Exception
-    */
+     * @throws \Doctrine\DBAL\Exception
+     */
     public function getItems(): array
     {
         $connection = GeneralUtility::makeInstance(ConnectionPool::class)
