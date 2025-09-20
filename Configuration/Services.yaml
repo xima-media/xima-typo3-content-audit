@@ -2,6 +2,9 @@ parameters:
   xima_typo3_content_audit.widgets.stale_pages.options:
     refreshAvailable: true
     excludePageUids: [ ]
+  xima_typo3_content_audit.widgets.fresh_pages.options:
+    refreshAvailable: true
+    excludePageUids: [ ]
 
 services:
   _defaults:
@@ -24,5 +27,20 @@ services:
         title: 'LLL:EXT:xima_typo3_content_audit/Resources/Private/Language/locallang.xlf:widgets.stale_pages.title'
         description: 'LLL:EXT:xima_typo3_content_audit/Resources/Private/Language/locallang.xlf:widgets.stale_pages.description'
         iconIdentifier: 'content-audit-widgets-stale-pages'
+        height: 'large'
+        width: 'medium'
+
+  Xima\XimaTypo3ContentAudit\Widgets\FreshPages:
+    class: 'Xima\XimaTypo3ContentAudit\Widgets\FreshPages'
+    arguments:
+      $dataProvider: '@Xima\XimaTypo3ContentAudit\Widgets\Provider\MergedPageChangeDataProvider'
+      $options: '%xima_typo3_content_audit.widgets.fresh_pages.options%'
+    tags:
+      - name: dashboard.widget
+        identifier: 'contentAuditFreshPages'
+        groupNames: 'general'
+        title: 'LLL:EXT:xima_typo3_content_audit/Resources/Private/Language/locallang.xlf:widgets.fresh_pages.title'
+        description: 'LLL:EXT:xima_typo3_content_audit/Resources/Private/Language/locallang.xlf:widgets.fresh_pages.description'
+        iconIdentifier: 'content-audit-widgets-fresh-pages'
         height: 'large'
         width: 'medium'

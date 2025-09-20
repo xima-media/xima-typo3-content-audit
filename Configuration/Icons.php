@@ -9,4 +9,8 @@ return [
         'provider' => SvgIconProvider::class,
         'source' => 'EXT:xima_typo3_content_audit/Resources/Public/Icons/WidgetsStalePages.svg',
     ],
+    'content-audit-widgets-fresh-pages' => [
+        'provider' => SvgIconProvider::class,
+        'source' => 'EXT:xima_typo3_content_audit/Resources/Public/Icons/WidgetsFreshPages.svg',
+    ],
 ];

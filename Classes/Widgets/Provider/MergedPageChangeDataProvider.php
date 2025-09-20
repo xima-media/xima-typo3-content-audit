@@ -16,6 +16,13 @@ class MergedPageChangeDataProvider implements ListDataProviderInterface
      */
     protected array $excludePageUids = [];
 
+    protected bool $showOldestFirst = true;
+
+    public function setShowOldestFirst(bool $oldestFirst): void
+    {
+        $this->showOldestFirst = $oldestFirst;
+    }
+
     /**
      * @param array<int> $excludePageUids
      */
@@ -31,6 +38,9 @@ class MergedPageChangeDataProvider implements ListDataProviderInterface
     {
         $connection = GeneralUtility::makeInstance(ConnectionPool::class)
             ->getConnectionForTable('pages');
+
+        $sortDirectionKeyword = $this->showOldestFirst ? 'ASC' : 'DESC';
+        $changeConditionOperator = $this->showOldestFirst ? '<' : '>';
 
         // TYPO3 QueryBuilder does not support subqueries in JOINs directly
         // Fallback to raw SQL query for now and restore the query builder later if possible
@@ -56,8 +66,8 @@ WHERE
     AND p.hidden = 0
     AND p.doktype IN (1, 4)
     AND p.uid NOT IN (:uids)
-    AND GREATEST(IFNULL(content.lastContentChange, 0), p.tstamp) < :timestamp
-ORDER BY updated ASC
+    AND GREATEST(IFNULL(content.lastContentChange, 0), p.tstamp) {$changeConditionOperator} :timestamp
+ORDER BY updated {$sortDirectionKeyword}
 LIMIT 20
 SQL;
 

@@ -13,7 +13,7 @@ use TYPO3\CMS\Dashboard\Widgets\WidgetConfigurationInterface;
 use TYPO3\CMS\Dashboard\Widgets\WidgetInterface;
 use TYPO3\CMS\Fluid\View\StandaloneView;
 
-class StalePages implements WidgetInterface
+class FreshPages implements WidgetInterface
 {
     protected ServerRequestInterface $request;
 
@@ -27,7 +27,7 @@ class StalePages implements WidgetInterface
 
     public function renderWidgetContent(): string
     {
-        $template = GeneralUtility::getFileAbsFileName('EXT:xima_typo3_content_audit/Resources/Private/Templates/StalePages.html');
+        $template = GeneralUtility::getFileAbsFileName('EXT:xima_typo3_content_audit/Resources/Private/Templates/FreshPages.html');
 
         // preparing view
         $view = GeneralUtility::makeInstance(StandaloneView::class);
@@ -37,7 +37,7 @@ class StalePages implements WidgetInterface
         $view->setTemplatePathAndFilename($template);
 
         $this->dataProvider->setExcludePageUids($this->options['excludePageUids'] ?? []);
-        $this->dataProvider->setShowOldestFirst(true);
+        $this->dataProvider->setShowOldestFirst(false);
 
         $view->assignMultiple([
             'configuration' => $this->configuration,

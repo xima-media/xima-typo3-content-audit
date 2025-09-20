@@ -42,6 +42,47 @@
                 <source />
                 <target>Letzte Änderung an Seiteninhalten</target>
             </trans-unit>
+
+            <trans-unit id="widgets.fresh_pages.title">
+                <source />
+                <target>Frische Seiten</target>
+            </trans-unit>
+            <trans-unit id="widgets.fresh_pages.description">
+                <source />
+                <target>Zeigt eine Liste von Seiten die zuletzt verändert verändert wurden.</target>
+            </trans-unit>
+            <trans-unit id="widgets.fresh_pages.results">
+                <source />
+                <target>Seiten bei denen Eigenschaften oder Inhalte in den letzten 180 Tagen verändert wurden.</target>
+            </trans-unit>
+            <trans-unit id="widgets.fresh_pages.empty">
+                <source />
+                <target>Uff! Keine frischen Seiten erkannt. Sie sollten erwägen neue Inhalte zu erstellen.</target>
+            </trans-unit>
+            <trans-unit id="widgets.fresh_pages.page">
+                <source />
+                <target>Seite</target>
+            </trans-unit>
+            <trans-unit id="widgets.fresh_pages.path">
+                <source />
+                <target>Pfad</target>
+            </trans-unit>
+            <trans-unit id="widgets.fresh_pages.created">
+                <source />
+                <target>Erstellt</target>
+            </trans-unit>
+            <trans-unit id="widgets.fresh_pages.updated">
+                <source />
+                <target>Zuletzt aktualisiert</target>
+            </trans-unit>
+            <trans-unit id="widgets.fresh_pages.last_page_change">
+                <source />
+                <target>Letzte Änderung an den Seiteneigenschaften</target>
+            </trans-unit>
+            <trans-unit id="widgets.fresh_pages.last_content_change">
+                <source />
+                <target>Letzte Änderung an Seiteninhalten</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
