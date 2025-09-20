@@ -1,0 +1,25 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+    xmlns:backend="http://typo3.org/ns/TYPO3/CMS/Backend/ViewHelpers"
+    xmlns:core="http://typo3.org/ns/TYPO3/CMS/Core/ViewHelpers"
+    xmlns:be="http://typo3.org/ns/TYPO3/CMS/Backend/ViewHelpers"
+    data-namespace-typo3-fluid="true">
+
+<tr>
+    <td>
+        <f:if condition="{item.pageTitle} && {item.uid}">
+            <a href="{be:moduleLink(route: 'web_layout', arguments: '{id: item.uid}')}"
+               target="_blank"
+               title="ID {item.uid}">
+                {item.pageTitle}
+            </a>
+        </f:if>
+    </td>
+    <td>
+        {item.pageSlug}
+    </td>
+    <td class="text-nowrap">
+        <f:format.date format="d.m.Y H:i">{item.updated}</f:format.date>
+    </td>
+</tr>
+
+</html>

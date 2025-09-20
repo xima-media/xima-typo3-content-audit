@@ -13,4 +13,8 @@ return [
         'provider' => SvgIconProvider::class,
         'source' => 'EXT:xima_typo3_content_audit/Resources/Public/Icons/WidgetsFreshPages.svg',
     ],
+    'content-audit-widgets-hidden-pages' => [
+        'provider' => SvgIconProvider::class,
+        'source' => 'EXT:xima_typo3_content_audit/Resources/Public/Icons/WidgetsHiddenPages.svg',
+    ],
 ];
