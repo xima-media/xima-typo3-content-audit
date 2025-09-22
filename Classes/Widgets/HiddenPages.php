@@ -38,11 +38,14 @@ class HiddenPages implements WidgetInterface
 
         $this->dataProvider->setExcludePageUids($this->options['excludePageUids'] ?? []);
 
+        $resultSet = $this->dataProvider->getItems();
         $view->assignMultiple([
             'configuration' => $this->configuration,
-            'records' => $this->dataProvider->getItems(),
+            'records' => $resultSet['results'],
             'button' => $this->buttonProvider,
             'options' => $this->options,
+            'hiddenCount' => $resultSet['hiddenCount'],
+            'totalCount' => $resultSet['totalCount'],
             'version' => GeneralUtility::makeInstance(Typo3Version::class)->getMajorVersion(),
         ]);
         return $view->render();

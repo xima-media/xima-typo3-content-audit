@@ -82,6 +82,26 @@ class HiddenContentDataProvider implements ListDataProviderInterface
             );
         }
 
+        $hiddenCountQueryBuilder = clone $queryBuilder;
+        $hiddenCountQueryBuilder->count('uid');
+        $hiddenCountQueryBuilder->resetQueryPart('orderBy');
+        $hiddenCount = (int)$hiddenCountQueryBuilder->executeQuery()->fetchOne();
+
+        $totalCountQueryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('pages');
+        $totalCountQueryBuilder->getRestrictions()
+            ->removeByType(HiddenRestriction::class);
+        $totalCount = (int)$totalCountQueryBuilder
+            ->count('uid')
+            ->from('pages')
+            ->where(
+                $totalCountQueryBuilder->expr()->in(
+                    'doktype',
+                    $totalCountQueryBuilder->createNamedParameter([1, 4], Connection::PARAM_INT_ARRAY)
+                )
+            )
+            ->executeQuery()
+            ->fetchOne();
+
         $results = $queryBuilder
             ->executeQuery()
             ->fetchAllAssociative();
@@ -93,6 +113,10 @@ class HiddenContentDataProvider implements ListDataProviderInterface
             }
         }
 
-        return $results;
+        return [
+            'hiddenCount' => $hiddenCount,
+            'totalCount' => $totalCount,
+            'results' => $results,
+        ];
     }
 }
