@@ -52,7 +52,12 @@ SELECT
     p.crdate as created,
     p.tstamp as lastPageChange,
     IFNULL(content.lastContentChange, p.tstamp) as lastContentChange,
-    GREATEST(IFNULL(content.lastContentChange, 0), p.tstamp) AS updated
+    GREATEST(IFNULL(content.lastContentChange, 0), p.tstamp) AS updated,
+    p.perms_userid,
+    p.perms_groupid,
+    p.perms_user,
+    p.perms_group,
+    p.perms_everybody
 FROM pages AS p
 LEFT JOIN (
     SELECT pid, MAX(tstamp) AS lastContentChange

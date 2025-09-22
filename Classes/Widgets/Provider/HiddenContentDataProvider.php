@@ -41,7 +41,12 @@ class HiddenContentDataProvider implements ListDataProviderInterface
                 'title as pageTitle',
                 'slug as pageSlug',
                 'crdate as created',
-                'tstamp as updated'
+                'tstamp as updated',
+                'perms_userid',
+                'perms_groupid',
+                'perms_user',
+                'perms_group',
+                'perms_everybody'
             )
             ->from('pages')
             // Select only pages and shortcuts, no folders etc
