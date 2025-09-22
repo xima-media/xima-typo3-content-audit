@@ -6,6 +6,7 @@ namespace Xima\XimaTypo3ContentAudit\Widgets\Provider;
 
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\Database\Query\Restriction\HiddenRestriction;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Dashboard\Widgets\ListDataProviderInterface;
 
@@ -33,7 +34,7 @@ class HiddenContentDataProvider implements ListDataProviderInterface
 
         // Remove TYPO3 default "hidden" restriction to also find hidden pages
         $queryBuilder->getRestrictions()
-            ->removeByType(\TYPO3\CMS\Core\Database\Query\Restriction\HiddenRestriction::class);
+            ->removeByType(HiddenRestriction::class);
 
         $queryBuilder
             ->select(
@@ -53,7 +54,7 @@ class HiddenContentDataProvider implements ListDataProviderInterface
             ->where(
                 $queryBuilder->expr()->in(
                     'doktype',
-                    $queryBuilder->createNamedParameter([1, 4], \TYPO3\CMS\Core\Database\Connection::PARAM_INT_ARRAY)
+                    $queryBuilder->createNamedParameter([1, 4], Connection::PARAM_INT_ARRAY)
                 )
             )
             ->setMaxResults(20)
@@ -61,10 +62,10 @@ class HiddenContentDataProvider implements ListDataProviderInterface
 
         // Only select hidden (not deleted) pages not updated for x days
         $queryBuilder->andWhere(
-            $queryBuilder->expr()->eq('hidden', $queryBuilder->createNamedParameter(1, \PDO::PARAM_INT)),
+            $queryBuilder->expr()->eq('hidden', $queryBuilder->createNamedParameter(1, Connection::PARAM_INT)),
             $queryBuilder->expr()->lt(
                 'tstamp',
-                $queryBuilder->createNamedParameter(strtotime('-365 days'), \PDO::PARAM_INT)
+                $queryBuilder->createNamedParameter(strtotime('-365 days'), Connection::PARAM_INT)
             )
         );
 
@@ -75,7 +76,7 @@ class HiddenContentDataProvider implements ListDataProviderInterface
                     'uid',
                     $queryBuilder->createNamedParameter(
                         $this->excludePageUids,
-                        \TYPO3\CMS\Core\Database\Connection::PARAM_INT_ARRAY
+                        Connection::PARAM_INT_ARRAY
                     )
                 )
             );
