@@ -6,6 +6,8 @@
 
 A widget for the TYPO3 dashboard to evaluate the relevance, accuracy and freshness of your digital content
 
+![Screenshot](./Documentation/screenshot.png)
+
 ## Requirements
 
 - PHP
@@ -24,7 +26,7 @@ https://github.com/xima-media/xima-typo3-content-audit
 ## Usage
 
 - Add the widget to your dashboard
-- Check the result list and decide what to do with tha shown pages - update the content,
+- Check the result list and decide what to do with the shown pages - update the content,
   archive or delete the page
 
 ## License
