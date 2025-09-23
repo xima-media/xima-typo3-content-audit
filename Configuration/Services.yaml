@@ -8,6 +8,9 @@ parameters:
   xima_typo3_content_audit.widgets.hidden_pages.options:
     refreshAvailable: true
     excludePageUids: [ ]
+  xima_typo3_content_audit.widgets.hidden_content.options:
+    refreshAvailable: true
+    excludePageUids: [ ]
 
 services:
   _defaults:
@@ -51,7 +54,7 @@ services:
   Xima\XimaTypo3ContentAudit\Widgets\HiddenPages:
     class: 'Xima\XimaTypo3ContentAudit\Widgets\HiddenPages'
     arguments:
-      $dataProvider: '@Xima\XimaTypo3ContentAudit\Widgets\Provider\HiddenContentDataProvider'
+      $dataProvider: '@Xima\XimaTypo3ContentAudit\Widgets\Provider\HiddenPagesDataProvider'
       $options: '%xima_typo3_content_audit.widgets.hidden_pages.options%'
     tags:
       - name: dashboard.widget
@@ -60,5 +63,20 @@ services:
         title: 'LLL:EXT:xima_typo3_content_audit/Resources/Private/Language/locallang.xlf:widgets.hidden_pages.title'
         description: 'LLL:EXT:xima_typo3_content_audit/Resources/Private/Language/locallang.xlf:widgets.hidden_pages.description'
         iconIdentifier: 'content-audit-widgets-hidden-pages'
+        height: 'medium'
+        width: 'medium'
+
+  Xima\XimaTypo3ContentAudit\Widgets\HiddenContent:
+    class: 'Xima\XimaTypo3ContentAudit\Widgets\HiddenContent'
+    arguments:
+      $dataProvider: '@Xima\XimaTypo3ContentAudit\Widgets\Provider\HiddenContentDataProvider'
+      $options: '%xima_typo3_content_audit.widgets.hidden_content.options%'
+    tags:
+      - name: dashboard.widget
+        identifier: 'contentAuditHiddenContent'
+        groupNames: 'general'
+        title: 'LLL:EXT:xima_typo3_content_audit/Resources/Private/Language/locallang.xlf:widgets.hidden_content.title'
+        description: 'LLL:EXT:xima_typo3_content_audit/Resources/Private/Language/locallang.xlf:widgets.hidden_content.description'
+        iconIdentifier: 'content-audit-widgets-hidden-content'
         height: 'medium'
         width: 'medium'

@@ -13,59 +13,62 @@ use TYPO3\CMS\Dashboard\Widgets\ListDataProviderInterface;
 class HiddenContentDataProvider implements ListDataProviderInterface
 {
     /**
-     * @var array<int>
-     */
+    * @var array<int>
+    */
     protected array $excludePageUids = [];
 
     /**
-     * @param array<int> $excludePageUids
-     */
+    * @param array<int> $excludePageUids
+    */
     public function setExcludePageUids(array $excludePageUids): void
     {
         $this->excludePageUids = $excludePageUids;
     }
 
     /**
-     * @throws \Doctrine\DBAL\Exception
-     */
+    * @throws \Doctrine\DBAL\Exception
+    */
     public function getItems(): array
     {
-        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('pages');
+        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tt_content');
 
-        // Remove TYPO3 default "hidden" restriction to also find hidden pages
+        // Remove TYPO3 default "hidden" restriction to also find hidden content elements
         $queryBuilder->getRestrictions()
             ->removeByType(HiddenRestriction::class);
 
         $queryBuilder
             ->select(
-                'uid',
-                'title as pageTitle',
-                'slug as pageSlug',
-                'crdate as created',
-                'tstamp as updated',
-                'perms_userid',
-                'perms_groupid',
-                'perms_user',
-                'perms_group',
-                'perms_everybody'
+                'content.uid',
+                'content.pid',
+                'content.header as contentTitle',
+                'content.crdate as created',
+                'content.tstamp as updated',
+                'content.hidden',
+                'page.uid as pageUid',
+                'page.pid as pagePid',
+                'page.slug as pageSlug',
+                'page.perms_userid as pagePermsUserId',
+                'page.perms_groupid as pagePermsGroupId',
+                'page.perms_user as pagePermsUser',
+                'page.perms_group as pagePermsGroup',
+                'page.perms_everybody as pagePermsEverybody'
             )
-            ->from('pages')
-            // Select only pages and shortcuts, no folders etc
-            ->where(
-                $queryBuilder->expr()->in(
-                    'doktype',
-                    $queryBuilder->createNamedParameter([1, 4], Connection::PARAM_INT_ARRAY)
-                )
+            ->from('tt_content', 'content')
+            ->innerJoin(
+                'content',
+                'pages',
+                'page',
+                'page.uid = content.pid'
             )
             ->setMaxResults(20)
-            ->orderBy('tstamp', 'ASC');
+            ->orderBy('content.tstamp', 'ASC');
 
-        // Only select hidden (not deleted) pages not updated for x days
+        // Only select hidden (not deleted) content not updated for x days
         $queryBuilder->andWhere(
-            $queryBuilder->expr()->eq('hidden', $queryBuilder->createNamedParameter(1, Connection::PARAM_INT)),
+            $queryBuilder->expr()->eq('content.hidden', $queryBuilder->createNamedParameter(1, Connection::PARAM_INT)),
             $queryBuilder->expr()->lt(
-                'tstamp',
-                $queryBuilder->createNamedParameter(strtotime('-365 days'), Connection::PARAM_INT)
+                'content.tstamp',
+                $queryBuilder->createNamedParameter(strtotime('-730 days'), Connection::PARAM_INT)
             )
         );
 
@@ -73,32 +76,23 @@ class HiddenContentDataProvider implements ListDataProviderInterface
         if (!empty($this->excludePageUids)) {
             $queryBuilder->andWhere(
                 $queryBuilder->expr()->notIn(
-                    'uid',
-                    $queryBuilder->createNamedParameter(
-                        $this->excludePageUids,
-                        Connection::PARAM_INT_ARRAY
-                    )
+                    'content.pid',
+                    $queryBuilder->createNamedParameter($this->excludePageUids, Connection::PARAM_INT_ARRAY)
                 )
             );
         }
 
         $hiddenCountQueryBuilder = clone $queryBuilder;
-        $hiddenCountQueryBuilder->count('uid');
-        $hiddenCountQueryBuilder->resetQueryPart('orderBy');
+        $hiddenCountQueryBuilder->count('content.uid');
+        $hiddenCountQueryBuilder->resetQueryPart('orderBy'); // Resets the limit
         $hiddenCount = (int)$hiddenCountQueryBuilder->executeQuery()->fetchOne();
 
-        $totalCountQueryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('pages');
+        $totalCountQueryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tt_content');
         $totalCountQueryBuilder->getRestrictions()
             ->removeByType(HiddenRestriction::class);
         $totalCount = (int)$totalCountQueryBuilder
             ->count('uid')
-            ->from('pages')
-            ->where(
-                $totalCountQueryBuilder->expr()->in(
-                    'doktype',
-                    $totalCountQueryBuilder->createNamedParameter([1, 4], Connection::PARAM_INT_ARRAY)
-                )
-            )
+            ->from('tt_content')
             ->executeQuery()
             ->fetchOne();
 
@@ -106,9 +100,21 @@ class HiddenContentDataProvider implements ListDataProviderInterface
             ->executeQuery()
             ->fetchAllAssociative();
 
-        // Check if user has access to edit page record
-        foreach ($results as $key => $page) {
-            if (!$GLOBALS['BE_USER']->doesUserHaveAccess($page, 2)) { // 2 = edit page
+        // Check if user has access to edit the content record
+        if (!$GLOBALS['BE_USER']->check('tables_modify', 'tt_content')) {
+            $results = [];
+        }
+        foreach ($results as $key => $content) {
+            $pageRecord = [
+                'uid' => (int)$content['pageUid'],
+                'pid' => (int)$content['pagePid'],
+                'perms_userid' => (int)$content['pagePermsUserId'],
+                'perms_groupid' => (int)$content['pagePermsGroupId'],
+                'perms_user' => (int)$content['pagePermsUser'],
+                'perms_group' => (int)$content['pagePermsGroup'],
+                'perms_everybody' => (int)$content['pagePermsEverybody'],
+            ];
+            if (!$GLOBALS['BE_USER']->doesUserHaveAccess($pageRecord, 2)) {
                 unset($results[$key]);
             }
         }

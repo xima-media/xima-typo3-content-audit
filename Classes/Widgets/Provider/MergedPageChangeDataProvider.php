@@ -12,8 +12,8 @@ use TYPO3\CMS\Dashboard\Widgets\ListDataProviderInterface;
 class MergedPageChangeDataProvider implements ListDataProviderInterface
 {
     /**
-     * @var array<int>
-     */
+    * @var array<int>
+    */
     protected array $excludePageUids = [];
 
     protected bool $showOldestFirst = true;
@@ -24,16 +24,16 @@ class MergedPageChangeDataProvider implements ListDataProviderInterface
     }
 
     /**
-     * @param array<int> $excludePageUids
-     */
+    * @param array<int> $excludePageUids
+    */
     public function setExcludePageUids(array $excludePageUids): void
     {
         $this->excludePageUids = $excludePageUids;
     }
 
     /**
-     * @throws \Doctrine\DBAL\Exception
-     */
+    * @throws \Doctrine\DBAL\Exception
+    */
     public function getItems(): array
     {
         $connection = GeneralUtility::makeInstance(ConnectionPool::class)

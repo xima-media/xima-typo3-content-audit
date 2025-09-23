@@ -120,6 +120,47 @@
                 <source />
                 <target>Versteckt seit mindestens</target>
             </trans-unit>
+
+            <trans-unit id="widgets.hidden_content.title">
+                <source />
+                <target>Lange versteckte Inhalte</target>
+            </trans-unit>
+            <trans-unit id="widgets.hidden_content.description">
+                <source />
+                <target>Inhalte die schon längere Zeit ausgeblendet und vielleicht nicht mehr relevant sind.</target>
+            </trans-unit>
+            <trans-unit id="widgets.hidden_content.results">
+                <source />
+                <target>Inhalte die schon längere Zeit ausgeblendet sind.</target>
+            </trans-unit>
+            <trans-unit id="widgets.hidden_content.count">
+                <source />
+                <target>%1$d vergessene von insgesamt %2$d Elementen.</target>
+            </trans-unit>
+            <trans-unit id="widgets.hidden_content.empty">
+                <source />
+                <target>Yay! Keine vergessen Inhalte erkannt.</target>
+            </trans-unit>
+            <trans-unit id="widgets.hidden_content.content">
+                <source />
+                <target>Inhalt</target>
+            </trans-unit>
+            <trans-unit id="widgets.hidden_content.path">
+                <source />
+                <target>Pfad</target>
+            </trans-unit>
+            <trans-unit id="widgets.hidden_content.created">
+                <source />
+                <target>Erstellt</target>
+            </trans-unit>
+            <trans-unit id="widgets.hidden_content.updated">
+                <source />
+                <target>Versteckt seit mindestens</target>
+            </trans-unit>
+            <trans-unit id="widgets.hidden_content.empty_title">
+                <source />
+                <target>Kein Titel</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

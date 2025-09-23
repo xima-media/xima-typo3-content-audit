@@ -1,0 +1,29 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+    xmlns:backend="http://typo3.org/ns/TYPO3/CMS/Backend/ViewHelpers"
+    xmlns:core="http://typo3.org/ns/TYPO3/CMS/Core/ViewHelpers"
+    xmlns:be="http://typo3.org/ns/TYPO3/CMS/Backend/ViewHelpers"
+    data-namespace-typo3-fluid="true">
+
+<f:comment>
+    <f:debug inline="true">{record}</f:debug>
+</f:comment>
+
+<tr>
+    <td>
+        <core:icon identifier="content-listgroup" overlay="overlay-hidden" size="small"/>
+        <a href="{be:moduleLink(route: 'web_layout', arguments: '{id: item.pid}')}"
+            target="_blank"
+            title="ID {item.uid}">
+            <f:if condition="{item.contentTitle}" then="{item.contentTitle}"
+                else="{f:translate(key: 'widgets.hidden_content.empty_title', extensionName: 'XimaTypo3ContentAudit')}"/>
+        </a>
+    </td>
+    <td>
+        {item.pageSlug}
+    </td>
+    <td class="text-nowrap">
+        <f:format.date format="d.m.Y H:i">{item.updated}</f:format.date>
+    </td>
+</tr>
+
+</html>
