@@ -1,0 +1,26 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+    xmlns:backend="http://typo3.org/ns/TYPO3/CMS/Backend/ViewHelpers"
+    xmlns:core="http://typo3.org/ns/TYPO3/CMS/Core/ViewHelpers"
+    xmlns:be="http://typo3.org/ns/TYPO3/CMS/Backend/ViewHelpers"
+    data-namespace-typo3-fluid="true">
+
+<tr>
+    <td>
+        <core:iconForResource resource="{item.file}"/>
+        <a href="{be:moduleLink(route: 'record_edit', query: 'edit[sys_file_metadata][{item.uid}]=edit')}"
+            target="_blank"
+            title="ID {item.uid}">
+            {item.file.name}
+        </a>
+    </td>
+    <td>
+        <f:replace value="{item.file.identifier}" search="{item.file.name}" replace=""/>
+    </td>
+    <td class="text-nowrap">
+        <f:if condition="{item.file.type} == 2">
+            <f:image image="{item.file}" width="100c" height="50c"/>
+        </f:if>
+    </td>
+</tr>
+
+</html>

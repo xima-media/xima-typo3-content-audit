@@ -122,6 +122,31 @@
             <trans-unit id="widgets.hidden_content.empty_title">
                 <source>No title</source>
             </trans-unit>
+
+            <trans-unit id="widgets.missing_image_fields.title">
+                <source>Images with missing fields</source>
+            </trans-unit>
+            <trans-unit id="widgets.missing_image_fields.description">
+                <source>Images with missing alternative text.</source>
+            </trans-unit>
+            <trans-unit id="widgets.missing_image_fields.results">
+                <source>Images with missing alternative text.</source>
+            </trans-unit>
+            <trans-unit id="widgets.missing_image_fields.count">
+                <source>%1$d incomplete out of a total of %2$d items.</source>
+            </trans-unit>
+            <trans-unit id="widgets.missing_image_fields.empty">
+                <source>Yay! No incomplete images detected.</source>
+            </trans-unit>
+            <trans-unit id="widgets.missing_image_fields.image">
+                <source>Image</source>
+            </trans-unit>
+            <trans-unit id="widgets.missing_image_fields.path">
+                <source>Path</source>
+            </trans-unit>
+            <trans-unit id="widgets.missing_image_fields.preview">
+                <source>Preview</source>
+            </trans-unit>
         </body>
     </file>
 </xliff>

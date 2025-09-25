@@ -161,6 +161,39 @@
                 <source />
                 <target>Kein Titel</target>
             </trans-unit>
+
+            <trans-unit id="widgets.missing_image_fields.title">
+                <source />
+                <target>Bilder mit fehlenden Feldern</target>
+            </trans-unit>
+            <trans-unit id="widgets.missing_image_fields.description">
+                <source />
+                <target>Bilder ohne Alternativtext.</target>
+            </trans-unit>
+            <trans-unit id="widgets.missing_image_fields.results">
+                <source />
+                <target>Bilder ohne Alternativtext.</target>
+            </trans-unit>
+            <trans-unit id="widgets.missing_image_fields.count">
+                <source />
+                <target>%1$d unvollständige von insgesamt %2$d Elementen.</target>
+            </trans-unit>
+            <trans-unit id="widgets.missing_image_fields.empty">
+                <source />
+                <target>Yay! Keine unvollständigen Bilder erkannt.</target>
+            </trans-unit>
+            <trans-unit id="widgets.missing_image_fields.image">
+                <source />
+                <target>Bild</target>
+            </trans-unit>
+            <trans-unit id="widgets.missing_image_fields.path">
+                <source />
+                <target>Pfad</target>
+            </trans-unit>
+            <trans-unit id="widgets.missing_image_fields.preview">
+                <source />
+                <target>Vorschau</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
