@@ -11,6 +11,16 @@ use TYPO3\CMS\Dashboard\Widgets\ListDataProviderInterface;
 
 class MissingImageFieldsDataProvider implements ListDataProviderInterface
 {
+    protected string $missingField = 'alternative';
+
+    /**
+    * @param string $missingField
+    */
+    public function setMissingField(string $missingField): void
+    {
+        $this->missingField = $missingField;
+    }
+
     /**
     * @throws \Doctrine\DBAL\Exception
     */
@@ -20,14 +30,12 @@ class MissingImageFieldsDataProvider implements ListDataProviderInterface
         $queryBuilder
             ->select(
                 'meta.uid',
-                'meta.file', // reference to sys_file
                 'meta.title',
-                'meta.description',
-                'meta.alternative',
-                'meta.copyright',
                 'meta.sys_language_uid',
                 'meta.tstamp',
                 'meta.crdate',
+                'meta.' . $this->missingField,
+                'meta.file', // reference to sys_file
                 'file.identifier',
                 'file.name',
                 'file.mime_type'
@@ -50,8 +58,8 @@ class MissingImageFieldsDataProvider implements ListDataProviderInterface
 
         $queryBuilder->andWhere(
             $queryBuilder->expr()->or(
-                $queryBuilder->expr()->eq('meta.alternative', $queryBuilder->createNamedParameter('')),
-                $queryBuilder->expr()->isNull('meta.alternative')
+                $queryBuilder->expr()->eq('meta.' . $this->missingField, $queryBuilder->createNamedParameter('')),
+                $queryBuilder->expr()->isNull('meta.' . $this->missingField)
             )
         );
 

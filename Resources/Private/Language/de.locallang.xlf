@@ -168,11 +168,11 @@
             </trans-unit>
             <trans-unit id="widgets.missing_image_fields.description">
                 <source />
-                <target>Bilder ohne Alternativtext.</target>
+                <target>Listet Bilder, bei denen wichtige Metadaten wie Alternativtexte fehlen.</target>
             </trans-unit>
             <trans-unit id="widgets.missing_image_fields.results">
                 <source />
-                <target>Bilder ohne Alternativtext.</target>
+                <target>Bilder ohne »%s«.</target>
             </trans-unit>
             <trans-unit id="widgets.missing_image_fields.count">
                 <source />

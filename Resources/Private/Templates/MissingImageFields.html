@@ -11,8 +11,8 @@
     <f:if condition="{records}">
         <f:then>
             <div class="mb-3">
-                <f:translate key="widgets.missing_image_fields.results" extensionName="XimaTypo3ContentAudit"/>
-                <f:translate key="widgets.missing_image_fields.count" extensionName="XimaTypo3ContentAudit" arguments="{hiddenCount: missingFieldCount, totalCount: totalCount}"/>
+                <f:translate key="widgets.missing_image_fields.results" extensionName="XimaTypo3ContentAudit" arguments="{0: missingFieldLabel}" />
+                <f:translate key="widgets.missing_image_fields.count" extensionName="XimaTypo3ContentAudit" arguments="{missingFieldCount: missingFieldCount, totalCount: totalCount}"/>
             </div>
             <div class="widget-table-wrapper">
                 <table class="widget-table {f:if(condition: '{version} == 13', then: 'table')} table-striped table-hover">

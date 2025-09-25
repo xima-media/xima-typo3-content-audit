@@ -1,18 +1,21 @@
+# yamllint disable rule:line-length
+---
 parameters:
   xima_typo3_content_audit.widgets.stale_pages.options:
     refreshAvailable: true
-    excludePageUids: [ ]
+    excludePageUids: []
   xima_typo3_content_audit.widgets.fresh_pages.options:
     refreshAvailable: true
-    excludePageUids: [ ]
+    excludePageUids: []
   xima_typo3_content_audit.widgets.hidden_pages.options:
     refreshAvailable: true
-    excludePageUids: [ ]
+    excludePageUids: []
   xima_typo3_content_audit.widgets.hidden_content.options:
     refreshAvailable: true
-    excludePageUids: [ ]
+    excludePageUids: []
   xima_typo3_content_audit.widgets.missing_image_fields.options:
     refreshAvailable: true
+    missingField: 'alternative'
 
 services:
   _defaults:

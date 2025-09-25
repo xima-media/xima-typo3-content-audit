@@ -29,6 +29,55 @@ https://github.com/xima-media/xima-typo3-content-audit
 - Check the result list and decide what to do with the shown pages - update the content,
   archive or delete the page
 
+### Configuration
+
+You may configure the widgets by adjusting the available parameters.
+Copy and paste the `parameters` section from the
+[Services.yaml](./Configuration/Services.yaml) file into your own
+and adjust the values as needed.
+
+_EXT:acme_sitepackage/Configuration/Services.yaml_
+```yaml
+parameters:
+  xima_typo3_content_audit.widgets.stale_pages.options:
+    refreshAvailable: true
+    excludePageUids: [4,8,15,16,23,42]
+```
+
+TYPO3 is not able to let editors add multiple widgets of the same type
+to their dashboard.
+If you want to add multiple widgets with only different configurations,
+you need to create multiple service definitions with different
+key-names and `identifier` fields.
+
+Example: A second widget showing images with empty copyright fields,
+additionally to the existing one showing images with missing alternative texts.
+[Copy and rename the parameter section & widget definition](./Configuration/Services.yaml)
+into your sitepackage (eg. `acme_sitepackage`).
+
+_EXT:acme_sitepackage/Configuration/Services.yaml_
+```yaml
+parameters:
+  acme_sitepackage.widgets.missing_image_fields.options: # add your own parameter key, see below
+    refreshAvailable: true
+    missingField: 'copyright'
+
+  Acme\AcmeSitepackage\Widgets\MissingImageFields: # change this key to avoid conflicts
+    class: 'Xima\XimaTypo3ContentAudit\Widgets\MissingImageFields'
+    arguments:
+      $dataProvider: '@Xima\XimaTypo3ContentAudit\Widgets\Provider\MissingImageFieldsDataProvider'
+      $options: '%acme_sitepackage.widgets.missing_image_fields.options%' # use your own parameter here
+    tags:
+      - name: dashboard.widget
+        identifier: 'acmeSitepackageMissingImageFields' # change this identifier to avoid conflicts
+        groupNames: 'general'
+        title: 'LLL:EXT:xima_wfs_sitepackage/Resources/Private/Language/locallang.xlf:widgets.missing_image_fields.title' # use your own language label here
+        description: 'LLL:EXT:xima_typo3_content_audit/Resources/Private/Language/locallang.xlf:widgets.missing_image_fields.description'
+        iconIdentifier: 'content-audit-widgets-hidden-content'
+        height: 'medium'
+        width: 'medium'
+```
+
 ## License
 
 GNU General Public License version 2 or later

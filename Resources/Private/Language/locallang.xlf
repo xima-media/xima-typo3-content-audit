@@ -127,10 +127,10 @@
                 <source>Images with missing fields</source>
             </trans-unit>
             <trans-unit id="widgets.missing_image_fields.description">
-                <source>Images with missing alternative text.</source>
+                <source>Lists images that are missing important metadata such as alternative text.</source>
             </trans-unit>
             <trans-unit id="widgets.missing_image_fields.results">
-                <source>Images with missing alternative text.</source>
+                <source>Images with missing »%s«.</source>
             </trans-unit>
             <trans-unit id="widgets.missing_image_fields.count">
                 <source>%1$d incomplete out of a total of %2$d items.</source>
