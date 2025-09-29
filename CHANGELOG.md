@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.2.0] - 2025-09-29
+
+- Feature: Add widget to show images without alt text
+- Feature: Add widget to show long hidden content (show content which is hidden for more than x days)
+
 ## [1.1.1] - 2025-09-22
 
 - Bugfix: Use correct access right fields
