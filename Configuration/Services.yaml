@@ -34,7 +34,7 @@ services:
     tags:
       - name: dashboard.widget
         identifier: 'contentAuditStalePages'
-        groupNames: 'general'
+        groupNames: 'content'
         title: 'LLL:EXT:xima_typo3_content_audit/Resources/Private/Language/locallang.xlf:widgets.stale_pages.title'
         description: 'LLL:EXT:xima_typo3_content_audit/Resources/Private/Language/locallang.xlf:widgets.stale_pages.description'
         iconIdentifier: 'content-audit-widgets-stale-pages'
@@ -49,7 +49,7 @@ services:
     tags:
       - name: dashboard.widget
         identifier: 'contentAuditFreshPages'
-        groupNames: 'general'
+        groupNames: 'content'
         title: 'LLL:EXT:xima_typo3_content_audit/Resources/Private/Language/locallang.xlf:widgets.fresh_pages.title'
         description: 'LLL:EXT:xima_typo3_content_audit/Resources/Private/Language/locallang.xlf:widgets.fresh_pages.description'
         iconIdentifier: 'content-audit-widgets-fresh-pages'
@@ -64,7 +64,7 @@ services:
     tags:
       - name: dashboard.widget
         identifier: 'contentAuditHiddenPages'
-        groupNames: 'general'
+        groupNames: 'content'
         title: 'LLL:EXT:xima_typo3_content_audit/Resources/Private/Language/locallang.xlf:widgets.hidden_pages.title'
         description: 'LLL:EXT:xima_typo3_content_audit/Resources/Private/Language/locallang.xlf:widgets.hidden_pages.description'
         iconIdentifier: 'content-audit-widgets-hidden-pages'
@@ -79,7 +79,7 @@ services:
     tags:
       - name: dashboard.widget
         identifier: 'contentAuditHiddenContent'
-        groupNames: 'general'
+        groupNames: 'content'
         title: 'LLL:EXT:xima_typo3_content_audit/Resources/Private/Language/locallang.xlf:widgets.hidden_content.title'
         description: 'LLL:EXT:xima_typo3_content_audit/Resources/Private/Language/locallang.xlf:widgets.hidden_content.description'
         iconIdentifier: 'content-audit-widgets-hidden-content'
@@ -95,7 +95,7 @@ services:
     tags:
       - name: dashboard.widget
         identifier: 'contentAuditMissingImageFields'
-        groupNames: 'general'
+        groupNames: 'content'
         title: 'LLL:EXT:xima_typo3_content_audit/Resources/Private/Language/locallang.xlf:widgets.missing_image_fields.title'
         description: 'LLL:EXT:xima_typo3_content_audit/Resources/Private/Language/locallang.xlf:widgets.missing_image_fields.description'
         iconIdentifier: 'content-audit-widgets-hidden-content'

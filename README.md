@@ -86,7 +86,7 @@ parameters:
     tags:
       - name: dashboard.widget
         identifier: 'acmeSitepackageMissingImageFields' # change this identifier to avoid conflicts
-        groupNames: 'general'
+        groupNames: 'content'
         title: 'LLL:EXT:xima_wfs_sitepackage/Resources/Private/Language/locallang.xlf:widgets.missing_image_fields.title' # use your own language label here
         description: 'LLL:EXT:xima_typo3_content_audit/Resources/Private/Language/locallang.xlf:widgets.missing_image_fields.description'
         iconIdentifier: 'content-audit-widgets-hidden-content'
