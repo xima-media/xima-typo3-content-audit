@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.2.1] - 2025-10-10
+
+- Bugfix: Fix limit restriction in TYPO3 v13
+- Bugfix: Remove double widget title in TYPO3 v13
+
 ## [1.2.0] - 2025-09-29
 
 - Feature: Add widget to show images without alt text
