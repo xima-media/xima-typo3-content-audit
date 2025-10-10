@@ -8,6 +8,22 @@ A widget for the TYPO3 dashboard to evaluate the relevance, accuracy and freshne
 
 ![Screenshot](./Documentation/screenshot.png)
 
+## Features
+
+Available widgets:
+
+- Stale Pages: Displays a list of pages that have not been changed for a long time
+  - Integrators may exclude certain pages from the list, e.g. start page or landing pages
+- Fresh Pages: Displays a list of pages that have been changed recently
+- Long Hidden Pages: Display a list of pages that have been hidden for a long time and may no longer be relevant
+- Long-hidden Content: Display a list of content that has been hidden for a long time and may no longer be relevant
+- Images with missing fields: Lists images that are missing important metadata such as alternative text
+  - The field may be configured, e.g. to check for missing copyright information instead of alternative text
+
+✨ Would you like to share important news and announcements with your editorial team
+or add a general welcome message for editors on the dashboard? Check out our
+[dashboard news extension](https://github.com/xima-media/xima-typo3-dashboard-news).
+
 ## Requirements
 
 - PHP
