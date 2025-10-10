@@ -3,10 +3,12 @@
     xmlns:core="http://typo3.org/ns/TYPO3/CMS/Core/ViewHelpers"
     data-namespace-typo3-fluid="true">
 
-<div class="widget-content-title d-flex" style="gap:10px;">
-    <core:icon identifier="content-audit-widgets-fresh-pages" size="small"/>
-    <span><f:translate key="widgets.fresh_pages.title" extensionName="XimaTypo3ContentAudit"/></span>
-</div>
+<f:if condition="{version} < 13">
+    <div class="widget-content-title d-flex" style="gap:10px;">
+        <core:icon identifier="content-audit-widgets-fresh-pages" size="small"/>
+        <span><f:translate key="widgets.fresh_pages.title" extensionName="XimaTypo3ContentAudit"/></span>
+    </div>
+</f:if>
 <div class="widget-content-main x--content-audit-widget--main" style="--mask: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0, rgba(0, 0, 0, 1) 90%, rgba(0, 0, 0, 0) 95%, rgba(0, 0, 0, 0) 0) 100% 90% / 100% 100% repeat-x;-webkit-mask: var(--mask);mask: var(--mask);">
     <f:if condition="{records}">
         <f:then>
