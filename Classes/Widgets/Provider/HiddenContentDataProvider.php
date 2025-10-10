@@ -84,7 +84,8 @@ class HiddenContentDataProvider implements ListDataProviderInterface
 
         $hiddenCountQueryBuilder = clone $queryBuilder;
         $hiddenCountQueryBuilder->count('content.uid');
-        $hiddenCountQueryBuilder->resetQueryPart('orderBy'); // Resets the limit
+        $hiddenCountQueryBuilder->setMaxResults(PHP_INT_MAX); // Reset the cloned limit
+        // @todo When dropping support for TYPO3 11 we may use ->resetOrderBy() instead
         $hiddenCount = (int)$hiddenCountQueryBuilder->executeQuery()->fetchOne();
 
         $totalCountQueryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tt_content');
