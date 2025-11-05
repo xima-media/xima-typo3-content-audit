@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.2.2] - 2025-11-05
+
+- Bugfgix: Add missing dashboard group for TYPO3 < v13
+
 ## [1.2.1] - 2025-10-10
 
 - Bugfix: Fix limit restriction in TYPO3 v13
