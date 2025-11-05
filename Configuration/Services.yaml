@@ -86,7 +86,6 @@ services:
         height: 'medium'
         width: 'medium'
 
-
   Xima\XimaTypo3ContentAudit\Widgets\MissingImageFields:
     class: 'Xima\XimaTypo3ContentAudit\Widgets\MissingImageFields'
     arguments:
@@ -98,6 +97,7 @@ services:
         groupNames: 'content'
         title: 'LLL:EXT:xima_typo3_content_audit/Resources/Private/Language/locallang.xlf:widgets.missing_image_fields.title'
         description: 'LLL:EXT:xima_typo3_content_audit/Resources/Private/Language/locallang.xlf:widgets.missing_image_fields.description'
-        iconIdentifier: 'content-audit-widgets-hidden-content'
+        iconIdentifier: 'content-audit-widgets-missing-image-fields'
         height: 'medium'
         width: 'medium'
+
