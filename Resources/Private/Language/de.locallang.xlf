@@ -2,6 +2,11 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
     <file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2025-06-02T12:00:00Z">
         <body>
+            <trans-unit id="widget_group.content" resname="widget_group.content">
+                <source />
+                <target>Content</target>
+            </trans-unit>
+
             <trans-unit id="widgets.stale_pages.title">
                 <source />
                 <target>Veraltete Seiten</target>
