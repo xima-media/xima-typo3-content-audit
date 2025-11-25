@@ -1,0 +1,23 @@
+INSERT INTO `pages`
+    (`uid`, `pid`, `title`, `slug`, `sys_language_uid`, `l10n_parent`, `l10n_source`, `perms_userid`,
+    `perms_groupid`, `perms_user`, `perms_group`, `perms_everybody`, `doktype`, `is_siteroot`, `module`, `tstamp`, `crdate`)
+VALUES (1, 0, 'Home', '/', 0, 0, 0, 1, 1, 31, 31, 1, 1, 1, '', UNIX_TIMESTAMP(), UNIX_TIMESTAMP()),
+    (2, 0, 'Startseite', '/', 1, 1, 0, 1, 1, 31, 31, 1, 1, 1, '', UNIX_TIMESTAMP(), UNIX_TIMESTAMP()),
+    (3, 1, 'About us', '/about-us', 0, 0, 0, 1, 1, 31, 31, 1, 1, 0, '', UNIX_TIMESTAMP(), UNIX_TIMESTAMP()),
+    (4, 1, 'Über uns', '/ueber-uns', 1, 3, 0, 1, 1, 31, 31, 1, 1, 0, '', UNIX_TIMESTAMP(), UNIX_TIMESTAMP()),
+    (5, 1, 'Research', '/research', 0, 0, 0, 1, 1, 31, 31, 1, 1, 0, '', UNIX_TIMESTAMP(), UNIX_TIMESTAMP()),
+    (6, 1, 'Forschung', '/forschung', 1, 5, 0, 1, 1, 31, 31, 1, 1, 0, '', UNIX_TIMESTAMP(), UNIX_TIMESTAMP()),
+    (7, 1, 'Contact', '/contact', 0, 0, 0, 1, 1, 31, 31, 1, 1, 0, '', UNIX_TIMESTAMP(), UNIX_TIMESTAMP()),
+    (8, 1, 'Kontakt', '/kontakt', 1, 7, 0, 1, 1, 31, 31, 1, 1, 0, '', UNIX_TIMESTAMP(), UNIX_TIMESTAMP()),
+    (9, 1, 'Imprint', '/imprint', 0, 0, 0, 1, 1, 31, 31, 1, 1, 0, '', UNIX_TIMESTAMP(), UNIX_TIMESTAMP()),
+    (10, 1, 'Impressum', '/impressum', 1, 9, 0, 1, 1, 31, 31, 1, 1, 0, '', UNIX_TIMESTAMP(), UNIX_TIMESTAMP()),
+    (11, 5, 'Research topics', '/research-topics', 0, 0, 0, 1, 1, 31, 31, 1, 1, 0, '', UNIX_TIMESTAMP(), UNIX_TIMESTAMP()),
+    (12, 5, 'Forschungsthemen', '/forschungsthemen', 1, 11, 0, 1, 1, 31, 31, 1, 1, 0, '', UNIX_TIMESTAMP(), UNIX_TIMESTAMP()),
+    (13, 5, 'Research groups', '/research-groups', 0, 0, 0, 1, 1, 31, 31, 1, 1, 0, '', UNIX_TIMESTAMP(), UNIX_TIMESTAMP()),
+    (14, 5, 'Forschungsgruppen', '/forschungsgruppen', 1, 13, 0, 1, 1, 31, 31, 1, 1, 0, '', UNIX_TIMESTAMP(), UNIX_TIMESTAMP()),
+    (15, 1, 'News', '/news', 0, 0, 0, 1, 1, 31, 31, 1, 254, 0, 'news', UNIX_TIMESTAMP(), UNIX_TIMESTAMP()),
+    (16, 1, 'News', '/news', 1, 15, 0, 1, 1, 31, 31, 1, 254, 0, 'news', UNIX_TIMESTAMP(), UNIX_TIMESTAMP()),
+    (17, 1, 'Categories', '/categories', 0, 0, 0, 1, 1, 31, 31, 1, 254, 0, '', UNIX_TIMESTAMP(), UNIX_TIMESTAMP()),
+    (18, 1, 'Kategorien', '/kategorien', 1, 17, 0, 1, 1, 31, 31, 1, 254, 0, '', UNIX_TIMESTAMP(), UNIX_TIMESTAMP()),
+    (19, 1, 'User', '/user', 0, 0, 0, 1, 1, 31, 31, 1, 254, 0, 'fe_users', UNIX_TIMESTAMP(), UNIX_TIMESTAMP()),
+    (20, 1, 'Benutzer', '/benutzer', 1, 19, 0, 1, 1, 31, 31, 1, 254, 0, 'fe_users', UNIX_TIMESTAMP(), UNIX_TIMESTAMP());

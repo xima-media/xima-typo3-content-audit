@@ -94,6 +94,16 @@ parameters:
         width: 'medium'
 ```
 
+## Development
+
+To set up a development environment, please clone the repository and run
+
+```bash
+ddev start && ddev init-typo3
+```
+
+Execute the command again to reset the installation.
+
 ## License
 
 GNU General Public License version 2 or later
