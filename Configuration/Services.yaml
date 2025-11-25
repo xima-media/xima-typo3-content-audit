@@ -100,4 +100,3 @@ services:
         iconIdentifier: 'content-audit-widgets-missing-image-fields'
         height: 'medium'
         width: 'medium'
-

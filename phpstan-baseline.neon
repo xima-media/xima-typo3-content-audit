@@ -1,2 +1,36 @@
 parameters:
-	ignoreErrors: []
+	ignoreErrors:
+		-
+			message: "#^Call to an undefined method TYPO3\\\\CMS\\\\Dashboard\\\\Widgets\\\\ListDataProviderInterface\\:\\:setExcludePageUids\\(\\)\\.$#"
+			count: 1
+			path: Classes/Widgets/FreshPages.php
+
+		-
+			message: "#^Call to an undefined method TYPO3\\\\CMS\\\\Dashboard\\\\Widgets\\\\ListDataProviderInterface\\:\\:setShowOldestFirst\\(\\)\\.$#"
+			count: 1
+			path: Classes/Widgets/FreshPages.php
+
+		-
+			message: "#^Call to an undefined method TYPO3\\\\CMS\\\\Dashboard\\\\Widgets\\\\ListDataProviderInterface\\:\\:setExcludePageUids\\(\\)\\.$#"
+			count: 1
+			path: Classes/Widgets/HiddenContent.php
+
+		-
+			message: "#^Call to an undefined method TYPO3\\\\CMS\\\\Dashboard\\\\Widgets\\\\ListDataProviderInterface\\:\\:setExcludePageUids\\(\\)\\.$#"
+			count: 1
+			path: Classes/Widgets/HiddenPages.php
+
+		-
+			message: "#^Call to an undefined method TYPO3\\\\CMS\\\\Dashboard\\\\Widgets\\\\ListDataProviderInterface\\:\\:setMissingField\\(\\)\\.$#"
+			count: 1
+			path: Classes/Widgets/MissingImageFields.php
+
+		-
+			message: "#^Call to an undefined method TYPO3\\\\CMS\\\\Dashboard\\\\Widgets\\\\ListDataProviderInterface\\:\\:setExcludePageUids\\(\\)\\.$#"
+			count: 1
+			path: Classes/Widgets/StalePages.php
+
+		-
+			message: "#^Call to an undefined method TYPO3\\\\CMS\\\\Dashboard\\\\Widgets\\\\ListDataProviderInterface\\:\\:setShowOldestFirst\\(\\)\\.$#"
+			count: 1
+			path: Classes/Widgets/StalePages.php

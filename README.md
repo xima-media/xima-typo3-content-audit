@@ -102,7 +102,7 @@ The GNU General Public License can be found at http://www.gnu.org/copyleft/gpl.h
 
 ## Author
 
-Dan Kleine ([@pixelbrackets](https://github.com/pixelbrackets)) for [XIMA](https://www.webit.de/)
+Dan Kleine ([@pixelbrackets](https://pixelbrackets.de)) for [XIMA](https://www.xima.de/)
 
 ## Changelog
 

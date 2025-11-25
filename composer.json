@@ -32,7 +32,7 @@
 	},
 	"suggest": {
 		"typo3/cms-sys-note": "Add messages on any page to let editors inform each other about important changes",
-		"xima/xima-typo3-content-planner":  "Add status badges to pages and the pagetree to support the planning of content work",
+		"xima/xima-typo3-content-planner": "Add status badges to pages and the pagetree to support the planning of content work",
 		"xima/xima-typo3-dashboard-news": "Display important news and announcements in the TYPO3 dashboard to keep editorial teams in the loop"
 	},
 	"autoload": {
