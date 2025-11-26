@@ -19,6 +19,8 @@ Available widgets:
 - Long-hidden Content: Display a list of content that has been hidden for a long time and may no longer be relevant
 - Images with missing fields: Lists images that are missing important metadata such as alternative text
   - The field may be configured, e.g. to check for missing copyright information instead of alternative text
+- Broken Links: Display pages with broken internal links detected by the TYPO3 linkvalidator
+  - **Note:** Requires the `typo3/cms-linkvalidator` extension to be installed and configured
 
 ✨ Would you like to share important news and announcements with your editorial team
 or add a general welcome message for editors on the dashboard? Check out our

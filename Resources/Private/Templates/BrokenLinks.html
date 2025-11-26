@@ -1,0 +1,80 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+    xmlns:dashboard="http://typo3.org/ns/TYPO3/CMS/Dashboard/ViewHelpers"
+    xmlns:core="http://typo3.org/ns/TYPO3/CMS/Core/ViewHelpers"
+    xmlns:be="http://typo3.org/ns/TYPO3/CMS/Backend/ViewHelpers"
+    data-namespace-typo3-fluid="true">
+
+<f:if condition="{version} < 13">
+    <div class="widget-content-title d-flex" style="gap:10px;">
+        <core:icon identifier="content-audit-widgets-broken-links" size="small"/>
+        <span><f:translate key="widgets.broken_links.title" extensionName="XimaTypo3ContentAudit"/></span>
+    </div>
+</f:if>
+<div class="widget-content-main x--content-audit-widget--main" style="--mask: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0, rgba(0, 0, 0, 1) 90%, rgba(0, 0, 0, 0) 95%, rgba(0, 0, 0, 0) 0) 100% 90% / 100% 100% repeat-x;-webkit-mask: var(--mask);mask: var(--mask);">
+    <f:if condition="!{linkvalidatorIsInstalled}">
+        <div class="row widget-no-items-found">
+            <div class="col-xs-12">
+                <p>
+                    <f:translate key="widgets.broken_links.extension_required" extensionName="XimaTypo3ContentAudit"/>
+                </p>
+            </div>
+        </div>
+    </f:if>
+
+    <f:if condition="{linkvalidatorIsInstalled}">
+        <f:if condition="{records}">
+            <div class="mb-3">
+                <f:translate key="widgets.broken_links.results" extensionName="XimaTypo3ContentAudit"/>
+            </div>
+            <div class="widget-table-wrapper">
+                <table class="widget-table {f:if(condition: '{version} == 13', then: 'table')} table-striped table-hover">
+                    <thead>
+                    <tr>
+                        <th><f:translate key="widgets.broken_links.page" extensionName="XimaTypo3ContentAudit"/></th>
+                        <th><f:translate key="widgets.broken_links.path" extensionName="XimaTypo3ContentAudit"/></th>
+                        <th><f:translate key="widgets.broken_links.broken_count" extensionName="XimaTypo3ContentAudit"/></th>
+                        <th><f:translate key="widgets.broken_links.updated" extensionName="XimaTypo3ContentAudit"/></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <f:for each="{records}" as="record">
+                        <tr>
+                            <td>
+                                <core:icon identifier="apps-pagetree-page" size="small" />
+                                <a href="{be:moduleLink(route: 'web_layout', arguments: '{id: record.uid}')}"
+                                    target="_blank"
+                                    title="ID {record.uid}">
+                                    {record.pageTitle}
+                                </a>
+                            </td>
+                            <td>
+                                {record.pageSlug}
+                            </td>
+                            <td class="text-center">
+                                <span class="badge badge-danger">{record.broken_link_count}</span>
+                            </td>
+                            <td class="text-nowrap">
+                                <f:format.date format="d.m.Y H:i">{record.updated}</f:format.date>
+                            </td>
+                        </tr>
+                    </f:for>
+                    </tbody>
+                </table>
+            </div>
+        </f:if>
+    </f:if>
+
+    <f:if condition="{linkvalidatorIsInstalled}">
+        <f:if condition="!{records}">
+            <div class="row widget-no-items-found">
+                <div class="col-xs-12">
+                    <p>
+                        <f:translate key="widgets.broken_links.empty" extensionName="XimaTypo3ContentAudit"/>
+                    </p>
+                </div>
+            </div>
+        </f:if>
+    </f:if>
+</div>
+
+</html>

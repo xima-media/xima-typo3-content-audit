@@ -16,6 +16,8 @@ parameters:
   xima_typo3_content_audit.widgets.missing_image_fields.options:
     refreshAvailable: true
     missingField: 'alternative'
+  xima_typo3_content_audit.widgets.broken_links.options:
+    refreshAvailable: true
 
 services:
   _defaults:
@@ -98,5 +100,20 @@ services:
         title: 'LLL:EXT:xima_typo3_content_audit/Resources/Private/Language/locallang.xlf:widgets.missing_image_fields.title'
         description: 'LLL:EXT:xima_typo3_content_audit/Resources/Private/Language/locallang.xlf:widgets.missing_image_fields.description'
         iconIdentifier: 'content-audit-widgets-missing-image-fields'
+        height: 'medium'
+        width: 'medium'
+
+  Xima\XimaTypo3ContentAudit\Widgets\BrokenLinks:
+    class: 'Xima\XimaTypo3ContentAudit\Widgets\BrokenLinks'
+    arguments:
+      $dataProvider: '@Xima\XimaTypo3ContentAudit\Widgets\Provider\BrokenLinksDataProvider'
+      $options: '%xima_typo3_content_audit.widgets.broken_links.options%'
+    tags:
+      - name: dashboard.widget
+        identifier: 'contentAuditBrokenLinks'
+        groupNames: 'content'
+        title: 'LLL:EXT:xima_typo3_content_audit/Resources/Private/Language/locallang.xlf:widgets.broken_links.title'
+        description: 'LLL:EXT:xima_typo3_content_audit/Resources/Private/Language/locallang.xlf:widgets.broken_links.description'
+        iconIdentifier: 'content-audit-widgets-broken-links'
         height: 'medium'
         width: 'medium'

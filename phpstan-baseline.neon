@@ -1,36 +1,43 @@
 parameters:
 	ignoreErrors:
 		-
-			message: "#^Call to an undefined method TYPO3\\\\CMS\\\\Dashboard\\\\Widgets\\\\ListDataProviderInterface\\:\\:setExcludePageUids\\(\\)\\.$#"
+			message: '#^Call to an undefined method TYPO3\\CMS\\Dashboard\\Widgets\\ListDataProviderInterface\:\:setExcludePageUids\(\)\.$#'
+			identifier: method.notFound
 			count: 1
 			path: Classes/Widgets/FreshPages.php
 
 		-
-			message: "#^Call to an undefined method TYPO3\\\\CMS\\\\Dashboard\\\\Widgets\\\\ListDataProviderInterface\\:\\:setShowOldestFirst\\(\\)\\.$#"
+			message: '#^Call to an undefined method TYPO3\\CMS\\Dashboard\\Widgets\\ListDataProviderInterface\:\:setShowOldestFirst\(\)\.$#'
+			identifier: method.notFound
 			count: 1
 			path: Classes/Widgets/FreshPages.php
 
 		-
-			message: "#^Call to an undefined method TYPO3\\\\CMS\\\\Dashboard\\\\Widgets\\\\ListDataProviderInterface\\:\\:setExcludePageUids\\(\\)\\.$#"
+			message: '#^Call to an undefined method TYPO3\\CMS\\Dashboard\\Widgets\\ListDataProviderInterface\:\:setExcludePageUids\(\)\.$#'
+			identifier: method.notFound
 			count: 1
 			path: Classes/Widgets/HiddenContent.php
 
 		-
-			message: "#^Call to an undefined method TYPO3\\\\CMS\\\\Dashboard\\\\Widgets\\\\ListDataProviderInterface\\:\\:setExcludePageUids\\(\\)\\.$#"
+			message: '#^Call to an undefined method TYPO3\\CMS\\Dashboard\\Widgets\\ListDataProviderInterface\:\:setExcludePageUids\(\)\.$#'
+			identifier: method.notFound
 			count: 1
 			path: Classes/Widgets/HiddenPages.php
 
 		-
-			message: "#^Call to an undefined method TYPO3\\\\CMS\\\\Dashboard\\\\Widgets\\\\ListDataProviderInterface\\:\\:setMissingField\\(\\)\\.$#"
+			message: '#^Call to an undefined method TYPO3\\CMS\\Dashboard\\Widgets\\ListDataProviderInterface\:\:setMissingField\(\)\.$#'
+			identifier: method.notFound
 			count: 1
 			path: Classes/Widgets/MissingImageFields.php
 
 		-
-			message: "#^Call to an undefined method TYPO3\\\\CMS\\\\Dashboard\\\\Widgets\\\\ListDataProviderInterface\\:\\:setExcludePageUids\\(\\)\\.$#"
+			message: '#^Call to an undefined method TYPO3\\CMS\\Dashboard\\Widgets\\ListDataProviderInterface\:\:setExcludePageUids\(\)\.$#'
+			identifier: method.notFound
 			count: 1
 			path: Classes/Widgets/StalePages.php
 
 		-
-			message: "#^Call to an undefined method TYPO3\\\\CMS\\\\Dashboard\\\\Widgets\\\\ListDataProviderInterface\\:\\:setShowOldestFirst\\(\\)\\.$#"
+			message: '#^Call to an undefined method TYPO3\\CMS\\Dashboard\\Widgets\\ListDataProviderInterface\:\:setShowOldestFirst\(\)\.$#'
+			identifier: method.notFound
 			count: 1
 			path: Classes/Widgets/StalePages.php

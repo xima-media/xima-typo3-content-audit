@@ -151,6 +151,34 @@
             <trans-unit id="widgets.missing_image_fields.preview">
                 <source>Preview</source>
             </trans-unit>
+
+            <trans-unit id="widgets.broken_links.title">
+                <source>Broken Links</source>
+            </trans-unit>
+            <trans-unit id="widgets.broken_links.description">
+                <source>Display pages with broken internal links detected by the link validator.</source>
+            </trans-unit>
+            <trans-unit id="widgets.broken_links.results">
+                <source>Pages with broken internal links.</source>
+            </trans-unit>
+            <trans-unit id="widgets.broken_links.empty">
+                <source>Yay! No broken internal links detected.</source>
+            </trans-unit>
+            <trans-unit id="widgets.broken_links.page">
+                <source>Page</source>
+            </trans-unit>
+            <trans-unit id="widgets.broken_links.path">
+                <source>Path</source>
+            </trans-unit>
+            <trans-unit id="widgets.broken_links.updated">
+                <source>Last updated</source>
+            </trans-unit>
+            <trans-unit id="widgets.broken_links.broken_count">
+                <source>Broken links</source>
+            </trans-unit>
+            <trans-unit id="widgets.broken_links.extension_required">
+                <source>This widget requires the TYPO3 linkvalidator extension "typo3/cms-linkvalidator". Please ask your system administrator to install it.</source>
+            </trans-unit>
         </body>
     </file>
 </xliff>

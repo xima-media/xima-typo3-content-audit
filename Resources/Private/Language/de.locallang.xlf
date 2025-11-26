@@ -199,6 +199,43 @@
                 <source />
                 <target>Vorschau</target>
             </trans-unit>
+
+            <trans-unit id="widgets.broken_links.title">
+                <source />
+                <target>Defekte Links</target>
+            </trans-unit>
+            <trans-unit id="widgets.broken_links.description">
+                <source />
+                <target>Zeigt Seiten mit defekten internen Links, die vom Link-Validator erkannt wurden.</target>
+            </trans-unit>
+            <trans-unit id="widgets.broken_links.results">
+                <source />
+                <target>Seiten mit defekten internen Links.</target>
+            </trans-unit>
+            <trans-unit id="widgets.broken_links.empty">
+                <source />
+                <target>Yay! Keine defekten internen Links erkannt.</target>
+            </trans-unit>
+            <trans-unit id="widgets.broken_links.page">
+                <source />
+                <target>Seite</target>
+            </trans-unit>
+            <trans-unit id="widgets.broken_links.path">
+                <source />
+                <target>Pfad</target>
+            </trans-unit>
+            <trans-unit id="widgets.broken_links.updated">
+                <source />
+                <target>Zuletzt aktualisiert</target>
+            </trans-unit>
+            <trans-unit id="widgets.broken_links.broken_count">
+                <source />
+                <target>Defekte Links</target>
+            </trans-unit>
+            <trans-unit id="widgets.broken_links.extension_required">
+                <source />
+                <target>Dieses Widget benötigt die TYPO3 Linkvalidator Extension „typo3/cms-linkvalidator“. Bitte bitten Sie ihre Systemadministration, diese zu installieren.</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

@@ -8,7 +8,8 @@ VALUES
         "contentAuditFreshPages": {"identifier": "contentAuditFreshPages"},
         "contentAuditHiddenPages": {"identifier": "contentAuditHiddenPages"},
         "contentAuditHiddenContent": {"identifier": "contentAuditHiddenContent"},
-        "contentAuditMissingImageFields": {"identifier": "contentAuditMissingImageFields"}
+        "contentAuditMissingImageFields": {"identifier": "contentAuditMissingImageFields"},
+        "contentAuditBrokenLinks": {"identifier": "contentAuditBrokenLinks"}
     }',
     UNIX_TIMESTAMP(),
     UNIX_TIMESTAMP(),
@@ -20,7 +21,8 @@ VALUES
         "contentAuditFreshPages": {"identifier": "contentAuditFreshPages"},
         "contentAuditHiddenPages": {"identifier": "contentAuditHiddenPages"},
         "contentAuditHiddenContent": {"identifier": "contentAuditHiddenContent"},
-        "contentAuditMissingImageFields": {"identifier": "contentAuditMissingImageFields"}
+        "contentAuditMissingImageFields": {"identifier": "contentAuditMissingImageFields"},
+        "contentAuditBrokenLinks": {"identifier": "contentAuditBrokenLinks"}
     }',
     UNIX_TIMESTAMP(),
     UNIX_TIMESTAMP(),

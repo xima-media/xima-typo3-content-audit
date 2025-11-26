@@ -25,4 +25,8 @@ return [
         'provider' => SvgIconProvider::class,
         'source' => 'EXT:xima_typo3_content_audit/Resources/Public/Icons/WidgetsMissingImageFields.svg',
     ],
+    'content-audit-widgets-broken-links' => [
+        'provider' => SvgIconProvider::class,
+        'source' => 'EXT:xima_typo3_content_audit/Resources/Public/Icons/WidgetsBrokenLinks.svg',
+    ],
 ];

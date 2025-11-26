@@ -28,12 +28,11 @@
 		"ssch/typo3-rector": "^2.0 || ^3.0",
 		"symfony/translation": "^6.3 || ^7.0",
 		"typo3/cms-base-distribution": "^11.5 || ^12.4 || ^13.4",
+		"typo3/cms-linkvalidator": "^11.5 || ^12.4 || ^13.4",
 		"typo3/cms-lowlevel": "^11.5 || ^12.4 || ^13.4"
 	},
 	"suggest": {
-		"typo3/cms-sys-note": "Add messages on any page to let editors inform each other about important changes",
-		"xima/xima-typo3-content-planner": "Add status badges to pages and the pagetree to support the planning of content work",
-		"xima/xima-typo3-dashboard-news": "Display important news and announcements in the TYPO3 dashboard to keep editorial teams in the loop"
+		"typo3/cms-linkvalidator": "Required for the Broken Links widget to detect and display pages with broken internal links"
 	},
 	"autoload": {
 		"psr-4": {
