@@ -1,8 +1,14 @@
 # Changelog
 
+## [1.3.0] - 2025-11-27
+
+- Feature: Add widget for daily missions
+- Feature: Add widget for broken links
+- Feature: Add DDEV with demo setup
+
 ## [1.2.2] - 2025-11-05
 
-- Bugfgix: Add missing dashboard group for TYPO3 < v13
+- Bugfix: Add missing dashboard group for TYPO3 < v13
 
 ## [1.2.1] - 2025-10-10
 
