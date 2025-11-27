@@ -29,4 +29,8 @@ return [
         'provider' => SvgIconProvider::class,
         'source' => 'EXT:xima_typo3_content_audit/Resources/Public/Icons/WidgetsBrokenLinks.svg',
     ],
+    'content-audit-widgets-daily-mission' => [
+        'provider' => SvgIconProvider::class,
+        'source' => 'EXT:xima_typo3_content_audit/Resources/Public/Icons/WidgetsDailyMission.svg',
+    ],
 ];

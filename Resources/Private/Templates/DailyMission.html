@@ -1,0 +1,31 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+    xmlns:core="http://typo3.org/ns/TYPO3/CMS/Core/ViewHelpers"
+    data-namespace-typo3-fluid="true">
+
+<f:if condition="{version} < 13">
+    <div class="widget-content-title d-flex" style="gap:10px;">
+        <core:icon identifier="content-audit-widgets-daily-mission" size="small"/>
+        <span><f:translate key="widgets.daily_mission.title" extensionName="XimaTypo3ContentAudit"/></span>
+    </div>
+</f:if>
+<div class="widget-content-main x--content-audit-widget--main">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="daily-mission-message text-center p-2">
+                <h4 class="mb-3">
+                    <f:translate key="widgets.daily_mission.heading" extensionName="XimaTypo3ContentAudit"/>
+                </h4>
+                <p class="lead">
+                    <f:translate key="{data.messageKey}" extensionName="XimaTypo3ContentAudit"/>
+                </p>
+                <div class="mt-3 text-muted">
+                    <small>
+                        <f:translate key="widgets.daily_mission.footer" extensionName="XimaTypo3ContentAudit"/>
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</html>

@@ -234,7 +234,52 @@
             </trans-unit>
             <trans-unit id="widgets.broken_links.extension_required">
                 <source />
-                <target>Dieses Widget benötigt die TYPO3 Linkvalidator Extension „typo3/cms-linkvalidator“. Bitte bitten Sie ihre Systemadministration, diese zu installieren.</target>
+                <target>Dieses Widget benötigt die TYPO3 Linkvalidator Extension „typo3/cms-linkvalidator". Bitte bitten Sie ihre Systemadministration, diese zu installieren.</target>
+            </trans-unit>
+
+            <trans-unit id="widgets.daily_mission.title">
+                <source />
+                <target>Tägliche Content-Aufgabe</target>
+            </trans-unit>
+            <trans-unit id="widgets.daily_mission.description">
+                <source />
+                <target>Tägliche motivierende Botschaft zur Verbesserung der Inhaltsqualität.</target>
+            </trans-unit>
+            <trans-unit id="widgets.daily_mission.heading">
+                <source />
+                <target>🎯 Heutige Aufgabe</target>
+            </trans-unit>
+            <trans-unit id="widgets.daily_mission.footer">
+                <source />
+                <target>Tipp: Die anderen Content-Widgets prüfen um Aufgaben zu finden</target>
+            </trans-unit>
+            <trans-unit id="widgets.daily_mission.message_monday">
+                <source />
+                <target>Starten Sie die Woche frisch! Prüfen Sie das Widget „Veraltete Seiten" für Inhalte, die Aufmerksamkeit benötigen.</target>
+            </trans-unit>
+            <trans-unit id="widgets.daily_mission.message_tuesday">
+                <source />
+                <target>Machen Sie Ihre Inhalte barrierefrei! Überprüfen Sie das Widget „Bilder mit fehlenden Feldern" für Bilder ohne Alt-Text.</target>
+            </trans-unit>
+            <trans-unit id="widgets.daily_mission.message_wednesday">
+                <source />
+                <target>Wochenmitte-Aufräumen! Prüfen Sie die Widgets „Lange versteckte Seiten" und „Lange versteckte Inhalte" für löschbare Elemente.</target>
+            </trans-unit>
+            <trans-unit id="widgets.daily_mission.message_thursday">
+                <source />
+                <target>Verhindern Sie defekte Links! Besuchen Sie das Widget „Defekte Links", um Navigationsprobleme zu beheben.</target>
+            </trans-unit>
+            <trans-unit id="widgets.daily_mission.message_friday">
+                <source />
+                <target>Stark abschließen! Freuen Sie sich über Ihre „Frischen Seiten" und schließen Sie offene Aufgaben ab.</target>
+            </trans-unit>
+            <trans-unit id="widgets.daily_mission.message_saturday">
+                <source />
+                <target>Wochenende, Zeit zum Entspannen. Neue Contentaufgaben gibts nächste Woche.</target>
+            </trans-unit>
+            <trans-unit id="widgets.daily_mission.message_sunday">
+                <source />
+                <target>Schönen Sonntag! Wir sehen uns am Montag mit neuen Aufgaben wieder.</target>
             </trans-unit>
         </body>
     </file>

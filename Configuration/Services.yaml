@@ -18,6 +18,8 @@ parameters:
     missingField: 'alternative'
   xima_typo3_content_audit.widgets.broken_links.options:
     refreshAvailable: true
+  xima_typo3_content_audit.widgets.daily_mission.options:
+    refreshAvailable: true
 
 services:
   _defaults:
@@ -116,4 +118,19 @@ services:
         description: 'LLL:EXT:xima_typo3_content_audit/Resources/Private/Language/locallang.xlf:widgets.broken_links.description'
         iconIdentifier: 'content-audit-widgets-broken-links'
         height: 'medium'
+        width: 'medium'
+
+  Xima\XimaTypo3ContentAudit\Widgets\DailyMission:
+    class: 'Xima\XimaTypo3ContentAudit\Widgets\DailyMission'
+    arguments:
+      $dataProvider: '@Xima\XimaTypo3ContentAudit\Widgets\Provider\DailyMissionDataProvider'
+      $options: '%xima_typo3_content_audit.widgets.daily_mission.options%'
+    tags:
+      - name: dashboard.widget
+        identifier: 'contentAuditDailyMission'
+        groupNames: 'content'
+        title: 'LLL:EXT:xima_typo3_content_audit/Resources/Private/Language/locallang.xlf:widgets.daily_mission.title'
+        description: 'LLL:EXT:xima_typo3_content_audit/Resources/Private/Language/locallang.xlf:widgets.daily_mission.description'
+        iconIdentifier: 'content-audit-widgets-daily-mission'
+        height: 'small'
         width: 'medium'

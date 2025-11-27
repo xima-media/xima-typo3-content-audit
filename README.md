@@ -21,6 +21,8 @@ Available widgets:
   - The field may be configured, e.g. to check for missing copyright information instead of alternative text
 - Broken Links: Display pages with broken internal links detected by the TYPO3 linkvalidator
   - **Note:** Requires the `typo3/cms-linkvalidator` extension to be installed and configured
+- Daily Content Mission: Shows daily motivational messages to encourage editors to improve content quality
+  - Messages rotate by day of week and reference specific widgets to check
 
 ✨ Would you like to share important news and announcements with your editorial team
 or add a general welcome message for editors on the dashboard? Check out our

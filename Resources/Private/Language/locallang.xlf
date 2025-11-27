@@ -179,6 +179,40 @@
             <trans-unit id="widgets.broken_links.extension_required">
                 <source>This widget requires the TYPO3 linkvalidator extension "typo3/cms-linkvalidator". Please ask your system administrator to install it.</source>
             </trans-unit>
+
+            <trans-unit id="widgets.daily_mission.title">
+                <source>Daily Content Mission</source>
+            </trans-unit>
+            <trans-unit id="widgets.daily_mission.description">
+                <source>Daily motivational message to encourage content quality improvements.</source>
+            </trans-unit>
+            <trans-unit id="widgets.daily_mission.heading">
+                <source>🎯 Your Daily Mission</source>
+            </trans-unit>
+            <trans-unit id="widgets.daily_mission.footer">
+                <source>Check other widgets for actionable items</source>
+            </trans-unit>
+            <trans-unit id="widgets.daily_mission.message_monday">
+                <source>Start the week fresh! Check your Stale Pages widget for content that needs attention.</source>
+            </trans-unit>
+            <trans-unit id="widgets.daily_mission.message_tuesday">
+                <source>Make your content accessible! Review the Missing Image Fields widget for images without alt text.</source>
+            </trans-unit>
+            <trans-unit id="widgets.daily_mission.message_wednesday">
+                <source>Midweek cleanup! Check Hidden Pages and Hidden Content widgets for items that can be deleted.</source>
+            </trans-unit>
+            <trans-unit id="widgets.daily_mission.message_thursday">
+                <source>Keep your links healthy! Visit the Broken Links widget to fix navigation issues.</source>
+            </trans-unit>
+            <trans-unit id="widgets.daily_mission.message_friday">
+                <source>Finish strong! Celebrate your Fresh Pages and wrap up any pending content tasks.</source>
+            </trans-unit>
+            <trans-unit id="widgets.daily_mission.message_saturday">
+                <source>It's the weekend! Time to relax. New content tasks will be here next week.</source>
+            </trans-unit>
+            <trans-unit id="widgets.daily_mission.message_sunday">
+                <source>Enjoy your Sunday! See you back on Monday for new content tasks.</source>
+            </trans-unit>
         </body>
     </file>
 </xliff>

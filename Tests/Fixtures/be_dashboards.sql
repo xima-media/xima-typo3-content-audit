@@ -9,7 +9,8 @@ VALUES
         "contentAuditHiddenPages": {"identifier": "contentAuditHiddenPages"},
         "contentAuditHiddenContent": {"identifier": "contentAuditHiddenContent"},
         "contentAuditMissingImageFields": {"identifier": "contentAuditMissingImageFields"},
-        "contentAuditBrokenLinks": {"identifier": "contentAuditBrokenLinks"}
+        "contentAuditBrokenLinks": {"identifier": "contentAuditBrokenLinks"},
+        "contentAuditDailyMission": {"identifier": "contentAuditDailyMission"}
     }',
     UNIX_TIMESTAMP(),
     UNIX_TIMESTAMP(),
@@ -22,7 +23,8 @@ VALUES
         "contentAuditHiddenPages": {"identifier": "contentAuditHiddenPages"},
         "contentAuditHiddenContent": {"identifier": "contentAuditHiddenContent"},
         "contentAuditMissingImageFields": {"identifier": "contentAuditMissingImageFields"},
-        "contentAuditBrokenLinks": {"identifier": "contentAuditBrokenLinks"}
+        "contentAuditBrokenLinks": {"identifier": "contentAuditBrokenLinks"},
+        "contentAuditDailyMission": {"identifier": "contentAuditDailyMission"}
     }',
     UNIX_TIMESTAMP(),
     UNIX_TIMESTAMP(),
