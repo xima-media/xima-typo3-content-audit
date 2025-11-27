@@ -45,11 +45,24 @@ https://github.com/xima-media/xima-typo3-content-audit
 
 ## Usage
 
-- Add the widget to your dashboard
-- Check the result list and decide what to do with the shown pages - update the content,
+- Add widgets to your dashboard manually
+- Check the result lists and decide what to do with the shown pages - update the content,
   archive or delete the page
 
-### Configuration
+## Configuration
+
+### Dashboard Preset
+
+The extension provides a preset which includes all widgets at once,
+without the need to add them manually one by one.
+
+- Available in the dashboard creation wizard
+- Can be set as default for new users via TSconfig:
+  ```
+  options.dashboard.dashboardPresetsForNewUsers = tx_ximatypo3contentaudit_dashboard
+  ```
+
+### Widget Configuration
 
 You may configure the widgets by adjusting the available parameters.
 Copy and paste the `parameters` section from the
@@ -63,6 +76,8 @@ parameters:
     refreshAvailable: true
     excludePageUids: [4,8,15,16,23,42]
 ```
+
+### Adding Multiple Widgets of the Same Type
 
 TYPO3 is not able to let editors add multiple widgets of the same type
 to their dashboard.

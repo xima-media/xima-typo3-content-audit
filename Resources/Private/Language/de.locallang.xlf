@@ -7,6 +7,15 @@
                 <target>Content</target>
             </trans-unit>
 
+            <trans-unit id="dashboard.title">
+                <source />
+                <target>Content-Audit Dashboard</target>
+            </trans-unit>
+            <trans-unit id="dashboard.description">
+                <source />
+                <target>Dashboard-Vorlage mit Widgets zur Verbesserung der Inhaltsqualität und -aktualität.</target>
+            </trans-unit>
+
             <trans-unit id="widgets.stale_pages.title">
                 <source />
                 <target>Veraltete Seiten</target>
