@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.4.0] - 2025-12-01
+
+- Feature: Add dashboard preset
+
 ## [1.3.0] - 2025-11-27
 
 - Feature: Add widget for daily missions
