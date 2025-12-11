@@ -17,7 +17,8 @@ Available widgets:
 - Fresh Pages: Displays a list of pages that have been changed recently
 - Long Hidden Pages: Display a list of pages that have been hidden for a long time and may no longer be relevant
 - Long-hidden Content: Display a list of content that has been hidden for a long time and may no longer be relevant
-- Empty Pages: Lists pages that do not contain any content elements yet
+- Empty Pages: Display a list of pages that have no visible content elements
+  - Integrators may configure which page types (doktype) to check and exclude certain pages
 - Images with missing fields: Lists images that are missing important metadata such as alternative text
   - The field may be configured, e.g. to check for missing copyright information instead of alternative text
 - Broken Links: Display pages with broken internal links detected by the TYPO3 linkvalidator

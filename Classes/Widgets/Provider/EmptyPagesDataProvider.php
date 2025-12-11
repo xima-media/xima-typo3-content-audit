@@ -17,11 +17,24 @@ class EmptyPagesDataProvider implements ListDataProviderInterface
     protected array $excludePageUids = [];
 
     /**
+    * @var array<int>
+    */
+    protected array $allowedPageTypes = [1];
+
+    /**
     * @param array<int> $excludePageUids
     */
     public function setExcludePageUids(array $excludePageUids): void
     {
         $this->excludePageUids = $excludePageUids;
+    }
+
+    /**
+    * @param array<int> $allowedPageTypes
+    */
+    public function setAllowedPageTypes(array $allowedPageTypes): void
+    {
+        $this->allowedPageTypes = $allowedPageTypes;
     }
 
     /**
@@ -46,11 +59,11 @@ class EmptyPagesDataProvider implements ListDataProviderInterface
             )
             ->addSelectLiteral('COUNT(' . $queryBuilder->quoteIdentifier('content.uid') . ') as content_count')
             ->from('pages')
-            // Select only pages, no shortcuts or folders etc
+            // Select only configured page types
             ->where(
                 $queryBuilder->expr()->in(
                     'pages.doktype',
-                    $queryBuilder->createNamedParameter([1], Connection::PARAM_INT_ARRAY)
+                    $queryBuilder->createNamedParameter($this->allowedPageTypes, Connection::PARAM_INT_ARRAY)
                 )
             )
             ->leftJoin(
@@ -92,7 +105,7 @@ class EmptyPagesDataProvider implements ListDataProviderInterface
             ->where(
                 $totalCountQueryBuilder->expr()->in(
                     'doktype',
-                    $totalCountQueryBuilder->createNamedParameter([1, 4], Connection::PARAM_INT_ARRAY)
+                    $totalCountQueryBuilder->createNamedParameter($this->allowedPageTypes, Connection::PARAM_INT_ARRAY)
                 )
             )
             ->executeQuery()

@@ -37,6 +37,7 @@ class EmptyPages implements WidgetInterface
         $view->setTemplatePathAndFilename($template);
 
         $this->dataProvider->setExcludePageUids($this->options['excludePageUids'] ?? []);
+        $this->dataProvider->setAllowedPageTypes($this->options['allowedPageTypes'] ?? [1]);
 
         $resultSet = $this->dataProvider->getItems();
         $view->assignMultiple([

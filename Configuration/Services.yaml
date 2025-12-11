@@ -23,6 +23,7 @@ parameters:
   xima_typo3_content_audit.widgets.empty_pages.options:
     refreshAvailable: true
     excludePageUids: []
+    allowedPageTypes: [1]
 
 services:
   _defaults:
