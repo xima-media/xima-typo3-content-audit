@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.5.0] - 2025-12-12
+
+- Feature: Add widget for empty pages
+- Feature: Add config to set pagetypes to check for empty pages
+
 ## [1.4.0] - 2025-12-01
 
 - Feature: Add dashboard preset
