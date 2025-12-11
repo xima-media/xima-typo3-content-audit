@@ -33,4 +33,8 @@ return [
         'provider' => SvgIconProvider::class,
         'source' => 'EXT:xima_typo3_content_audit/Resources/Public/Icons/WidgetsDailyMission.svg',
     ],
+    'content-audit-widgets-empty-pages' => [
+        'provider' => SvgIconProvider::class,
+        'source' => 'EXT:xima_typo3_content_audit/Resources/Public/Icons/WidgetsEmptyPages.svg',
+    ],
 ];

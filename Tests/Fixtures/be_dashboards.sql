@@ -4,13 +4,15 @@ VALUES
     ('content-audit-demo-admin',
     'Content Audit',
     '{
+        "contentAuditDailyMission": {"identifier": "contentAuditDailyMission"},
         "contentAuditStalePages": {"identifier": "contentAuditStalePages"},
         "contentAuditFreshPages": {"identifier": "contentAuditFreshPages"},
         "contentAuditHiddenPages": {"identifier": "contentAuditHiddenPages"},
         "contentAuditHiddenContent": {"identifier": "contentAuditHiddenContent"},
+        "contentAuditEmptyPages": {"identifier": "contentAuditEmptyPages"},
         "contentAuditMissingImageFields": {"identifier": "contentAuditMissingImageFields"},
-        "contentAuditBrokenLinks": {"identifier": "contentAuditBrokenLinks"},
-        "contentAuditDailyMission": {"identifier": "contentAuditDailyMission"}
+        "contentAuditBrokenLinks": {"identifier": "contentAuditBrokenLinks"}
+
     }',
     UNIX_TIMESTAMP(),
     UNIX_TIMESTAMP(),
@@ -18,13 +20,14 @@ VALUES
     ('content-audit-demo-editor',
     'Content Audit',
     '{
+        "contentAuditDailyMission": {"identifier": "contentAuditDailyMission"},
         "contentAuditStalePages": {"identifier": "contentAuditStalePages"},
         "contentAuditFreshPages": {"identifier": "contentAuditFreshPages"},
         "contentAuditHiddenPages": {"identifier": "contentAuditHiddenPages"},
         "contentAuditHiddenContent": {"identifier": "contentAuditHiddenContent"},
+        "contentAuditEmptyPages": {"identifier": "contentAuditEmptyPages"},
         "contentAuditMissingImageFields": {"identifier": "contentAuditMissingImageFields"},
-        "contentAuditBrokenLinks": {"identifier": "contentAuditBrokenLinks"},
-        "contentAuditDailyMission": {"identifier": "contentAuditDailyMission"}
+        "contentAuditBrokenLinks": {"identifier": "contentAuditBrokenLinks"}
     }',
     UNIX_TIMESTAMP(),
     UNIX_TIMESTAMP(),

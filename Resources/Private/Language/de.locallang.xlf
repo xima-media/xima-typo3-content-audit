@@ -290,6 +290,39 @@
                 <source />
                 <target>Schönen Sonntag! Wir sehen uns am Montag mit neuen Aufgaben wieder.</target>
             </trans-unit>
+
+            <trans-unit id="widgets.empty_pages.title">
+                <source />
+                <target>Leere Seiten</target>
+            </trans-unit>
+            <trans-unit id="widgets.empty_pages.description">
+                <source />
+                <target>Zeigt eine Liste von Seiten die keine sichtbaren Inhaltselemente haben.</target>
+            </trans-unit>
+            <trans-unit id="widgets.empty_pages.results">
+                <source />
+                <target>Seiten die keine sichtbaren Inhaltselemente haben.</target>
+            </trans-unit>
+            <trans-unit id="widgets.empty_pages.count">
+                <source />
+                <target>%1$d leere Seiten von insgesamt %2$d Seiten.</target>
+            </trans-unit>
+            <trans-unit id="widgets.empty_pages.empty">
+                <source />
+                <target>Yay! Keine leeren Seiten erkannt.</target>
+            </trans-unit>
+            <trans-unit id="widgets.empty_pages.page">
+                <source />
+                <target>Seite</target>
+            </trans-unit>
+            <trans-unit id="widgets.empty_pages.path">
+                <source />
+                <target>Pfad</target>
+            </trans-unit>
+            <trans-unit id="widgets.empty_pages.updated">
+                <source />
+                <target>Zuletzt aktualisiert</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

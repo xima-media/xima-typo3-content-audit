@@ -35,6 +35,16 @@ VALUES
     (101, 3, 'text', 'Not so long hidden content 2', '<p>This content is hidden but not for so long.</p>', 0, 0, 0, 1, UNIX_TIMESTAMP(DATE_SUB(NOW(), INTERVAL 450 DAY))),
     (102, 3, 'text', 'Very long hidden content 3', '<p>This content is also hidden for a very long time.</p>', 0, 0, 0, 1, UNIX_TIMESTAMP(DATE_SUB(NOW(), INTERVAL 450 DAY)));
 
+-- Add content to test (really) empty pages
+-- Add visible content to contact page (7), hidden content to imprint (9),
+-- deleted content to research topics (11), and leave research groups (13) empty
+INSERT INTO tt_content
+    (uid, pid, CType, header, bodytext, colPos, sys_language_uid, l18n_parent, hidden, deleted, tstamp)
+VALUES
+    (110, 7, 'text', 'Get in touch', '<p>Contact us via email or phone.</p>', 0, 0, 0, 0, 0, UNIX_TIMESTAMP()),
+    (111, 9, 'text', 'Hidden imprint content', '<p>This content is hidden.</p>', 0, 0, 0, 1, 0, UNIX_TIMESTAMP()),
+    (112, 11, 'text', 'Deleted content', '<p>This content is deleted.</p>', 0, 0, 0, 0, 1, UNIX_TIMESTAMP());
+
 -- Add sys_file entries for testing missing image fields
 INSERT INTO `sys_file`
     (`uid`, `pid`, `tstamp`, `last_indexed`, `missing`, `storage`, `type`, `metadata`, `identifier`, `identifier_hash`, `extension`, `mime_type`, `name`, `sha1`, `size`, `creation_date`, `modification_date`)

@@ -20,6 +20,9 @@ parameters:
     refreshAvailable: true
   xima_typo3_content_audit.widgets.daily_mission.options:
     refreshAvailable: true
+  xima_typo3_content_audit.widgets.empty_pages.options:
+    refreshAvailable: true
+    excludePageUids: []
 
 services:
   _defaults:
@@ -133,4 +136,19 @@ services:
         description: 'LLL:EXT:xima_typo3_content_audit/Resources/Private/Language/locallang.xlf:widgets.daily_mission.description'
         iconIdentifier: 'content-audit-widgets-daily-mission'
         height: 'small'
+        width: 'medium'
+
+  Xima\XimaTypo3ContentAudit\Widgets\EmptyPages:
+    class: 'Xima\XimaTypo3ContentAudit\Widgets\EmptyPages'
+    arguments:
+      $dataProvider: '@Xima\XimaTypo3ContentAudit\Widgets\Provider\EmptyPagesDataProvider'
+      $options: '%xima_typo3_content_audit.widgets.empty_pages.options%'
+    tags:
+      - name: dashboard.widget
+        identifier: 'contentAuditEmptyPages'
+        groupNames: 'content'
+        title: 'LLL:EXT:xima_typo3_content_audit/Resources/Private/Language/locallang.xlf:widgets.empty_pages.title'
+        description: 'LLL:EXT:xima_typo3_content_audit/Resources/Private/Language/locallang.xlf:widgets.empty_pages.description'
+        iconIdentifier: 'content-audit-widgets-empty-pages'
+        height: 'medium'
         width: 'medium'
