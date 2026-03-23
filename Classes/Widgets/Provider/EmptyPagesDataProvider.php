@@ -70,7 +70,7 @@ class EmptyPagesDataProvider implements ListDataProviderInterface
                 'pages',
                 'tt_content',
                 'content',
-                $queryBuilder->expr()->and(
+                (string)$queryBuilder->expr()->and(
                     $queryBuilder->expr()->eq('content.pid', $queryBuilder->quoteIdentifier('pages.uid')),
                     $queryBuilder->expr()->eq('content.hidden', $queryBuilder->createNamedParameter(0, Connection::PARAM_INT)),
                     $queryBuilder->expr()->eq('content.deleted', $queryBuilder->createNamedParameter(0, Connection::PARAM_INT))

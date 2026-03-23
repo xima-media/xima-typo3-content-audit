@@ -9,6 +9,12 @@
 			"email": "dan.kleine@xima.de",
 			"homepage": "https://pixelbrackets.de",
 			"role": "Developer"
+		},
+		{
+			"name": "Dan Kleine",
+			"email": "dan.kleine@xima.de",
+			"homepage": "https://pixelbrackets.de",
+			"role": "Product Owner"
 		}
 	],
 	"require": {
