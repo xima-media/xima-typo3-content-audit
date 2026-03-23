@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.5.1] - 2026-03-23
+
+- Bugfix: Catch empty page exception
+
 ## [1.5.0] - 2025-12-12
 
 - Feature: Add widget for empty pages
