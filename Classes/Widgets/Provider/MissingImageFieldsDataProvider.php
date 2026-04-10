@@ -86,7 +86,7 @@ class MissingImageFieldsDataProvider implements ListDataProviderInterface
         $missingCountQueryBuilder = clone $queryBuilder;
         $missingCountQueryBuilder->count('meta.uid');
         $missingCountQueryBuilder->setMaxResults(PHP_INT_MAX); // Reset the cloned limit
-        // @todo When dropping support for TYPO3 11 we may use ->resetOrderBy() instead
+        // @todo When dropping support for TYPO3 12 we may use ->resetOrderBy() instead
         $missingFieldCount = (int)$missingCountQueryBuilder->executeQuery()->fetchOne();
 
         // Count total image metadata records

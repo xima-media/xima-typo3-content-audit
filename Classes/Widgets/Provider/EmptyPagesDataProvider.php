@@ -92,8 +92,8 @@ class EmptyPagesDataProvider implements ListDataProviderInterface
         }
 
         $emptyCountQueryBuilder = clone $queryBuilder;
-        $emptyCountQueryBuilder->setMaxResults(PHP_INT_MAX);  // Reset the cloned limit
-        // @todo When dropping support for TYPO3 11 we may use ->resetOrderBy() instead
+        $emptyCountQueryBuilder->setMaxResults(PHP_INT_MAX); // Reset the cloned limit
+        // @todo When dropping support for TYPO3 12 we may use ->resetOrderBy() instead
         // We can't use ->count() here because it would remove the content_count column needed by HAVING
         // Execute the grouped query and count the number of rows instead
         $emptyCount = count($emptyCountQueryBuilder->executeQuery()->fetchAllAssociative());
