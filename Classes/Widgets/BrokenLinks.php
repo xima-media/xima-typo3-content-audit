@@ -5,41 +5,48 @@ declare(strict_types=1);
 namespace Xima\XimaTypo3ContentAudit\Widgets;
 
 use Psr\Http\Message\ServerRequestInterface;
+use TYPO3\CMS\Backend\View\BackendViewFactory;
 use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Core\Package\PackageManager;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Dashboard\Widgets\ButtonProviderInterface;
 use TYPO3\CMS\Dashboard\Widgets\ListDataProviderInterface;
+use TYPO3\CMS\Dashboard\Widgets\RequestAwareWidgetInterface;
 use TYPO3\CMS\Dashboard\Widgets\WidgetConfigurationInterface;
 use TYPO3\CMS\Dashboard\Widgets\WidgetInterface;
-use TYPO3\CMS\Fluid\View\StandaloneView;
 
-class BrokenLinks implements WidgetInterface
+class BrokenLinks implements WidgetInterface, RequestAwareWidgetInterface
 {
-    protected ServerRequestInterface $request;
+    private ServerRequestInterface $request;
 
     public function __construct(
         protected readonly WidgetConfigurationInterface $configuration,
         protected readonly ListDataProviderInterface $dataProvider,
+        protected readonly BackendViewFactory $backendViewFactory,
         protected readonly ?ButtonProviderInterface $buttonProvider = null,
         protected array $options = []
     ) {
     }
 
+    public function setRequest(ServerRequestInterface $request): void
+    {
+        $this->request = $request;
+    }
+
     public function renderWidgetContent(): string
     {
-        $template = GeneralUtility::getFileAbsFileName('EXT:xima_typo3_content_audit/Resources/Private/Templates/BrokenLinks.html');
+        // @todo Remove StandaloneView fallback once v12 support is dropped
+        if (class_exists(\TYPO3\CMS\Fluid\View\StandaloneView::class)) {
+            $view = GeneralUtility::makeInstance(\TYPO3\CMS\Fluid\View\StandaloneView::class);
+            $view->setFormat('html');
+            $view->setTemplateRootPaths(['EXT:xima_typo3_content_audit/Resources/Private/Templates/']);
+            $view->setPartialRootPaths(['EXT:xima_typo3_content_audit/Resources/Private/Partials/']);
+        } else {
+            $view = $this->backendViewFactory->create($this->request, ['xima/xima-typo3-content-audit']);
+        }
 
-        // preparing view
-        $view = GeneralUtility::makeInstance(StandaloneView::class);
-        $view->setFormat('html');
-        $view->setTemplateRootPaths(['EXT:xima_typo3_content_audit/Resources/Private/Templates/']);
-        $view->setPartialRootPaths(['EXT:xima_typo3_content_audit/Resources/Private/Partials/']);
-        $view->setTemplatePathAndFilename($template);
-
-        // Check if linkvalidator extension is installed
-        $packageManager = GeneralUtility::makeInstance(PackageManager::class);
-        $linkvalidatorIsInstalled = $packageManager->isPackageActive('linkvalidator');
+        // Check if optional linkvalidator extension is installed, otherwise we cannot show any results
+        $linkvalidatorIsInstalled = GeneralUtility::makeInstance(PackageManager::class)->isPackageActive('linkvalidator');
 
         $view->assignMultiple([
             'configuration' => $this->configuration,
@@ -49,7 +56,7 @@ class BrokenLinks implements WidgetInterface
             'version' => GeneralUtility::makeInstance(Typo3Version::class)->getMajorVersion(),
             'linkvalidatorIsInstalled' => $linkvalidatorIsInstalled,
         ]);
-        return $view->render();
+        return $view->render('BrokenLinks');
     }
 
     public function getOptions(): array

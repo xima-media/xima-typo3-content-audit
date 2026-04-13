@@ -14,10 +14,10 @@
         <f:then>
             <div class="mb-3">
                 <f:translate key="widgets.missing_image_fields.results" extensionName="XimaTypo3ContentAudit" arguments="{0: missingFieldLabel}" />
-                <f:translate key="widgets.missing_image_fields.count" extensionName="XimaTypo3ContentAudit" arguments="{missingFieldCount: missingFieldCount, totalCount: totalCount}"/>
+                <f:translate key="widgets.missing_image_fields.count" extensionName="XimaTypo3ContentAudit" arguments="{0: missingFieldCount, 1: totalCount}"/>
             </div>
             <div class="widget-table-wrapper">
-                <table class="widget-table {f:if(condition: '{version} == 13', then: 'table')} table-striped table-hover">
+                <table class="widget-table {f:if(condition: '{version} >= 13', then: 'table')} table-striped table-hover">
                     <thead>
                     <tr>
                         <th><f:translate key="widgets.missing_image_fields.image" extensionName="XimaTypo3ContentAudit"/></th>

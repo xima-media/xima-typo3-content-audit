@@ -1,7 +1,7 @@
 # TYPO3 Content Audit Dashboard Widget `xima_typo3_content_audit`
 
 [![Latest Stable Version](https://typo3-badges.dev/badge/xima_typo3_content_audit/version/shields.svg)](https://packagist.org/packages/xima/xima-typo3-content-audit)
-[![Supported TYPO3 versions](https://badgen.net/badge/TYPO3/12%20&%2013/orange)](https://extensions.typo3.org/extension/xima_typo3_content_audit)
+[![Supported TYPO3 versions](https://badgen.net/badge/TYPO3/12%20&%2013%20&%2014/orange)](https://extensions.typo3.org/extension/xima_typo3_content_audit)
 [![Total Downloads](https://typo3-badges.dev/badge/xima_typo3_content_audit/downloads/shields.svg)](https://extensions.typo3.org/extension/xima_typo3_content_audit)
 
 A widget for the TYPO3 dashboard to evaluate the relevance, accuracy and freshness of your digital content
@@ -102,6 +102,7 @@ parameters:
   Acme\AcmeSitepackage\Widgets\MissingImageFields: # change this key to avoid conflicts
     class: 'Xima\XimaTypo3ContentAudit\Widgets\MissingImageFields'
     arguments:
+      $backendViewFactory: '@TYPO3\CMS\Backend\View\BackendViewFactory'
       $dataProvider: '@Xima\XimaTypo3ContentAudit\Widgets\Provider\MissingImageFieldsDataProvider'
       $options: '%acme_sitepackage.widgets.missing_image_fields.options%' # use your own parameter here
     tags:

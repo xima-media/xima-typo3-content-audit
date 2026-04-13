@@ -37,6 +37,7 @@ services:
   Xima\XimaTypo3ContentAudit\Widgets\StalePages:
     class: 'Xima\XimaTypo3ContentAudit\Widgets\StalePages'
     arguments:
+      $backendViewFactory: '@TYPO3\CMS\Backend\View\BackendViewFactory'
       $dataProvider: '@Xima\XimaTypo3ContentAudit\Widgets\Provider\MergedPageChangeDataProvider'
       $options: '%xima_typo3_content_audit.widgets.stale_pages.options%'
     tags:
@@ -52,6 +53,7 @@ services:
   Xima\XimaTypo3ContentAudit\Widgets\FreshPages:
     class: 'Xima\XimaTypo3ContentAudit\Widgets\FreshPages'
     arguments:
+      $backendViewFactory: '@TYPO3\CMS\Backend\View\BackendViewFactory'
       $dataProvider: '@Xima\XimaTypo3ContentAudit\Widgets\Provider\MergedPageChangeDataProvider'
       $options: '%xima_typo3_content_audit.widgets.fresh_pages.options%'
     tags:
@@ -67,6 +69,7 @@ services:
   Xima\XimaTypo3ContentAudit\Widgets\HiddenPages:
     class: 'Xima\XimaTypo3ContentAudit\Widgets\HiddenPages'
     arguments:
+      $backendViewFactory: '@TYPO3\CMS\Backend\View\BackendViewFactory'
       $dataProvider: '@Xima\XimaTypo3ContentAudit\Widgets\Provider\HiddenPagesDataProvider'
       $options: '%xima_typo3_content_audit.widgets.hidden_pages.options%'
     tags:
@@ -82,6 +85,7 @@ services:
   Xima\XimaTypo3ContentAudit\Widgets\HiddenContent:
     class: 'Xima\XimaTypo3ContentAudit\Widgets\HiddenContent'
     arguments:
+      $backendViewFactory: '@TYPO3\CMS\Backend\View\BackendViewFactory'
       $dataProvider: '@Xima\XimaTypo3ContentAudit\Widgets\Provider\HiddenContentDataProvider'
       $options: '%xima_typo3_content_audit.widgets.hidden_content.options%'
     tags:
@@ -97,6 +101,7 @@ services:
   Xima\XimaTypo3ContentAudit\Widgets\MissingImageFields:
     class: 'Xima\XimaTypo3ContentAudit\Widgets\MissingImageFields'
     arguments:
+      $backendViewFactory: '@TYPO3\CMS\Backend\View\BackendViewFactory'
       $dataProvider: '@Xima\XimaTypo3ContentAudit\Widgets\Provider\MissingImageFieldsDataProvider'
       $options: '%xima_typo3_content_audit.widgets.missing_image_fields.options%'
     tags:
@@ -112,6 +117,7 @@ services:
   Xima\XimaTypo3ContentAudit\Widgets\BrokenLinks:
     class: 'Xima\XimaTypo3ContentAudit\Widgets\BrokenLinks'
     arguments:
+      $backendViewFactory: '@TYPO3\CMS\Backend\View\BackendViewFactory'
       $dataProvider: '@Xima\XimaTypo3ContentAudit\Widgets\Provider\BrokenLinksDataProvider'
       $options: '%xima_typo3_content_audit.widgets.broken_links.options%'
     tags:
@@ -127,6 +133,7 @@ services:
   Xima\XimaTypo3ContentAudit\Widgets\DailyMission:
     class: 'Xima\XimaTypo3ContentAudit\Widgets\DailyMission'
     arguments:
+      $backendViewFactory: '@TYPO3\CMS\Backend\View\BackendViewFactory'
       $dataProvider: '@Xima\XimaTypo3ContentAudit\Widgets\Provider\DailyMissionDataProvider'
       $options: '%xima_typo3_content_audit.widgets.daily_mission.options%'
     tags:
@@ -142,6 +149,7 @@ services:
   Xima\XimaTypo3ContentAudit\Widgets\EmptyPages:
     class: 'Xima\XimaTypo3ContentAudit\Widgets\EmptyPages'
     arguments:
+      $backendViewFactory: '@TYPO3\CMS\Backend\View\BackendViewFactory'
       $dataProvider: '@Xima\XimaTypo3ContentAudit\Widgets\Provider\EmptyPagesDataProvider'
       $options: '%xima_typo3_content_audit.widgets.empty_pages.options%'
     tags:
