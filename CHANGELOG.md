@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.6.0] - 2026-04-21
+
+- Feature: Drop support for TYPO3 v11, add support for TYPO3 v14
+
 ## [1.5.1] - 2026-03-23
 
 - Bugfix: Catch empty page exception
