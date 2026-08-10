@@ -14,7 +14,14 @@
         </a>
     </td>
     <td>
-        {item.pageSlug}
+        <f:if condition="{item.previewUrl}">
+            <a href="{item.previewUrl}" target="_blank" title="{f:translate(key: 'widgets.preview_title', extensionName: 'XimaTypo3ContentAudit')}">
+                {item.pageSlug}
+            </a>
+        </f:if>
+        <f:if condition="!{item.previewUrl}">
+            {item.pageSlug}
+        </f:if>
     </td>
     <td class="text-nowrap">
         <f:format.date format="d.m.Y H:i">{item.updated}</f:format.date>

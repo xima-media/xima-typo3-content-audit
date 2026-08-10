@@ -8,6 +8,7 @@ use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Dashboard\Widgets\ListDataProviderInterface;
+use Xima\XimaTypo3ContentAudit\Service\PagePreviewUrlProvider;
 
 class MergedPageChangeDataProvider implements ListDataProviderInterface
 {
@@ -22,6 +23,11 @@ class MergedPageChangeDataProvider implements ListDataProviderInterface
     protected array $excludePageUids = [];
 
     protected bool $showOldestFirst = true;
+
+    public function __construct(
+        protected readonly PagePreviewUrlProvider $previewUrlProvider, private readonly \TYPO3\CMS\Core\Database\ConnectionPool $connectionPool
+    ) {
+    }
 
     public function setShowOldestFirst(bool $oldestFirst): void
     {
@@ -41,7 +47,7 @@ class MergedPageChangeDataProvider implements ListDataProviderInterface
     */
     public function getItems(): array
     {
-        $connection = GeneralUtility::makeInstance(ConnectionPool::class)
+        $connection = $this->connectionPool
             ->getConnectionForTable('pages');
 
         $sortDirectionKeyword = $this->showOldestFirst ? 'ASC' : 'DESC';
@@ -93,21 +99,17 @@ SQL;
             ]
         )->fetchAllAssociative();
 
-        // Check if user has access to edit page record
+        // Check if user has access to edit page record, add new page badge, add frontend preview URL
+        $newThreshold = time() - self::NEW_THRESHOLD_DAYS * 86400;
         foreach ($results as $key => $page) {
             if (!$GLOBALS['BE_USER']->doesUserHaveAccess($page, 2)) { // 2 = edit page
                 unset($results[$key]);
+                continue;
             }
+            $results[$key]['isNew'] = (int)$page['created'] >= $newThreshold;
+            $results[$key]['previewUrl'] = $this->previewUrlProvider->getUrl((int)$page['uid']);
         }
-        $results = array_values($results);
 
-        // Add new page badge
-        $newThreshold = time() - self::NEW_THRESHOLD_DAYS * 86400;
-        $results = array_map(function (array $page) use ($newThreshold): array {
-            $page['isNew'] = (int)$page['created'] >= $newThreshold;
-            return $page;
-        }, $results);
-
-        return $results;
+        return array_values($results);
     }
 }

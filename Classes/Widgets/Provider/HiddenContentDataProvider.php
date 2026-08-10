@@ -9,6 +9,7 @@ use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\Restriction\HiddenRestriction;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Dashboard\Widgets\ListDataProviderInterface;
+use Xima\XimaTypo3ContentAudit\Service\PagePreviewUrlProvider;
 
 class HiddenContentDataProvider implements ListDataProviderInterface
 {
@@ -16,6 +17,11 @@ class HiddenContentDataProvider implements ListDataProviderInterface
     * @var array<int>
     */
     protected array $excludePageUids = [];
+
+    public function __construct(
+        protected readonly PagePreviewUrlProvider $previewUrlProvider, private readonly \TYPO3\CMS\Core\Database\ConnectionPool $connectionPool
+    ) {
+    }
 
     /**
     * @param array<int> $excludePageUids
@@ -30,7 +36,7 @@ class HiddenContentDataProvider implements ListDataProviderInterface
     */
     public function getItems(): array
     {
-        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tt_content');
+        $queryBuilder = $this->connectionPool->getQueryBuilderForTable('tt_content');
 
         // Remove TYPO3 default "hidden" restriction to also find hidden content elements
         $queryBuilder->getRestrictions()
@@ -88,7 +94,7 @@ class HiddenContentDataProvider implements ListDataProviderInterface
         // @todo When dropping support for TYPO3 12 we may use ->resetOrderBy() instead
         $hiddenCount = (int)$hiddenCountQueryBuilder->executeQuery()->fetchOne();
 
-        $totalCountQueryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tt_content');
+        $totalCountQueryBuilder = $this->connectionPool->getQueryBuilderForTable('tt_content');
         $totalCountQueryBuilder->getRestrictions()
             ->removeByType(HiddenRestriction::class);
         $totalCount = (int)$totalCountQueryBuilder
@@ -101,7 +107,7 @@ class HiddenContentDataProvider implements ListDataProviderInterface
             ->executeQuery()
             ->fetchAllAssociative();
 
-        // Check if user has access to edit the content record
+        // Check if user has access to edit the content record, add frontend preview URL
         if (!$GLOBALS['BE_USER']->check('tables_modify', 'tt_content')) {
             $results = [];
         }
@@ -117,7 +123,9 @@ class HiddenContentDataProvider implements ListDataProviderInterface
             ];
             if (!$GLOBALS['BE_USER']->doesUserHaveAccess($pageRecord, 2)) {
                 unset($results[$key]);
+                continue;
             }
+            $results[$key]['previewUrl'] = $this->previewUrlProvider->getUrl((int)$content['pageUid']);
         }
 
         return [

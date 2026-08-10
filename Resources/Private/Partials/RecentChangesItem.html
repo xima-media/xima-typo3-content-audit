@@ -7,12 +7,10 @@
 <tr>
     <td>
         <f:if condition="{item.recordType} == 'page'">
-            <f:then>
-                <core:icon identifier="apps-pagetree-page" size="small"/>
-            </f:then>
-            <f:else>
-                <core:icon identifier="content-listgroup" size="small"/>
-            </f:else>
+            <core:icon identifier="apps-pagetree-page" size="small"/>
+        </f:if>
+        <f:if condition="{item.recordType} != 'page'">
+            <core:icon identifier="content-listgroup" size="small"/>
         </f:if>
         <f:if condition="{item.isNew}">
             <span class="badge badge-success" title="{f:translate(key: 'widgets.new_title', extensionName: 'XimaTypo3ContentAudit')}">
@@ -27,7 +25,14 @@
         </a>
     </td>
     <td>
-        {item.pageSlug}
+        <f:if condition="{item.previewUrl}">
+            <a href="{item.previewUrl}" target="_blank" title="{f:translate(key: 'widgets.preview_title', extensionName: 'XimaTypo3ContentAudit')}">
+                {item.pageSlug}
+            </a>
+        </f:if>
+        <f:if condition="!{item.previewUrl}">
+            {item.pageSlug}
+        </f:if>
     </td>
     <td>
         <f:if condition="{item.editorName}" then="{item.editorName}" else="-"/>

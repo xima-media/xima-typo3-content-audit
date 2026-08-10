@@ -12,6 +12,9 @@ use TYPO3\CMS\Dashboard\Widgets\ListDataProviderInterface;
 class MissingImageFieldsDataProvider implements ListDataProviderInterface
 {
     protected string $missingField = 'alternative';
+    public function __construct(private readonly \TYPO3\CMS\Core\Database\ConnectionPool $connectionPool, private readonly \TYPO3\CMS\Core\Resource\ResourceFactory $resourceFactory)
+    {
+    }
 
     /**
     * @param string $missingField
@@ -26,7 +29,7 @@ class MissingImageFieldsDataProvider implements ListDataProviderInterface
     */
     public function getItems(): array
     {
-        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('sys_file_metadata');
+        $queryBuilder = $this->connectionPool->getQueryBuilderForTable('sys_file_metadata');
         $queryBuilder
             ->select(
                 'meta.uid',
@@ -65,7 +68,7 @@ class MissingImageFieldsDataProvider implements ListDataProviderInterface
 
         $results = $queryBuilder->executeQuery()->fetchAllAssociative();
 
-        $resourceFactory = GeneralUtility::makeInstance(ResourceFactory::class);
+        $resourceFactory = $this->resourceFactory;
         foreach ($results as $key => $row) {
             $fileObject = $resourceFactory->getFileObject((int)$row['file']);
             try {
@@ -90,7 +93,7 @@ class MissingImageFieldsDataProvider implements ListDataProviderInterface
         $missingFieldCount = (int)$missingCountQueryBuilder->executeQuery()->fetchOne();
 
         // Count total image metadata records
-        $totalCountQueryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)
+        $totalCountQueryBuilder = $this->connectionPool
             ->getQueryBuilderForTable('sys_file_metadata');
         $totalCount = (int)$totalCountQueryBuilder
             ->count('meta.uid')

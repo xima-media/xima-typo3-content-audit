@@ -9,6 +9,7 @@ use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\Restriction\HiddenRestriction;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Dashboard\Widgets\ListDataProviderInterface;
+use Xima\XimaTypo3ContentAudit\Service\PagePreviewUrlProvider;
 
 class HiddenPagesDataProvider implements ListDataProviderInterface
 {
@@ -16,6 +17,11 @@ class HiddenPagesDataProvider implements ListDataProviderInterface
     * @var array<int>
     */
     protected array $excludePageUids = [];
+
+    public function __construct(
+        protected readonly PagePreviewUrlProvider $previewUrlProvider, private readonly \TYPO3\CMS\Core\Database\ConnectionPool $connectionPool
+    ) {
+    }
 
     /**
     * @param array<int> $excludePageUids
@@ -30,7 +36,7 @@ class HiddenPagesDataProvider implements ListDataProviderInterface
     */
     public function getItems(): array
     {
-        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('pages');
+        $queryBuilder = $this->connectionPool->getQueryBuilderForTable('pages');
 
         // Remove TYPO3 default "hidden" restriction to also find hidden pages
         $queryBuilder->getRestrictions()
@@ -85,7 +91,7 @@ class HiddenPagesDataProvider implements ListDataProviderInterface
         // @todo When dropping support for TYPO3 12 we may use ->resetOrderBy() instead
         $hiddenCount = (int)$hiddenCountQueryBuilder->executeQuery()->fetchOne();
 
-        $totalCountQueryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('pages');
+        $totalCountQueryBuilder = $this->connectionPool->getQueryBuilderForTable('pages');
         $totalCountQueryBuilder->getRestrictions()
             ->removeByType(HiddenRestriction::class);
         $totalCount = (int)$totalCountQueryBuilder
@@ -104,11 +110,13 @@ class HiddenPagesDataProvider implements ListDataProviderInterface
             ->executeQuery()
             ->fetchAllAssociative();
 
-        // Check if user has access to edit page record
+        // Check if user has access to edit page record, add frontend preview URL
         foreach ($results as $key => $page) {
             if (!$GLOBALS['BE_USER']->doesUserHaveAccess($page, 2)) { // 2 = edit page
                 unset($results[$key]);
+                continue;
             }
+            $results[$key]['previewUrl'] = $this->previewUrlProvider->getUrl((int)$page['uid']);
         }
 
         return [

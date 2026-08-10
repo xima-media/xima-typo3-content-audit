@@ -8,6 +8,7 @@ use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Dashboard\Widgets\ListDataProviderInterface;
+use Xima\XimaTypo3ContentAudit\Service\PagePreviewUrlProvider;
 
 class RecentChangesDataProvider implements ListDataProviderInterface
 {
@@ -20,6 +21,11 @@ class RecentChangesDataProvider implements ListDataProviderInterface
     * @var array<int>
     */
     protected array $excludePageUids = [];
+
+    public function __construct(
+        protected readonly PagePreviewUrlProvider $previewUrlProvider, private readonly \TYPO3\CMS\Core\Database\ConnectionPool $connectionPool
+    ) {
+    }
 
     /**
     * @param array<int> $excludePageUids
@@ -34,7 +40,7 @@ class RecentChangesDataProvider implements ListDataProviderInterface
     */
     public function getItems(): array
     {
-        $connection = GeneralUtility::makeInstance(ConnectionPool::class)
+        $connection = $this->connectionPool
             ->getConnectionForTable('pages');
 
         $excludePageUids = empty($this->excludePageUids) ? [0] : $this->excludePageUids; // »0« workaround for valid sql
@@ -107,23 +113,21 @@ SQL;
         )->fetchAllAssociative();
 
         // Check if user has access to edit the page (also covers content elements on that page)
+        // Add editor name of last action, add new page badge, add frontend preview URL
+        $newThreshold = time() - self::NEW_THRESHOLD_DAYS * 86400;
         foreach ($results as $key => $record) {
             if (!$GLOBALS['BE_USER']->doesUserHaveAccess($record, 2)) { // 2 = edit page
                 unset($results[$key]);
+                continue;
             }
-        }
-        $results = array_values($results);
-
-        // Add editor name of last action, add new page badge
-        $newThreshold = time() - self::NEW_THRESHOLD_DAYS * 86400;
-        $results = array_map(function (array $record) use ($newThreshold): array {
             $record['action'] = ((int)$record['created'] === (int)$record['changed']) ? 'created' : 'updated';
             $record['editorName'] = $this->resolveEditorName($record);
             $record['isNew'] = (int)$record['created'] >= $newThreshold;
-            return $record;
-        }, $results);
+            $record['previewUrl'] = $this->previewUrlProvider->getUrl((int)$record['pageUid']);
+            $results[$key] = $record;
+        }
 
-        return $results;
+        return array_values($results);
     }
 
     /**
@@ -136,7 +140,7 @@ SQL;
         $table = $record['recordType'] === 'page' ? 'pages' : 'tt_content';
         $sortDirection = $record['action'] === 'created' ? 'ASC' : 'DESC';
 
-        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('sys_log');
+        $queryBuilder = $this->connectionPool->getQueryBuilderForTable('sys_log');
         $editorId = $queryBuilder
             ->select('userid')
             ->from('sys_log')
@@ -158,7 +162,7 @@ SQL;
             return null;
         }
 
-        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('be_users');
+        $queryBuilder = $this->connectionPool->getQueryBuilderForTable('be_users');
         $username = $queryBuilder
             ->select('username')
             ->from('be_users')

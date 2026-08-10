@@ -48,7 +48,14 @@
                                 </a>
                             </td>
                             <td>
-                                {record.pageSlug}
+                                <f:if condition="{record.previewUrl}">
+                                    <a href="{record.previewUrl}" target="_blank" title="{f:translate(key: 'widgets.preview_title', extensionName: 'XimaTypo3ContentAudit')}">
+                                        {record.pageSlug}
+                                    </a>
+                                </f:if>
+                                <f:if condition="!{record.previewUrl}">
+                                    {record.pageSlug}
+                                </f:if>
                             </td>
                             <td class="text-center">
                                 <span class="badge badge-danger">{record.broken_link_count}</span>
