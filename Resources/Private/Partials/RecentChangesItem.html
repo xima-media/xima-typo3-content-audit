@@ -1,0 +1,35 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+    xmlns:backend="http://typo3.org/ns/TYPO3/CMS/Backend/ViewHelpers"
+    xmlns:core="http://typo3.org/ns/TYPO3/CMS/Core/ViewHelpers"
+    xmlns:be="http://typo3.org/ns/TYPO3/CMS/Backend/ViewHelpers"
+    data-namespace-typo3-fluid="true">
+
+<tr>
+    <td>
+        <f:if condition="{item.recordType} == 'page'">
+            <f:then>
+                <core:icon identifier="apps-pagetree-page" size="small"/>
+            </f:then>
+            <f:else>
+                <core:icon identifier="content-listgroup" size="small"/>
+            </f:else>
+        </f:if>
+        <a href="{be:moduleLink(route: 'web_layout', arguments: '{id: item.pageUid}')}"
+            target="_blank"
+            title="ID {item.uid}">
+            <f:if condition="{item.recordTitle}" then="{item.recordTitle}"
+                else="{f:translate(key: 'widgets.recent_changes.empty_title', extensionName: 'XimaTypo3ContentAudit')}"/>
+        </a>
+    </td>
+    <td>
+        {item.pageSlug}
+    </td>
+    <td>
+        <f:if condition="{item.editorName}" then="{item.editorName}" else="-"/>
+    </td>
+    <td class="text-nowrap">
+        <f:format.date format="d.m.Y H:i">{item.changed}</f:format.date>
+    </td>
+</tr>
+
+</html>

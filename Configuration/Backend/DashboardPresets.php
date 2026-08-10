@@ -17,6 +17,7 @@ return [
             'contentAuditEmptyPages',
             'contentAuditMissingImageFields',
             'contentAuditBrokenLinks',
+            'contentAuditRecentChanges',
         ],
         'showInWizard' => true,
     ],

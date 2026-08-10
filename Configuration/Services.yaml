@@ -24,6 +24,9 @@ parameters:
     refreshAvailable: true
     excludePageUids: []
     allowedPageTypes: [1]
+  xima_typo3_content_audit.widgets.recent_changes.options:
+    refreshAvailable: true
+    excludePageUids: []
 
 services:
   _defaults:
@@ -160,4 +163,20 @@ services:
         description: 'LLL:EXT:xima_typo3_content_audit/Resources/Private/Language/locallang.xlf:widgets.empty_pages.description'
         iconIdentifier: 'content-audit-widgets-empty-pages'
         height: 'medium'
+        width: 'medium'
+
+  Xima\XimaTypo3ContentAudit\Widgets\RecentChanges:
+    class: 'Xima\XimaTypo3ContentAudit\Widgets\RecentChanges'
+    arguments:
+      $backendViewFactory: '@TYPO3\CMS\Backend\View\BackendViewFactory'
+      $dataProvider: '@Xima\XimaTypo3ContentAudit\Widgets\Provider\RecentChangesDataProvider'
+      $options: '%xima_typo3_content_audit.widgets.recent_changes.options%'
+    tags:
+      - name: dashboard.widget
+        identifier: 'contentAuditRecentChanges'
+        groupNames: 'content'
+        title: 'LLL:EXT:xima_typo3_content_audit/Resources/Private/Language/locallang.xlf:widgets.recent_changes.title'
+        description: 'LLL:EXT:xima_typo3_content_audit/Resources/Private/Language/locallang.xlf:widgets.recent_changes.description'
+        iconIdentifier: 'content-audit-widgets-recent-changes'
+        height: 'large'
         width: 'medium'

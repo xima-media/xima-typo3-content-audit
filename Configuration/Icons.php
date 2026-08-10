@@ -37,4 +37,8 @@ return [
         'provider' => SvgIconProvider::class,
         'source' => 'EXT:xima_typo3_content_audit/Resources/Public/Icons/WidgetsEmptyPages.svg',
     ],
+    'content-audit-widgets-recent-changes' => [
+        'provider' => SvgIconProvider::class,
+        'source' => 'EXT:xima_typo3_content_audit/Resources/Public/Icons/WidgetsRecentChanges.svg',
+    ],
 ];

@@ -102,3 +102,26 @@ VALUES
     -- Broken external links on page 202
     (5, 203, 202, 0, 'Content with broken external links', 'bodytext', 'tt_content', 'text', 'broken external site', 'https://example-broken-site-12345.com', '{"valid":false,"errorParams":{"errorType":"libcurlErrno","exception":"cURL error 6: Could not resolve host: example-broken-site-12345.com","errno":6,"message":"Couldn\'t resolve host."}}', UNIX_TIMESTAMP(DATE_SUB(NOW(), INTERVAL 1 DAY)), 'external', 0),
     (6, 203, 202, 0, 'Content with broken external links', 'bodytext', 'tt_content', 'text', 'another broken site', 'https://another-invalid-domain-99999.org', '{"valid":false,"errorParams":{"errorType":"libcurlErrno","exception":"cURL error 6: Could not resolve host: another-invalid-domain-99999.org","errno":6,"message":"Couldn\'t resolve host."}}', UNIX_TIMESTAMP(DATE_SUB(NOW(), INTERVAL 1 DAY)), 'external', 0);
+
+-- Pages and content for recent changes tests
+INSERT INTO `pages`
+    (`uid`, `pid`, `title`, `slug`, `sys_language_uid`, `l10n_parent`, `l10n_source`, `perms_userid`,
+    `perms_groupid`, `perms_user`, `perms_group`, `perms_everybody`, `doktype`, `is_siteroot`, `module`, `crdate`, `tstamp`)
+VALUES
+    (300, 1, 'Recently created page', '/recently-created-page', 0, 0, 0, 1, 1, 31, 31, 1, 1, 0, '', UNIX_TIMESTAMP(), UNIX_TIMESTAMP()),
+    (301, 1, 'Recently updated page', '/recently-updated-page', 0, 0, 0, 1, 1, 31, 31, 1, 1, 0, '', UNIX_TIMESTAMP(DATE_SUB(NOW(), INTERVAL 10 DAY)), UNIX_TIMESTAMP());
+
+INSERT INTO tt_content
+    (uid, pid, CType, header, bodytext, colPos, sys_language_uid, l18n_parent, hidden, crdate, tstamp)
+VALUES
+    (300, 1, 'text', 'Recently created content element', '<p>This content element was just created.</p>', 0, 0, 0, 0, UNIX_TIMESTAMP(), UNIX_TIMESTAMP()),
+    (301, 1, 'text', 'Recently updated content element', '<p>This content element was edited recently.</p>', 0, 0, 0, 0, UNIX_TIMESTAMP(DATE_SUB(NOW(), INTERVAL 5 DAY)), UNIX_TIMESTAMP());
+
+-- Log the creation and edit in sys_log (pages/tt_content no longer track this themselves)
+INSERT INTO `sys_log`
+    (`uid`, `tstamp`, `userid`, `action`, `recuid`, `tablename`, `recpid`, `channel`)
+VALUES
+    (300, UNIX_TIMESTAMP(), 3, 1, 300, 'pages', 1, 'content'),
+    (301, UNIX_TIMESTAMP(), 3, 2, 301, 'pages', 1, 'content'),
+    (302, UNIX_TIMESTAMP(), 3, 1, 300, 'tt_content', 1, 'content'),
+    (303, UNIX_TIMESTAMP(), 3, 2, 301, 'tt_content', 1, 'content');

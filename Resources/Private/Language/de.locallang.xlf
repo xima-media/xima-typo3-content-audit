@@ -323,6 +323,43 @@
                 <source />
                 <target>Zuletzt aktualisiert</target>
             </trans-unit>
+
+            <trans-unit id="widgets.recent_changes.title">
+                <source />
+                <target>Aktuelle Änderungen</target>
+            </trans-unit>
+            <trans-unit id="widgets.recent_changes.description">
+                <source />
+                <target>Zeigt eine Liste von Seiten und Inhaltselementen die zuletzt erstellt oder aktualisiert wurden.</target>
+            </trans-unit>
+            <trans-unit id="widgets.recent_changes.results">
+                <source />
+                <target>Die zuletzt erstellten oder aktualisierten Seiten und Inhaltselemente.</target>
+            </trans-unit>
+            <trans-unit id="widgets.recent_changes.empty">
+                <source />
+                <target>Keine aktuellen Inhaltsänderungen erkannt.</target>
+            </trans-unit>
+            <trans-unit id="widgets.recent_changes.content">
+                <source />
+                <target>Inhalt</target>
+            </trans-unit>
+            <trans-unit id="widgets.recent_changes.path">
+                <source />
+                <target>Pfad</target>
+            </trans-unit>
+            <trans-unit id="widgets.recent_changes.editor">
+                <source />
+                <target>Bearbeitet von</target>
+            </trans-unit>
+            <trans-unit id="widgets.recent_changes.updated">
+                <source />
+                <target>Zuletzt aktualisiert</target>
+            </trans-unit>
+            <trans-unit id="widgets.recent_changes.empty_title">
+                <source />
+                <target>Kein Titel</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
