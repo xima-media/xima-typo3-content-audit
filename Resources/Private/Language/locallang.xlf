@@ -19,8 +19,11 @@
             <trans-unit id="widgets.new_title">
                 <source>Created within the last 7 days</source>
             </trans-unit>
-            <trans-unit id="widgets.preview_title">
+            <trans-unit id="widgets.frontend_link_title">
                 <source>Open page in frontend</source>
+            </trans-unit>
+            <trans-unit id="widgets.backend_link_title">
+                <source>Open page in backend</source>
             </trans-unit>
 
             <trans-unit id="widgets.stale_pages.title">

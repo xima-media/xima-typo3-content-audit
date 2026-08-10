@@ -24,9 +24,13 @@
                 <source />
                 <target>In den letzten 7 Tagen erstellt</target>
             </trans-unit>
-            <trans-unit id="widgets.preview_title">
+            <trans-unit id="widgets.frontend_link_title">
                 <source />
                 <target>Seite im Frontend oeffnen</target>
+            </trans-unit>
+            <trans-unit id="widgets.backend_link_title">
+                <source />
+                <target>Seite im Backend oeffnen</target>
             </trans-unit>
 
             <trans-unit id="widgets.stale_pages.title">

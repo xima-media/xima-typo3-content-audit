@@ -40,16 +40,18 @@
                     <f:for each="{records}" as="record">
                         <tr>
                             <td>
-                                <core:icon identifier="apps-pagetree-page" size="small" />
+                                <span title="ID {record.uid}">
+                                    <core:icon identifier="apps-pagetree-page" size="small" />
+                                </span>
                                 <a href="{be:moduleLink(route: 'web_layout', arguments: '{id: record.uid}')}"
                                     target="_blank"
-                                    title="ID {record.uid}">
+                                    title="{f:translate(key: 'widgets.backend_link_title', extensionName: 'XimaTypo3ContentAudit')}">
                                     {record.pageTitle}
                                 </a>
                             </td>
                             <td>
                                 <f:if condition="{record.previewUrl}">
-                                    <a href="{record.previewUrl}" target="_blank" title="{f:translate(key: 'widgets.preview_title', extensionName: 'XimaTypo3ContentAudit')}">
+                                    <a href="{record.previewUrl}" target="_blank" title="{f:translate(key: 'widgets.frontend_link_title', extensionName: 'XimaTypo3ContentAudit')}">
                                         {record.pageSlug}
                                     </a>
                                 </f:if>

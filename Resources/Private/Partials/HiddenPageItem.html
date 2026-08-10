@@ -6,16 +6,18 @@
 
 <tr>
     <td>
-        <core:icon identifier="apps-pagetree-page" overlay="overlay-hidden" size="small" />
+        <span title="ID {item.uid}">
+            <core:icon identifier="apps-pagetree-page" overlay="overlay-hidden" size="small" />
+        </span>
         <a href="{be:moduleLink(route: 'web_layout', arguments: '{id: item.uid}')}"
             target="_blank"
-            title="ID {item.uid}">
+            title="{f:translate(key: 'widgets.backend_link_title', extensionName: 'XimaTypo3ContentAudit')}">
             {item.pageTitle}
         </a>
     </td>
     <td>
         <f:if condition="{item.previewUrl}">
-            <a href="{item.previewUrl}" target="_blank" title="{f:translate(key: 'widgets.preview_title', extensionName: 'XimaTypo3ContentAudit')}">
+            <a href="{item.previewUrl}" target="_blank" title="{f:translate(key: 'widgets.frontend_link_title', extensionName: 'XimaTypo3ContentAudit')}">
                 {item.pageSlug}
             </a>
         </f:if>

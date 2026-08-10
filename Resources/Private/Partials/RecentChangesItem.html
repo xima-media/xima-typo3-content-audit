@@ -6,12 +6,14 @@
 
 <tr>
     <td>
-        <f:if condition="{item.recordType} == 'page'">
-            <core:icon identifier="apps-pagetree-page" size="small"/>
-        </f:if>
-        <f:if condition="{item.recordType} != 'page'">
-            <core:icon identifier="content-listgroup" size="small"/>
-        </f:if>
+        <span title="ID {item.uid}">
+            <f:if condition="{item.recordType} == 'page'">
+                <core:icon identifier="apps-pagetree-page" size="small"/>
+            </f:if>
+            <f:if condition="{item.recordType} != 'page'">
+                <core:icon identifier="content-listgroup" size="small"/>
+            </f:if>
+        </span>
         <f:if condition="{item.isNew}">
             <span class="badge badge-success" title="{f:translate(key: 'widgets.new_title', extensionName: 'XimaTypo3ContentAudit')}">
                 <f:translate key="widgets.new" extensionName="XimaTypo3ContentAudit"/>
@@ -19,14 +21,14 @@
         </f:if>
         <a href="{be:moduleLink(route: 'web_layout', arguments: '{id: item.pageUid}')}"
             target="_blank"
-            title="ID {item.uid}">
+            title="{f:translate(key: 'widgets.backend_link_title', extensionName: 'XimaTypo3ContentAudit')}">
             <f:if condition="{item.recordTitle}" then="{item.recordTitle}"
                 else="{f:translate(key: 'widgets.recent_changes.empty_title', extensionName: 'XimaTypo3ContentAudit')}"/>
         </a>
     </td>
     <td>
         <f:if condition="{item.previewUrl}">
-            <a href="{item.previewUrl}" target="_blank" title="{f:translate(key: 'widgets.preview_title', extensionName: 'XimaTypo3ContentAudit')}">
+            <a href="{item.previewUrl}" target="_blank" title="{f:translate(key: 'widgets.frontend_link_title', extensionName: 'XimaTypo3ContentAudit')}">
                 {item.pageSlug}
             </a>
         </f:if>
