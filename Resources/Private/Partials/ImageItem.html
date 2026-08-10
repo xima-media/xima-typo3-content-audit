@@ -7,17 +7,24 @@
 <tr>
     <td>
         <core:iconForResource resource="{item.file}"/>
-        <a href="{be:moduleLink(route: 'record_edit', query: 'edit[sys_file_metadata][{item.uid}]=edit')}"
-            target="_blank"
-            title="ID {item.uid}">
-            {item.file.name}
-        </a>
+        <f:if condition="{item.file.missing}">
+            <span title="{f:translate(key: 'widgets.missing_image_fields.missing_file', extensionName: 'XimaTypo3ContentAudit')}">
+                {item.file.name}
+            </span>
+        </f:if>
+        <f:if condition="!{item.file.missing}">
+            <a href="{be:moduleLink(route: 'record_edit', query: 'edit[sys_file_metadata][{item.uid}]=edit')}"
+                target="_blank"
+                title="ID {item.uid}">
+                {item.file.name}
+            </a>
+        </f:if>
     </td>
     <td>
         <f:replace value="{item.file.identifier}" search="{item.file.name}" replace=""/>
     </td>
     <td class="text-nowrap">
-        <f:if condition="{item.file.type} == 2">
+        <f:if condition="!{item.file.missing} && {item.file.type} == 2">
             <f:image image="{item.file}" width="100c" height="50c"/>
         </f:if>
     </td>

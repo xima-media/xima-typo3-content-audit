@@ -165,6 +165,9 @@
             <trans-unit id="widgets.missing_image_fields.preview">
                 <source>Preview</source>
             </trans-unit>
+            <trans-unit id="widgets.missing_image_fields.missing_file">
+                <source>File is missing on disk and cannot be edited.</source>
+            </trans-unit>
 
             <trans-unit id="widgets.broken_links.title">
                 <source>Broken Links</source>
