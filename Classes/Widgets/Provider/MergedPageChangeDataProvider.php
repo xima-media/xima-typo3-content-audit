@@ -12,6 +12,11 @@ use TYPO3\CMS\Dashboard\Widgets\ListDataProviderInterface;
 class MergedPageChangeDataProvider implements ListDataProviderInterface
 {
     /**
+    * Pages created within this many days are marked as »New«
+    */
+    protected const NEW_THRESHOLD_DAYS = 7;
+
+    /**
     * @var array<int>
     */
     protected array $excludePageUids = [];
@@ -94,6 +99,14 @@ SQL;
                 unset($results[$key]);
             }
         }
+        $results = array_values($results);
+
+        // Add new page badge
+        $newThreshold = time() - self::NEW_THRESHOLD_DAYS * 86400;
+        $results = array_map(function (array $page) use ($newThreshold): array {
+            $page['isNew'] = (int)$page['created'] >= $newThreshold;
+            return $page;
+        }, $results);
 
         return $results;
     }

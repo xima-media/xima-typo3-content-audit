@@ -12,6 +12,11 @@ use TYPO3\CMS\Dashboard\Widgets\ListDataProviderInterface;
 class RecentChangesDataProvider implements ListDataProviderInterface
 {
     /**
+    * Records created within this many days are marked as »New«
+    */
+    protected const NEW_THRESHOLD_DAYS = 7;
+
+    /**
     * @var array<int>
     */
     protected array $excludePageUids = [];
@@ -109,10 +114,12 @@ SQL;
         }
         $results = array_values($results);
 
-        // Add editor name to action
-        $results = array_map(function (array $record): array {
+        // Add editor name of last action, add new page badge
+        $newThreshold = time() - self::NEW_THRESHOLD_DAYS * 86400;
+        $results = array_map(function (array $record) use ($newThreshold): array {
             $record['action'] = ((int)$record['created'] === (int)$record['changed']) ? 'created' : 'updated';
             $record['editorName'] = $this->resolveEditorName($record);
+            $record['isNew'] = (int)$record['created'] >= $newThreshold;
             return $record;
         }, $results);
 
