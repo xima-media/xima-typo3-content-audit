@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.7.0] - 2026-08-11
+
+- Feature: Add preview links to matching frontend pages
+- Feature: Add badge to show »new« pages
+- Feature: Add widget for recent changes
+- Bugfix: Catch exception for missing files in image widget
+
 ## [1.6.0] - 2026-04-21
 
 - Feature: Drop support for TYPO3 v11, add support for TYPO3 v14
