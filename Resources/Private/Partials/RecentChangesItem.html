@@ -19,8 +19,8 @@
                 <f:translate key="widgets.new" extensionName="XimaTypo3ContentAudit"/>
             </span>
         </f:if>
-        <a href="{be:moduleLink(route: 'web_layout', arguments: '{id: item.pageUid}')}"
-            target="_blank"
+        <f:variable name="anchor"><f:if condition="{item.recordType} != 'page'">#element-tt_content-{item.uid}</f:if></f:variable>
+        <a href="{be:moduleLink(route: 'web_layout', arguments: '{id: item.pageUid}')}{anchor}"
             title="{f:translate(key: 'widgets.backend_link_title', extensionName: 'XimaTypo3ContentAudit')}">
             <f:if condition="{item.recordTitle}" then="{item.recordTitle}"
                 else="{f:translate(key: 'widgets.recent_changes.empty_title', extensionName: 'XimaTypo3ContentAudit')}"/>

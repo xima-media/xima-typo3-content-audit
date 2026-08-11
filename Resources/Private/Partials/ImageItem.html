@@ -14,7 +14,6 @@
         </f:if>
         <f:if condition="!{item.file.missing}">
             <a href="{be:moduleLink(route: 'record_edit', query: 'edit[sys_file_metadata][{item.uid}]=edit')}"
-                target="_blank"
                 title="ID {item.uid}">
                 {item.file.name}
             </a>
