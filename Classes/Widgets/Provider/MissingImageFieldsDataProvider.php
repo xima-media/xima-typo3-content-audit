@@ -4,13 +4,12 @@ declare(strict_types=1);
 
 namespace Xima\XimaTypo3ContentAudit\Widgets\Provider;
 
-use TYPO3\CMS\Core\Database\ConnectionPool;
-use TYPO3\CMS\Core\Resource\ResourceFactory;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Dashboard\Widgets\ListDataProviderInterface;
 
 class MissingImageFieldsDataProvider implements ListDataProviderInterface
 {
+    private const DISPLAY_LIMIT = 20;
+
     protected string $missingField = 'alternative';
     public function __construct(private readonly \TYPO3\CMS\Core\Database\ConnectionPool $connectionPool, private readonly \TYPO3\CMS\Core\Resource\ResourceFactory $resourceFactory)
     {
@@ -56,8 +55,8 @@ class MissingImageFieldsDataProvider implements ListDataProviderInterface
                     $queryBuilder->createNamedParameter('image/%')
                 )
             )
-            ->setMaxResults(20)
-            ->orderBy('meta.tstamp', 'DESC');
+            ->orderBy('meta.tstamp', 'DESC')
+            ->addOrderBy('meta.uid', 'ASC');
 
         $queryBuilder->andWhere(
             $queryBuilder->expr()->or(
@@ -66,29 +65,32 @@ class MissingImageFieldsDataProvider implements ListDataProviderInterface
             )
         );
 
-        $results = $queryBuilder->executeQuery()->fetchAllAssociative();
+        $rows = $queryBuilder->executeQuery()->fetchAllAssociative();
 
-        $resourceFactory = $this->resourceFactory;
-        foreach ($results as $key => $row) {
-            $fileObject = $resourceFactory->getFileObject((int)$row['file']);
+        // Check if the current BE user can read the file
+        $results = [];
+        foreach ($rows as $row) {
+            $fileObject = $this->resourceFactory->getFileObject((int)$row['file']);
             try {
                 $fileObject->getParentFolder();
             } catch (\Throwable $th) {
                 $fileObject->setMissing(true);
             }
 
-            // Check if the current BE user can read the file
-            if ($fileObject->getStorage()->checkFileActionPermission('read', $fileObject)) {
-                $results[$key]['file'] = $fileObject;
-            } else {
-                unset($results[$key]);
+            if (!$fileObject->getStorage()->checkFileActionPermission('read', $fileObject)) {
+                continue;
+            }
+
+            $row['file'] = $fileObject;
+            $results[] = $row;
+            if (count($results) >= self::DISPLAY_LIMIT) {
+                break;
             }
         }
 
         // Count missing alt texts
         $missingCountQueryBuilder = clone $queryBuilder;
         $missingCountQueryBuilder->count('meta.uid');
-        $missingCountQueryBuilder->setMaxResults(PHP_INT_MAX); // Reset the cloned limit
         // @todo When dropping support for TYPO3 12 we may use ->resetOrderBy() instead
         $missingFieldCount = (int)$missingCountQueryBuilder->executeQuery()->fetchOne();
 

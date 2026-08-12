@@ -5,21 +5,22 @@ declare(strict_types=1);
 namespace Xima\XimaTypo3ContentAudit\Widgets\Provider;
 
 use TYPO3\CMS\Core\Database\Connection;
-use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\Restriction\HiddenRestriction;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Dashboard\Widgets\ListDataProviderInterface;
 use Xima\XimaTypo3ContentAudit\Service\PagePreviewUrlProvider;
 
 class HiddenContentDataProvider implements ListDataProviderInterface
 {
+    private const DISPLAY_LIMIT = 20;
+
     /**
     * @var array<int>
     */
     protected array $excludePageUids = [];
 
     public function __construct(
-        protected readonly PagePreviewUrlProvider $previewUrlProvider, private readonly \TYPO3\CMS\Core\Database\ConnectionPool $connectionPool
+        protected readonly PagePreviewUrlProvider $previewUrlProvider,
+        private readonly \TYPO3\CMS\Core\Database\ConnectionPool $connectionPool
     ) {
     }
 
@@ -36,8 +37,55 @@ class HiddenContentDataProvider implements ListDataProviderInterface
     */
     public function getItems(): array
     {
-        $queryBuilder = $this->connectionPool->getQueryBuilderForTable('tt_content');
+        $matchingContent = $this->fetchMatchingItems();
+        $hiddenCount = count($matchingContent);
 
+        $totalCountQueryBuilder = $this->connectionPool->getQueryBuilderForTable('tt_content');
+        $totalCountQueryBuilder->getRestrictions()
+            ->removeByType(HiddenRestriction::class);
+        $totalCount = (int)$totalCountQueryBuilder
+            ->count('uid')
+            ->from('tt_content')
+            ->executeQuery()
+            ->fetchOne();
+
+        // Check if user has access to edit the content record
+        $accessibleContent = [];
+        if ($GLOBALS['BE_USER']->check('tables_modify', 'tt_content')) {
+            foreach ($matchingContent as $content) {
+                $pageRecord = [
+                    'uid' => $content['pid'],
+                    'perms_userid' => $content['perms_userid'],
+                    'perms_groupid' => $content['perms_groupid'],
+                    'perms_user' => $content['perms_user'],
+                    'perms_group' => $content['perms_group'],
+                    'perms_everybody' => $content['perms_everybody'],
+                ];
+                if (!$GLOBALS['BE_USER']->doesUserHaveAccess($pageRecord, 2)) {
+                    continue;
+                }
+                $accessibleContent[] = $content;
+                if (count($accessibleContent) >= self::DISPLAY_LIMIT) {
+                    break;
+                }
+            }
+        }
+
+        return [
+            'hiddenCount' => $hiddenCount,
+            'totalCount' => $totalCount,
+            'results' => $this->fetchContentDetails($accessibleContent),
+        ];
+    }
+
+    /**
+    * Fetch raw content list
+    *
+    * @return list<array<string, mixed>>
+    */
+    private function fetchMatchingItems(): array
+    {
+        $queryBuilder = $this->connectionPool->getQueryBuilderForTable('tt_content');
         // Remove TYPO3 default "hidden" restriction to also find hidden content elements
         $queryBuilder->getRestrictions()
             ->removeByType(HiddenRestriction::class);
@@ -46,18 +94,13 @@ class HiddenContentDataProvider implements ListDataProviderInterface
             ->select(
                 'content.uid',
                 'content.pid',
-                'content.header as contentTitle',
-                'content.crdate as created',
                 'content.tstamp as updated',
-                'content.hidden',
-                'page.uid as pageUid',
-                'page.pid as pagePid',
                 'page.slug as pageSlug',
-                'page.perms_userid as pagePermsUserId',
-                'page.perms_groupid as pagePermsGroupId',
-                'page.perms_user as pagePermsUser',
-                'page.perms_group as pagePermsGroup',
-                'page.perms_everybody as pagePermsEverybody'
+                'page.perms_userid',
+                'page.perms_groupid',
+                'page.perms_user',
+                'page.perms_group',
+                'page.perms_everybody'
             )
             ->from('tt_content', 'content')
             ->innerJoin(
@@ -66,17 +109,15 @@ class HiddenContentDataProvider implements ListDataProviderInterface
                 'page',
                 'page.uid = content.pid'
             )
-            ->setMaxResults(20)
-            ->orderBy('content.tstamp', 'ASC');
-
-        // Only select hidden (not deleted) content not updated for x days
-        $queryBuilder->andWhere(
-            $queryBuilder->expr()->eq('content.hidden', $queryBuilder->createNamedParameter(1, Connection::PARAM_INT)),
-            $queryBuilder->expr()->lt(
-                'content.tstamp',
-                $queryBuilder->createNamedParameter(strtotime('-730 days'), Connection::PARAM_INT)
+            ->where(
+                $queryBuilder->expr()->eq('content.hidden', $queryBuilder->createNamedParameter(1, Connection::PARAM_INT)),
+                $queryBuilder->expr()->lt(
+                    'content.tstamp',
+                    $queryBuilder->createNamedParameter(strtotime('-730 days'), Connection::PARAM_INT)
+                )
             )
-        );
+            ->orderBy('updated', 'ASC')
+            ->addOrderBy('content.uid', 'ASC');
 
         // Add optional page exclusions
         if (!empty($this->excludePageUids)) {
@@ -88,50 +129,46 @@ class HiddenContentDataProvider implements ListDataProviderInterface
             );
         }
 
-        $hiddenCountQueryBuilder = clone $queryBuilder;
-        $hiddenCountQueryBuilder->count('content.uid');
-        $hiddenCountQueryBuilder->setMaxResults(PHP_INT_MAX); // Reset the cloned limit
-        // @todo When dropping support for TYPO3 12 we may use ->resetOrderBy() instead
-        $hiddenCount = (int)$hiddenCountQueryBuilder->executeQuery()->fetchOne();
+        return $queryBuilder->executeQuery()->fetchAllAssociative();
+    }
 
-        $totalCountQueryBuilder = $this->connectionPool->getQueryBuilderForTable('tt_content');
-        $totalCountQueryBuilder->getRestrictions()
+    /**
+    * Enrich already access-checked content elements with the remaining display columns
+    *
+    * @param list<array<string, mixed>> $contentElements
+    * @return list<array<string, mixed>>
+    */
+    private function fetchContentDetails(array $contentElements): array
+    {
+        if (empty($contentElements)) {
+            return [];
+        }
+
+        $contentUids = array_column($contentElements, 'uid');
+
+        $queryBuilder = $this->connectionPool->getQueryBuilderForTable('tt_content');
+        // Remove TYPO3 default "hidden" restriction - these elements are hidden by definition
+        $queryBuilder->getRestrictions()
             ->removeByType(HiddenRestriction::class);
-        $totalCount = (int)$totalCountQueryBuilder
-            ->count('uid')
-            ->from('tt_content')
-            ->executeQuery()
-            ->fetchOne();
 
-        $results = $queryBuilder
+        $rows = $queryBuilder
+            ->select('uid', 'header as contentTitle')
+            ->from('tt_content')
+            ->where(
+                $queryBuilder->expr()->in('uid', $queryBuilder->createNamedParameter($contentUids, Connection::PARAM_INT_ARRAY))
+            )
             ->executeQuery()
             ->fetchAllAssociative();
 
-        // Check if user has access to edit the content record, add frontend preview URL
-        if (!$GLOBALS['BE_USER']->check('tables_modify', 'tt_content')) {
-            $results = [];
-        }
-        foreach ($results as $key => $content) {
-            $pageRecord = [
-                'uid' => (int)$content['pageUid'],
-                'pid' => (int)$content['pagePid'],
-                'perms_userid' => (int)$content['pagePermsUserId'],
-                'perms_groupid' => (int)$content['pagePermsGroupId'],
-                'perms_user' => (int)$content['pagePermsUser'],
-                'perms_group' => (int)$content['pagePermsGroup'],
-                'perms_everybody' => (int)$content['pagePermsEverybody'],
-            ];
-            if (!$GLOBALS['BE_USER']->doesUserHaveAccess($pageRecord, 2)) {
-                unset($results[$key]);
-                continue;
-            }
-            $results[$key]['previewUrl'] = $this->previewUrlProvider->getUrl((int)$content['pageUid']);
+        $rowsByUid = array_column($rows, null, 'uid');
+
+        $results = [];
+        foreach ($contentElements as $content) {
+            $content = array_merge($content, $rowsByUid[$content['uid']] ?? []);
+            $content['previewUrl'] = $this->previewUrlProvider->getUrl((int)$content['pid']);
+            $results[] = $content;
         }
 
-        return [
-            'hiddenCount' => $hiddenCount,
-            'totalCount' => $totalCount,
-            'results' => $results,
-        ];
+        return $results;
     }
 }

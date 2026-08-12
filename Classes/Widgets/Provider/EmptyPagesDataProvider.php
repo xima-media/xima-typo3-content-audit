@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace Xima\XimaTypo3ContentAudit\Widgets\Provider;
 
 use TYPO3\CMS\Core\Database\Connection;
-use TYPO3\CMS\Core\Database\ConnectionPool;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Dashboard\Widgets\ListDataProviderInterface;
 use Xima\XimaTypo3ContentAudit\Service\PagePreviewUrlProvider;
 
@@ -16,6 +14,8 @@ class EmptyPagesDataProvider implements ListDataProviderInterface
     * Pages created within this many days are marked as »New«
     */
     protected const NEW_THRESHOLD_DAYS = 7;
+
+    private const DISPLAY_LIMIT = 20;
 
     /**
     * @var array<int>
@@ -28,7 +28,8 @@ class EmptyPagesDataProvider implements ListDataProviderInterface
     protected array $allowedPageTypes = [1];
 
     public function __construct(
-        protected readonly PagePreviewUrlProvider $previewUrlProvider, private readonly \TYPO3\CMS\Core\Database\ConnectionPool $connectionPool
+        protected readonly PagePreviewUrlProvider $previewUrlProvider,
+        private readonly \TYPO3\CMS\Core\Database\ConnectionPool $connectionPool
     ) {
     }
 
@@ -53,14 +54,53 @@ class EmptyPagesDataProvider implements ListDataProviderInterface
     */
     public function getItems(): array
     {
+        $matchingPages = $this->fetchMatchingItems();
+        $emptyCount = count($matchingPages);
+
+        $totalCountQueryBuilder = $this->connectionPool->getQueryBuilderForTable('pages');
+        $totalCount = (int)$totalCountQueryBuilder
+            ->count('uid')
+            ->from('pages')
+            ->where(
+                $totalCountQueryBuilder->expr()->in(
+                    'doktype',
+                    $totalCountQueryBuilder->createNamedParameter($this->allowedPageTypes, Connection::PARAM_INT_ARRAY)
+                )
+            )
+            ->executeQuery()
+            ->fetchOne();
+
+        // Check if user has access to edit page record
+        $accessiblePages = [];
+        foreach ($matchingPages as $page) {
+            if (!$GLOBALS['BE_USER']->doesUserHaveAccess($page, 2)) { // 2 = edit page
+                continue;
+            }
+            $accessiblePages[] = $page;
+            if (count($accessiblePages) >= self::DISPLAY_LIMIT) {
+                break;
+            }
+        }
+
+        return [
+            'emptyCount' => $emptyCount,
+            'totalCount' => $totalCount,
+            'results' => $this->fetchPageDetails($accessiblePages),
+        ];
+    }
+
+    /**
+    * Fetch raw page list
+    *
+    * @return list<array<string, mixed>>
+    */
+    private function fetchMatchingItems(): array
+    {
         $queryBuilder = $this->connectionPool->getQueryBuilderForTable('pages');
 
         $queryBuilder
             ->select(
                 'pages.uid',
-                'pages.title as pageTitle',
-                'pages.slug as pageSlug',
-                'pages.crdate as created',
                 'pages.tstamp as updated',
                 'pages.perms_userid',
                 'pages.perms_groupid',
@@ -89,8 +129,8 @@ class EmptyPagesDataProvider implements ListDataProviderInterface
             )
             ->groupBy('pages.uid')
             ->having('content_count = 0')
-            ->setMaxResults(20)
-            ->orderBy('pages.tstamp', 'DESC');
+            ->orderBy('updated', 'DESC')
+            ->addOrderBy('pages.uid', 'ASC');
 
         // Add optional page exclusions
         if (!empty($this->excludePageUids)) {
@@ -102,45 +142,44 @@ class EmptyPagesDataProvider implements ListDataProviderInterface
             );
         }
 
-        $emptyCountQueryBuilder = clone $queryBuilder;
-        $emptyCountQueryBuilder->setMaxResults(PHP_INT_MAX); // Reset the cloned limit
-        // @todo When dropping support for TYPO3 12 we may use ->resetOrderBy() instead
-        // We can't use ->count() here because it would remove the content_count column needed by HAVING
-        // Execute the grouped query and count the number of rows instead
-        $emptyCount = count($emptyCountQueryBuilder->executeQuery()->fetchAllAssociative());
+        return $queryBuilder->executeQuery()->fetchAllAssociative();
+    }
 
-        $totalCountQueryBuilder = $this->connectionPool->getQueryBuilderForTable('pages');
-        $totalCount = (int)$totalCountQueryBuilder
-            ->count('uid')
+    /**
+    * Enrich already access-checked pages with the remaining display columns
+    *
+    * @param list<array<string, mixed>> $pages
+    * @return list<array<string, mixed>>
+    */
+    private function fetchPageDetails(array $pages): array
+    {
+        if (empty($pages)) {
+            return [];
+        }
+
+        $pageUids = array_column($pages, 'uid');
+
+        $queryBuilder = $this->connectionPool->getQueryBuilderForTable('pages');
+        $rows = $queryBuilder
+            ->select('uid', 'title as pageTitle', 'slug as pageSlug', 'crdate as created')
             ->from('pages')
             ->where(
-                $totalCountQueryBuilder->expr()->in(
-                    'doktype',
-                    $totalCountQueryBuilder->createNamedParameter($this->allowedPageTypes, Connection::PARAM_INT_ARRAY)
-                )
+                $queryBuilder->expr()->in('uid', $queryBuilder->createNamedParameter($pageUids, Connection::PARAM_INT_ARRAY))
             )
-            ->executeQuery()
-            ->fetchOne();
-
-        $results = $queryBuilder
             ->executeQuery()
             ->fetchAllAssociative();
 
-        // Check if user has access to edit page record, add new page badge, add frontend preview URL
-        $newThreshold = time() - self::NEW_THRESHOLD_DAYS * 86400;
-        foreach ($results as $key => $page) {
-            if (!$GLOBALS['BE_USER']->doesUserHaveAccess($page, 2)) { // 2 = edit page
-                unset($results[$key]);
-                continue;
-            }
-            $results[$key]['isNew'] = (int)$page['created'] >= $newThreshold;
-            $results[$key]['previewUrl'] = $this->previewUrlProvider->getUrl((int)$page['uid']);
+        $rowsByUid = array_column($rows, null, 'uid');
+
+        $isNewThreshold = time() - self::NEW_THRESHOLD_DAYS * 86400;
+        $results = [];
+        foreach ($pages as $page) {
+            $page = array_merge($page, $rowsByUid[$page['uid']] ?? []);
+            $page['isNew'] = (int)$page['created'] >= $isNewThreshold;
+            $page['previewUrl'] = $this->previewUrlProvider->getUrl((int)$page['uid']);
+            $results[] = $page;
         }
 
-        return [
-            'emptyCount' => $emptyCount,
-            'totalCount' => $totalCount,
-            'results' => array_values($results),
-        ];
+        return $results;
     }
 }

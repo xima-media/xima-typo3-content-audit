@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace Xima\XimaTypo3ContentAudit\Widgets\Provider;
 
 use TYPO3\CMS\Core\Database\Connection;
-use TYPO3\CMS\Core\Database\ConnectionPool;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Dashboard\Widgets\ListDataProviderInterface;
 use Xima\XimaTypo3ContentAudit\Service\PagePreviewUrlProvider;
 
@@ -17,13 +15,16 @@ class RecentChangesDataProvider implements ListDataProviderInterface
     */
     protected const NEW_THRESHOLD_DAYS = 7;
 
+    private const DISPLAY_LIMIT = 20;
+
     /**
     * @var array<int>
     */
     protected array $excludePageUids = [];
 
     public function __construct(
-        protected readonly PagePreviewUrlProvider $previewUrlProvider, private readonly \TYPO3\CMS\Core\Database\ConnectionPool $connectionPool
+        protected readonly PagePreviewUrlProvider $previewUrlProvider,
+        private readonly \TYPO3\CMS\Core\Database\ConnectionPool $connectionPool
     ) {
     }
 
@@ -40,67 +41,84 @@ class RecentChangesDataProvider implements ListDataProviderInterface
     */
     public function getItems(): array
     {
-        $connection = $this->connectionPool
-            ->getConnectionForTable('pages');
+        $matchingRecords = $this->fetchMatchingItems();
 
+        // Check if user has access to edit the page (also covers content elements on that page)
+        $accessibleRecords = [];
+        foreach ($matchingRecords as $record) {
+            if (!$GLOBALS['BE_USER']->doesUserHaveAccess($record, 2)) { // 2 = edit page
+                continue;
+            }
+            $accessibleRecords[] = $record;
+            if (count($accessibleRecords) >= self::DISPLAY_LIMIT) {
+                break;
+            }
+        }
+
+        return $this->fetchRecordDetails($accessibleRecords);
+    }
+
+    /**
+    * Fetch raw record list
+    *
+    * @return list<array<string, mixed>>
+    */
+    private function fetchMatchingItems(): array
+    {
+        $connection = $this->connectionPool->getConnectionForTable('pages');
         $excludePageUids = empty($this->excludePageUids) ? [0] : $this->excludePageUids; // »0« workaround for valid sql
 
         // TYPO3 QueryBuilder does not support UNION queries directly
         // Fallback to raw SQL query for now and restore the query builder later if possible
         $sql = <<<SQL
-SELECT * FROM (
-    SELECT
-        'page' AS recordType,
-        p.uid AS uid,
-        p.uid AS pageUid,
-        p.title AS recordTitle,
-        p.slug AS pageSlug,
-        p.crdate AS created,
-        p.tstamp AS changed,
-        p.perms_userid,
-        p.perms_groupid,
-        p.perms_user,
-        p.perms_group,
-        p.perms_everybody
-    FROM pages AS p
-    WHERE
-        p.sys_language_uid = 0
-        AND p.deleted = 0
-        AND p.hidden = 0
-        AND p.doktype IN (1, 4)
-        AND p.uid NOT IN (:pageUids)
+            SELECT * FROM (
+                SELECT
+                    'page' AS recordType,
+                    p.uid AS uid,
+                    p.uid AS pageUid,
+                    p.crdate AS created,
+                    p.tstamp AS changed,
+                    p.perms_userid,
+                    p.perms_groupid,
+                    p.perms_user,
+                    p.perms_group,
+                    p.perms_everybody
+                FROM pages AS p
+                WHERE
+                    p.sys_language_uid = 0
+                    AND p.deleted = 0
+                    AND p.hidden = 0
+                    AND p.doktype IN (1, 4)
+                    AND p.uid NOT IN (:pageUids)
 
-    UNION ALL
+                UNION ALL
 
-    SELECT
-        'content' AS recordType,
-        c.uid AS uid,
-        c.pid AS pageUid,
-        c.header AS recordTitle,
-        p.slug AS pageSlug,
-        c.crdate AS created,
-        c.tstamp AS changed,
-        p.perms_userid,
-        p.perms_groupid,
-        p.perms_user,
-        p.perms_group,
-        p.perms_everybody
-    FROM tt_content AS c
-    INNER JOIN pages AS p ON p.uid = c.pid
-    WHERE
-        c.sys_language_uid = 0
-        AND c.deleted = 0
-        AND c.hidden = 0
-        AND p.deleted = 0
-        AND p.hidden = 0
-        AND p.doktype IN (1, 4)
-        AND c.pid NOT IN (:contentPageUids)
-) AS combined
-ORDER BY changed DESC
-LIMIT 20
-SQL;
+                SELECT
+                    'content' AS recordType,
+                    c.uid AS uid,
+                    c.pid AS pageUid,
+                    c.crdate AS created,
+                    c.tstamp AS changed,
+                    p.perms_userid,
+                    p.perms_groupid,
+                    p.perms_user,
+                    p.perms_group,
+                    p.perms_everybody
+                FROM tt_content AS c
+                INNER JOIN pages AS p ON p.uid = c.pid
+                WHERE
+                    c.sys_language_uid = 0
+                    AND c.deleted = 0
+                    AND c.hidden = 0
+                    AND p.deleted = 0
+                    AND p.hidden = 0
+                    AND p.doktype IN (1, 4)
+                    AND c.pid NOT IN (:contentPageUids)
+            ) AS combined
+            ORDER BY changed DESC, recordType ASC, uid ASC
+            SQL;
 
-        $results = $connection->executeQuery(
+        return $connection->executeQuery(
             $sql,
             [
                 'pageUids' => $excludePageUids,
@@ -111,23 +129,77 @@ SQL;
                 'contentPageUids' => Connection::PARAM_INT_ARRAY,
             ]
         )->fetchAllAssociative();
+    }
 
-        // Check if user has access to edit the page (also covers content elements on that page)
-        // Add editor name of last action, add new page badge, add frontend preview URL
-        $newThreshold = time() - self::NEW_THRESHOLD_DAYS * 86400;
-        foreach ($results as $key => $record) {
-            if (!$GLOBALS['BE_USER']->doesUserHaveAccess($record, 2)) { // 2 = edit page
-                unset($results[$key]);
-                continue;
-            }
-            $record['action'] = ((int)$record['created'] === (int)$record['changed']) ? 'created' : 'updated';
-            $record['editorName'] = $this->resolveEditorName($record);
-            $record['isNew'] = (int)$record['created'] >= $newThreshold;
-            $record['previewUrl'] = $this->previewUrlProvider->getUrl((int)$record['pageUid']);
-            $results[$key] = $record;
+    /**
+    * Enrich already access-checked records with the remaining display columns
+    *
+    * @param list<array<string, mixed>> $records
+    * @return list<array<string, mixed>>
+    */
+    private function fetchRecordDetails(array $records): array
+    {
+        if (empty($records)) {
+            return [];
         }
 
-        return array_values($results);
+        $pageUids = [];
+        $contentUids = [];
+        foreach ($records as $record) {
+            if ($record['recordType'] === 'page') {
+                $pageUids[] = $record['uid'];
+            } else {
+                $contentUids[] = $record['uid'];
+            }
+        }
+
+        $connection = $this->connectionPool->getConnectionForTable('pages');
+        $selects = [];
+        $params = [];
+        $types = [];
+
+        if ([] !== $pageUids) {
+            $selects[] = <<<SQL
+                SELECT 'page' AS recordType, uid, title AS recordTitle, slug AS pageSlug
+                FROM pages
+                WHERE uid IN (:pageUids)
+                SQL;
+            $params['pageUids'] = $pageUids;
+            $types['pageUids'] = Connection::PARAM_INT_ARRAY;
+        }
+
+        if ([] !== $contentUids) {
+            $selects[] = <<<SQL
+                SELECT 'content' AS recordType, c.uid AS uid, c.header AS recordTitle, p.slug AS pageSlug
+                FROM tt_content AS c
+                INNER JOIN pages AS p ON p.uid = c.pid
+                WHERE c.uid IN (:contentUids)
+                SQL;
+            $params['contentUids'] = $contentUids;
+            $types['contentUids'] = Connection::PARAM_INT_ARRAY;
+        }
+
+        $rows = $connection->executeQuery(implode(PHP_EOL . 'UNION ALL' . PHP_EOL, $selects), $params, $types)
+            ->fetchAllAssociative();
+
+        $detailsByKey = [];
+        foreach ($rows as $row) {
+            $detailsByKey[$row['recordType'] . ':' . $row['uid']] = $row;
+        }
+
+        $isNewThreshold = time() - self::NEW_THRESHOLD_DAYS * 86400;
+        $results = [];
+        foreach ($records as $record) {
+            $key = $record['recordType'] . ':' . $record['uid'];
+            $record = array_merge($record, $detailsByKey[$key] ?? []);
+            $record['action'] = ((int)$record['created'] === (int)$record['changed']) ? 'created' : 'updated';
+            $record['editorName'] = $this->resolveEditorName($record);
+            $record['isNew'] = (int)$record['created'] >= $isNewThreshold;
+            $record['previewUrl'] = $this->previewUrlProvider->getUrl((int)$record['pageUid']);
+            $results[] = $record;
+        }
+
+        return $results;
     }
 
     /**
