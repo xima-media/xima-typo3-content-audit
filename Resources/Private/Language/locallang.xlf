@@ -25,6 +25,9 @@
             <trans-unit id="widgets.backend_link_title">
                 <source>Open page in backend</source>
             </trans-unit>
+            <trans-unit id="widgets.show_all_in_pagetree">
+                <source>Show all in page tree</source>
+            </trans-unit>
 
             <trans-unit id="widgets.stale_pages.title">
                 <source>Stale Pages</source>

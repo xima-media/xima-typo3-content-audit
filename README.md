@@ -28,6 +28,10 @@ Available widgets:
 - Daily Content Mission: Shows daily motivational messages to encourage editors to improve content quality
   - Messages rotate by day of week and reference specific widgets to check
 
+- Most widgets provide configurations to exclude false positives, e.g. remove the privacy page from stale pages
+- Most widgets provide a link to show matching pages directly in the backend pagetree,
+  to make it easier for editors to find and edit the affected pages (TYPO3 >= 14 only)
+
 ✨ Would you like to share important news and announcements with your editorial team
 or add a general welcome message for editors on the dashboard? Check out our
 [dashboard news extension](https://github.com/xima-media/xima-typo3-dashboard-news).

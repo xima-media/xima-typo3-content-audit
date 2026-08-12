@@ -67,7 +67,7 @@ class HiddenPagesDataProvider implements ListDataProviderInterface
     *
     * @return list<array<string, mixed>>
     */
-    private function fetchMatchingItems(): array
+    public function fetchMatchingItems(): array
     {
         $queryBuilder = $this->connectionPool->getQueryBuilderForTable('pages');
 

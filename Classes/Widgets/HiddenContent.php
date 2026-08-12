@@ -13,6 +13,7 @@ use TYPO3\CMS\Dashboard\Widgets\ListDataProviderInterface;
 use TYPO3\CMS\Dashboard\Widgets\RequestAwareWidgetInterface;
 use TYPO3\CMS\Dashboard\Widgets\WidgetConfigurationInterface;
 use TYPO3\CMS\Dashboard\Widgets\WidgetInterface;
+use Xima\XimaTypo3ContentAudit\EventListener\PageTreeFilterListener;
 
 class HiddenContent implements WidgetInterface, RequestAwareWidgetInterface
 {
@@ -55,6 +56,7 @@ class HiddenContent implements WidgetInterface, RequestAwareWidgetInterface
             'matchCount' => $resultSet['matchCount'],
             'totalCount' => $resultSet['totalCount'],
             'version' => GeneralUtility::makeInstance(Typo3Version::class)->getMajorVersion(),
+            'pageTreeFilterToken' => PageTreeFilterListener::TOKEN_HIDDEN_CONTENT,
         ]);
         return $view->render('HiddenContent');
     }

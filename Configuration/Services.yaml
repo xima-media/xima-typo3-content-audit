@@ -37,6 +37,29 @@ services:
   Xima\XimaTypo3ContentAudit\:
     resource: '../Classes/*'
 
+  Xima\XimaTypo3ContentAudit\EventListener\BackendAssetsListener:
+    tags:
+      - name: event.listener
+        identifier: 'xima-typo3-content-audit/backend-assets'
+        event: 'TYPO3\CMS\Backend\Controller\Event\AfterBackendPageRenderEvent'
+
+  # @todo Simplify event handling once support for TYPO3 12/13 is dropped
+  Xima\XimaTypo3ContentAudit\EventListener\PageTreeFilterListener:
+    arguments:
+      $stalePagesOptions: '%xima_typo3_content_audit.widgets.stale_pages.options%'
+      $freshPagesOptions: '%xima_typo3_content_audit.widgets.fresh_pages.options%'
+      $hiddenPagesOptions: '%xima_typo3_content_audit.widgets.hidden_pages.options%'
+      $emptyPagesOptions: '%xima_typo3_content_audit.widgets.empty_pages.options%'
+      $hiddenContentOptions: '%xima_typo3_content_audit.widgets.hidden_content.options%'
+    tags:
+      - name: event.listener
+        identifier: 'xima-typo3-content-audit/pagetree-filter'
+        event: 'TYPO3\CMS\Backend\Tree\Repository\BeforePageTreeIsFilteredEvent'
+      - name: event.listener
+        identifier: 'xima-typo3-content-audit/pagetree-filter-marker'
+        event: 'TYPO3\CMS\Backend\Controller\Event\AfterPageTreeItemsPreparedEvent'
+        method: 'markMatchedPages'
+
   Xima\XimaTypo3ContentAudit\Widgets\StalePages:
     class: 'Xima\XimaTypo3ContentAudit\Widgets\StalePages'
     arguments:

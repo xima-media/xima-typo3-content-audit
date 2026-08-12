@@ -13,6 +13,7 @@ use TYPO3\CMS\Dashboard\Widgets\ListDataProviderInterface;
 use TYPO3\CMS\Dashboard\Widgets\RequestAwareWidgetInterface;
 use TYPO3\CMS\Dashboard\Widgets\WidgetConfigurationInterface;
 use TYPO3\CMS\Dashboard\Widgets\WidgetInterface;
+use Xima\XimaTypo3ContentAudit\EventListener\PageTreeFilterListener;
 
 class EmptyPages implements WidgetInterface, RequestAwareWidgetInterface
 {
@@ -56,6 +57,7 @@ class EmptyPages implements WidgetInterface, RequestAwareWidgetInterface
             'matchCount' => $resultSet['matchCount'],
             'totalCount' => $resultSet['totalCount'],
             'version' => GeneralUtility::makeInstance(Typo3Version::class)->getMajorVersion(),
+            'pageTreeFilterToken' => PageTreeFilterListener::TOKEN_EMPTY_PAGES,
         ]);
         return $view->render('EmptyPages');
     }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Xima\XimaTypo3ContentAudit\Widgets\Provider;
 
 use TYPO3\CMS\Core\Database\Connection;
+use TYPO3\CMS\Core\Package\PackageManager;
 use TYPO3\CMS\Dashboard\Widgets\ListDataProviderInterface;
 use Xima\XimaTypo3ContentAudit\Service\PageCountProvider;
 use Xima\XimaTypo3ContentAudit\Service\PagePreviewUrlProvider;
@@ -16,7 +17,8 @@ class BrokenLinksDataProvider implements ListDataProviderInterface
     public function __construct(
         protected readonly PagePreviewUrlProvider $previewUrlProvider,
         private readonly PageCountProvider $pageCountProvider,
-        private readonly \TYPO3\CMS\Core\Database\ConnectionPool $connectionPool
+        private readonly \TYPO3\CMS\Core\Database\ConnectionPool $connectionPool,
+        private readonly PackageManager $packageManager
     ) {
     }
 
@@ -53,8 +55,12 @@ class BrokenLinksDataProvider implements ListDataProviderInterface
     *
     * @return list<array<string, mixed>>
     */
-    private function fetchMatchingItems(): array
+    public function fetchMatchingItems(): array
     {
+        if (!$this->packageManager->isPackageActive('linkvalidator')) {
+            return [];
+        }
+
         $queryBuilder = $this->connectionPool->getQueryBuilderForTable('tx_linkvalidator_link');
         $queryBuilder
             ->select('p.uid', 'p.tstamp as updated', 'p.perms_userid', 'p.perms_groupid', 'p.perms_user', 'p.perms_group', 'p.perms_everybody')

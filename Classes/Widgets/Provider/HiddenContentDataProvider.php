@@ -83,7 +83,7 @@ class HiddenContentDataProvider implements ListDataProviderInterface
     *
     * @return list<array<string, mixed>>
     */
-    private function fetchMatchingItems(): array
+    public function fetchMatchingItems(): array
     {
         $queryBuilder = $this->connectionPool->getQueryBuilderForTable('tt_content');
         // Remove TYPO3 default "hidden" restriction to also find hidden content elements

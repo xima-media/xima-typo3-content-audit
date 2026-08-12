@@ -14,6 +14,7 @@ use TYPO3\CMS\Dashboard\Widgets\ListDataProviderInterface;
 use TYPO3\CMS\Dashboard\Widgets\RequestAwareWidgetInterface;
 use TYPO3\CMS\Dashboard\Widgets\WidgetConfigurationInterface;
 use TYPO3\CMS\Dashboard\Widgets\WidgetInterface;
+use Xima\XimaTypo3ContentAudit\EventListener\PageTreeFilterListener;
 
 class BrokenLinks implements WidgetInterface, RequestAwareWidgetInterface
 {
@@ -58,6 +59,7 @@ class BrokenLinks implements WidgetInterface, RequestAwareWidgetInterface
             'totalCount' => $resultSet['totalCount'],
             'version' => GeneralUtility::makeInstance(Typo3Version::class)->getMajorVersion(),
             'linkvalidatorIsInstalled' => $linkvalidatorIsInstalled,
+            'pageTreeFilterToken' => PageTreeFilterListener::TOKEN_BROKEN_LINKS,
         ]);
         return $view->render('BrokenLinks');
     }

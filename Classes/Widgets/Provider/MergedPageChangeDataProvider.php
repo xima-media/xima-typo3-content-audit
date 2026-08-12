@@ -78,7 +78,7 @@ class MergedPageChangeDataProvider implements ListDataProviderInterface
     *
     * @return list<array<string, mixed>>
     */
-    private function fetchMatchingItems(): array
+    public function fetchMatchingItems(): array
     {
         $connection = $this->connectionPool->getConnectionForTable('pages');
         $sortDirectionKeyword = $this->showOldestFirst ? 'ASC' : 'DESC';

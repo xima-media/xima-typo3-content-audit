@@ -1,0 +1,15 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+    xmlns:core="http://typo3.org/ns/TYPO3/CMS/Core/ViewHelpers"
+    xmlns:be="http://typo3.org/ns/TYPO3/CMS/Backend/ViewHelpers"
+    data-namespace-typo3-fluid="true">
+
+<f:if condition="{records} && {version} >= 14 && {token}">
+    <div class="widget-content-footer">
+        <a href="{be:moduleLink(route: 'web_layout', arguments: '{id: 0, ximaPageTreeFilter: token}')}" target="_top" class="widget-cta">
+            <span class="widget-cta-icon"><core:icon identifier="actions-filter" size="small"/></span>
+            <f:translate key="widgets.show_all_in_pagetree" extensionName="XimaTypo3ContentAudit"/>
+        </a>
+    </div>
+</f:if>
+
+</html>

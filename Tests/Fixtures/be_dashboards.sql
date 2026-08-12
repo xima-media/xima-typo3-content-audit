@@ -16,7 +16,7 @@ VALUES
     }',
     UNIX_TIMESTAMP(),
     UNIX_TIMESTAMP(),
-    1),
+    2),
     ('content-audit-demo-editor',
     'Content Audit',
     '{
