@@ -53,7 +53,7 @@ class EmptyPages implements WidgetInterface, RequestAwareWidgetInterface
             'records' => $resultSet['results'],
             'button' => $this->buttonProvider,
             'options' => $this->options,
-            'emptyCount' => $resultSet['emptyCount'],
+            'matchCount' => $resultSet['matchCount'],
             'totalCount' => $resultSet['totalCount'],
             'version' => GeneralUtility::makeInstance(Typo3Version::class)->getMajorVersion(),
         ]);

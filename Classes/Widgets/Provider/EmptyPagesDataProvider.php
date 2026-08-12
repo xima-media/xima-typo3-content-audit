@@ -6,6 +6,7 @@ namespace Xima\XimaTypo3ContentAudit\Widgets\Provider;
 
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Dashboard\Widgets\ListDataProviderInterface;
+use Xima\XimaTypo3ContentAudit\Service\PageCountProvider;
 use Xima\XimaTypo3ContentAudit\Service\PagePreviewUrlProvider;
 
 class EmptyPagesDataProvider implements ListDataProviderInterface
@@ -29,6 +30,7 @@ class EmptyPagesDataProvider implements ListDataProviderInterface
 
     public function __construct(
         protected readonly PagePreviewUrlProvider $previewUrlProvider,
+        private readonly PageCountProvider $pageCountProvider,
         private readonly \TYPO3\CMS\Core\Database\ConnectionPool $connectionPool
     ) {
     }
@@ -55,20 +57,8 @@ class EmptyPagesDataProvider implements ListDataProviderInterface
     public function getItems(): array
     {
         $matchingPages = $this->fetchMatchingItems();
-        $emptyCount = count($matchingPages);
-
-        $totalCountQueryBuilder = $this->connectionPool->getQueryBuilderForTable('pages');
-        $totalCount = (int)$totalCountQueryBuilder
-            ->count('uid')
-            ->from('pages')
-            ->where(
-                $totalCountQueryBuilder->expr()->in(
-                    'doktype',
-                    $totalCountQueryBuilder->createNamedParameter($this->allowedPageTypes, Connection::PARAM_INT_ARRAY)
-                )
-            )
-            ->executeQuery()
-            ->fetchOne();
+        $matchCount = count($matchingPages);
+        $totalCount = $this->pageCountProvider->getTotalPageCount($this->excludePageUids);
 
         // Check if user has access to edit page record
         $accessiblePages = [];
@@ -83,7 +73,7 @@ class EmptyPagesDataProvider implements ListDataProviderInterface
         }
 
         return [
-            'emptyCount' => $emptyCount,
+            'matchCount' => $matchCount,
             'totalCount' => $totalCount,
             'results' => $this->fetchPageDetails($accessiblePages),
         ];

@@ -47,12 +47,15 @@ class BrokenLinks implements WidgetInterface, RequestAwareWidgetInterface
 
         // Check if optional linkvalidator extension is installed, otherwise we cannot show any results
         $linkvalidatorIsInstalled = GeneralUtility::makeInstance(PackageManager::class)->isPackageActive('linkvalidator');
+        $resultSet = $linkvalidatorIsInstalled ? $this->dataProvider->getItems() : ['results' => [], 'matchCount' => 0, 'totalCount' => 0];
 
         $view->assignMultiple([
             'configuration' => $this->configuration,
-            'records' => $linkvalidatorIsInstalled ? $this->dataProvider->getItems() : [],
+            'records' => $resultSet['results'],
             'button' => $this->buttonProvider,
             'options' => $this->options,
+            'matchCount' => $resultSet['matchCount'],
+            'totalCount' => $resultSet['totalCount'],
             'version' => GeneralUtility::makeInstance(Typo3Version::class)->getMajorVersion(),
             'linkvalidatorIsInstalled' => $linkvalidatorIsInstalled,
         ]);

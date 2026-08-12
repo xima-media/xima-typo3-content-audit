@@ -53,7 +53,7 @@ class MissingImageFields implements WidgetInterface, RequestAwareWidgetInterface
             'records' => $resultSet['results'],
             'button' => $this->buttonProvider,
             'options' => $this->options,
-            'missingFieldCount' => $resultSet['missingFieldCount'],
+            'matchCount' => $resultSet['matchCount'],
             'totalCount' => $resultSet['totalCount'],
             'missingFieldLabel' => $GLOBALS['LANG']->sL($GLOBALS['TCA']['sys_file_metadata']['columns'][$missingField]['label'] ?? $missingField),
             'version' => GeneralUtility::makeInstance(Typo3Version::class)->getMajorVersion(),

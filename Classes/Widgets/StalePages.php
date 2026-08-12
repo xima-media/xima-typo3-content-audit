@@ -47,11 +47,14 @@ class StalePages implements WidgetInterface, RequestAwareWidgetInterface
         $this->dataProvider->setExcludePageUids($this->options['excludePageUids'] ?? []);
         $this->dataProvider->setShowOldestFirst(true);
 
+        $resultSet = $this->dataProvider->getItems();
         $view->assignMultiple([
             'configuration' => $this->configuration,
-            'records' => $this->dataProvider->getItems(),
+            'records' => $resultSet['results'],
             'button' => $this->buttonProvider,
             'options' => $this->options,
+            'matchCount' => $resultSet['matchCount'],
+            'totalCount' => $resultSet['totalCount'],
             'version' => GeneralUtility::makeInstance(Typo3Version::class)->getMajorVersion(),
         ]);
         return $view->render('StalePages');

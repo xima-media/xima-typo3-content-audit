@@ -6,6 +6,7 @@ namespace Xima\XimaTypo3ContentAudit\Widgets\Provider;
 
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Dashboard\Widgets\ListDataProviderInterface;
+use Xima\XimaTypo3ContentAudit\Service\PageCountProvider;
 use Xima\XimaTypo3ContentAudit\Service\PagePreviewUrlProvider;
 
 class MergedPageChangeDataProvider implements ListDataProviderInterface
@@ -26,6 +27,7 @@ class MergedPageChangeDataProvider implements ListDataProviderInterface
 
     public function __construct(
         protected readonly PagePreviewUrlProvider $previewUrlProvider,
+        private readonly PageCountProvider $pageCountProvider,
         private readonly \TYPO3\CMS\Core\Database\ConnectionPool $connectionPool
     ) {
     }
@@ -49,6 +51,8 @@ class MergedPageChangeDataProvider implements ListDataProviderInterface
     public function getItems(): array
     {
         $matchingPages = $this->fetchMatchingItems();
+        $matchCount = count($matchingPages);
+        $totalCount = $this->pageCountProvider->getTotalPageCount($this->excludePageUids);
 
         // Check if user has access to edit page record
         $accessiblePages = [];
@@ -62,7 +66,11 @@ class MergedPageChangeDataProvider implements ListDataProviderInterface
             }
         }
 
-        return $this->fetchPageDetails($accessiblePages);
+        return [
+            'matchCount' => $matchCount,
+            'totalCount' => $totalCount,
+            'results' => $this->fetchPageDetails($accessiblePages),
+        ];
     }
 
     /**

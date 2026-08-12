@@ -45,6 +45,10 @@
                 <source />
                 <target>Seiten bei denen Eigenschaften oder Inhalte seit mehr als 180 Tagen nicht verändert wurden.</target>
             </trans-unit>
+            <trans-unit id="widgets.stale_pages.count">
+                <source />
+                <target>%1$d von %2$d Seiten.</target>
+            </trans-unit>
             <trans-unit id="widgets.stale_pages.empty">
                 <source />
                 <target>Yay! Keine veralteten Seiten erkannt.</target>
@@ -85,6 +89,10 @@
             <trans-unit id="widgets.fresh_pages.results">
                 <source />
                 <target>Seiten bei denen Eigenschaften oder Inhalte in den letzten 180 Tagen verändert wurden.</target>
+            </trans-unit>
+            <trans-unit id="widgets.fresh_pages.count">
+                <source />
+                <target>%1$d von %2$d Seiten.</target>
             </trans-unit>
             <trans-unit id="widgets.fresh_pages.empty">
                 <source />
@@ -129,7 +137,7 @@
             </trans-unit>
             <trans-unit id="widgets.hidden_pages.count">
                 <source />
-                <target>%1$d vergessene Seiten von insgesamt %2$d Seiten.</target>
+                <target>%1$d von %2$d Seiten.</target>
             </trans-unit>
             <trans-unit id="widgets.hidden_pages.empty">
                 <source />
@@ -166,7 +174,7 @@
             </trans-unit>
             <trans-unit id="widgets.hidden_content.count">
                 <source />
-                <target>%1$d vergessene von insgesamt %2$d Elementen.</target>
+                <target>%1$d von %2$d Inhaltselementen.</target>
             </trans-unit>
             <trans-unit id="widgets.hidden_content.empty">
                 <source />
@@ -207,7 +215,7 @@
             </trans-unit>
             <trans-unit id="widgets.missing_image_fields.count">
                 <source />
-                <target>%1$d unvollständige von insgesamt %2$d Elementen.</target>
+                <target>%1$d von %2$d Bildern.</target>
             </trans-unit>
             <trans-unit id="widgets.missing_image_fields.empty">
                 <source />
@@ -241,6 +249,10 @@
             <trans-unit id="widgets.broken_links.results">
                 <source />
                 <target>Seiten mit defekten internen Links.</target>
+            </trans-unit>
+            <trans-unit id="widgets.broken_links.count">
+                <source />
+                <target>%1$d von %2$d Seiten.</target>
             </trans-unit>
             <trans-unit id="widgets.broken_links.empty">
                 <source />
@@ -326,7 +338,7 @@
             </trans-unit>
             <trans-unit id="widgets.empty_pages.count">
                 <source />
-                <target>%1$d leere Seiten von insgesamt %2$d Seiten.</target>
+                <target>%1$d von %2$d Seiten.</target>
             </trans-unit>
             <trans-unit id="widgets.empty_pages.empty">
                 <source />

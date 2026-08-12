@@ -52,7 +52,7 @@ class HiddenPages implements WidgetInterface, RequestAwareWidgetInterface
             'records' => $resultSet['results'],
             'button' => $this->buttonProvider,
             'options' => $this->options,
-            'hiddenCount' => $resultSet['hiddenCount'],
+            'matchCount' => $resultSet['matchCount'],
             'totalCount' => $resultSet['totalCount'],
             'version' => GeneralUtility::makeInstance(Typo3Version::class)->getMajorVersion(),
         ]);

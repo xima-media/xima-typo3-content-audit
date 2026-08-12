@@ -38,7 +38,7 @@ class HiddenContentDataProvider implements ListDataProviderInterface
     public function getItems(): array
     {
         $matchingContent = $this->fetchMatchingItems();
-        $hiddenCount = count($matchingContent);
+        $matchCount = count($matchingContent);
 
         $totalCountQueryBuilder = $this->connectionPool->getQueryBuilderForTable('tt_content');
         $totalCountQueryBuilder->getRestrictions()
@@ -72,7 +72,7 @@ class HiddenContentDataProvider implements ListDataProviderInterface
         }
 
         return [
-            'hiddenCount' => $hiddenCount,
+            'matchCount' => $matchCount,
             'totalCount' => $totalCount,
             'results' => $this->fetchContentDetails($accessibleContent),
         ];

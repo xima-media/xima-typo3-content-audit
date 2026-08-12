@@ -25,6 +25,7 @@
         <f:if condition="{records}">
             <div class="mb-3">
                 <f:translate key="widgets.broken_links.results" extensionName="XimaTypo3ContentAudit"/>
+                <f:translate key="widgets.broken_links.count" extensionName="XimaTypo3ContentAudit" arguments="{0: matchCount, 1: totalCount}"/>
             </div>
             <div class="widget-table-wrapper">
                 <table class="widget-table {f:if(condition: '{version} >= 13', then: 'table')} table-striped table-hover">

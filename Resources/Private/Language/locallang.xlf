@@ -35,6 +35,9 @@
             <trans-unit id="widgets.stale_pages.results">
                 <source>Pages whose properties or content have not been changed for more than 180 days.</source>
             </trans-unit>
+            <trans-unit id="widgets.stale_pages.count">
+                <source>%1$d of %2$d pages.</source>
+            </trans-unit>
             <trans-unit id="widgets.stale_pages.empty">
                 <source>Yay! No outdated pages detected.</source>
             </trans-unit>
@@ -65,6 +68,9 @@
             </trans-unit>
             <trans-unit id="widgets.fresh_pages.results">
                 <source>Pages whose properties or content have been changed within the last 180 days.</source>
+            </trans-unit>
+            <trans-unit id="widgets.fresh_pages.count">
+                <source>%1$d of %2$d pages.</source>
             </trans-unit>
             <trans-unit id="widgets.fresh_pages.empty">
                 <source>Yikes! No fresh pages detected. You should consider creating new content.</source>
@@ -98,7 +104,7 @@
                 <source>Pages that have been hidden for quite a while.</source>
             </trans-unit>
             <trans-unit id="widgets.hidden_pages.count">
-                <source>%1$d forgotten pages out of a total of %2$d pages.</source>
+                <source>%1$d of %2$d pages.</source>
             </trans-unit>
             <trans-unit id="widgets.hidden_pages.empty">
                 <source>Yay! No forgotten pages detected.</source>
@@ -126,7 +132,7 @@
                 <source>Content that has been hidden for quite a while.</source>
             </trans-unit>
             <trans-unit id="widgets.hidden_content.count">
-                <source>%1$d forgotten out of a total of %2$d items.</source>
+                <source>%1$d of %2$d content elements.</source>
             </trans-unit>
             <trans-unit id="widgets.hidden_content.empty">
                 <source>Yay! No forgotten content detected.</source>
@@ -157,7 +163,7 @@
                 <source>Images with missing »%s«.</source>
             </trans-unit>
             <trans-unit id="widgets.missing_image_fields.count">
-                <source>%1$d incomplete out of a total of %2$d items.</source>
+                <source>%1$d of %2$d images.</source>
             </trans-unit>
             <trans-unit id="widgets.missing_image_fields.empty">
                 <source>Yay! No incomplete images detected.</source>
@@ -183,6 +189,9 @@
             </trans-unit>
             <trans-unit id="widgets.broken_links.results">
                 <source>Pages with broken internal links.</source>
+            </trans-unit>
+            <trans-unit id="widgets.broken_links.count">
+                <source>%1$d of %2$d pages.</source>
             </trans-unit>
             <trans-unit id="widgets.broken_links.empty">
                 <source>Yay! No broken internal links detected.</source>
@@ -247,7 +256,7 @@
                 <source>Pages that have no visible content elements.</source>
             </trans-unit>
             <trans-unit id="widgets.empty_pages.count">
-                <source>%1$d empty pages out of a total of %2$d pages.</source>
+                <source>%1$d of %2$d pages.</source>
             </trans-unit>
             <trans-unit id="widgets.empty_pages.empty">
                 <source>Yay! No empty pages detected.</source>

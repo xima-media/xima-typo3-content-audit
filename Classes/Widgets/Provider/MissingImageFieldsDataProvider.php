@@ -92,7 +92,7 @@ class MissingImageFieldsDataProvider implements ListDataProviderInterface
         $missingCountQueryBuilder = clone $queryBuilder;
         $missingCountQueryBuilder->count('meta.uid');
         // @todo When dropping support for TYPO3 12 we may use ->resetOrderBy() instead
-        $missingFieldCount = (int)$missingCountQueryBuilder->executeQuery()->fetchOne();
+        $matchCount = (int)$missingCountQueryBuilder->executeQuery()->fetchOne();
 
         // Count total image metadata records
         $totalCountQueryBuilder = $this->connectionPool
@@ -116,7 +116,7 @@ class MissingImageFieldsDataProvider implements ListDataProviderInterface
             ->fetchOne();
 
         return [
-            'missingFieldCount' => $missingFieldCount,
+            'matchCount' => $matchCount,
             'totalCount' => $totalCount,
             'results' => $results,
         ];

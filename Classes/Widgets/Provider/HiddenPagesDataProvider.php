@@ -7,6 +7,7 @@ namespace Xima\XimaTypo3ContentAudit\Widgets\Provider;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\Query\Restriction\HiddenRestriction;
 use TYPO3\CMS\Dashboard\Widgets\ListDataProviderInterface;
+use Xima\XimaTypo3ContentAudit\Service\PageCountProvider;
 use Xima\XimaTypo3ContentAudit\Service\PagePreviewUrlProvider;
 
 class HiddenPagesDataProvider implements ListDataProviderInterface
@@ -20,6 +21,7 @@ class HiddenPagesDataProvider implements ListDataProviderInterface
 
     public function __construct(
         protected readonly PagePreviewUrlProvider $previewUrlProvider,
+        private readonly PageCountProvider $pageCountProvider,
         private readonly \TYPO3\CMS\Core\Database\ConnectionPool $connectionPool
     ) {
     }
@@ -38,22 +40,8 @@ class HiddenPagesDataProvider implements ListDataProviderInterface
     public function getItems(): array
     {
         $matchingPages = $this->fetchMatchingItems();
-        $hiddenCount = count($matchingPages);
-
-        $totalCountQueryBuilder = $this->connectionPool->getQueryBuilderForTable('pages');
-        $totalCountQueryBuilder->getRestrictions()
-            ->removeByType(HiddenRestriction::class);
-        $totalCount = (int)$totalCountQueryBuilder
-            ->count('uid')
-            ->from('pages')
-            ->where(
-                $totalCountQueryBuilder->expr()->in(
-                    'doktype',
-                    $totalCountQueryBuilder->createNamedParameter([1, 4], Connection::PARAM_INT_ARRAY)
-                )
-            )
-            ->executeQuery()
-            ->fetchOne();
+        $matchCount = count($matchingPages);
+        $totalCount = $this->pageCountProvider->getTotalPageCount($this->excludePageUids);
 
         // Check if user has access to edit page record
         $accessiblePages = [];
@@ -68,7 +56,7 @@ class HiddenPagesDataProvider implements ListDataProviderInterface
         }
 
         return [
-            'hiddenCount' => $hiddenCount,
+            'matchCount' => $matchCount,
             'totalCount' => $totalCount,
             'results' => $this->fetchPageDetails($accessiblePages),
         ];
