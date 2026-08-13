@@ -126,6 +126,13 @@ VALUES
     (302, UNIX_TIMESTAMP(), 3, 1, 300, 'tt_content', 1, 'content'),
     (303, UNIX_TIMESTAMP(), 3, 2, 301, 'tt_content', 1, 'content');
 
+-- Abstract and file reference for missing page fields test
+UPDATE `pages` SET `abstract` = 'This page already has a teaser abstract filled in.' WHERE `uid` IN (3, 100, 101, 102);
+INSERT INTO `sys_file_reference`
+    (`uid`, `pid`, `tstamp`, `crdate`, `uid_local`, `uid_foreign`, `tablenames`, `fieldname`)
+VALUES
+    (102, 1, UNIX_TIMESTAMP(), UNIX_TIMESTAMP(), 101, 7, 'pages', 'media');
+
 -- German translations for untranslated pages test
 INSERT INTO `pages`
     (`uid`, `pid`, `title`, `slug`, `sys_language_uid`, `l10n_parent`, `l10n_source`, `perms_userid`, `perms_groupid`, `perms_user`, `perms_group`, `perms_everybody`, `doktype`, `is_siteroot`, `module`, `tstamp`)

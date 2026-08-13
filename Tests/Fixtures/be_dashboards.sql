@@ -11,6 +11,7 @@ VALUES
         "contentAuditHiddenContent": {"identifier": "contentAuditHiddenContent"},
         "contentAuditEmptyPages": {"identifier": "contentAuditEmptyPages"},
         "contentAuditUntranslatedPages": {"identifier": "contentAuditUntranslatedPages"},
+        "contentAuditMissingPageFields": {"identifier": "contentAuditMissingPageFields"},
         "contentAuditMissingImageFields": {"identifier": "contentAuditMissingImageFields"},
         "contentAuditBrokenLinks": {"identifier": "contentAuditBrokenLinks"},
         "contentAuditRecentChanges": {"identifier": "contentAuditRecentChanges"}
@@ -28,6 +29,7 @@ VALUES
         "contentAuditHiddenContent": {"identifier": "contentAuditHiddenContent"},
         "contentAuditEmptyPages": {"identifier": "contentAuditEmptyPages"},
         "contentAuditUntranslatedPages": {"identifier": "contentAuditUntranslatedPages"},
+        "contentAuditMissingPageFields": {"identifier": "contentAuditMissingPageFields"},
         "contentAuditMissingImageFields": {"identifier": "contentAuditMissingImageFields"},
         "contentAuditBrokenLinks": {"identifier": "contentAuditBrokenLinks"},
         "contentAuditRecentChanges": {"identifier": "contentAuditRecentChanges"}

@@ -21,6 +21,10 @@ return [
         'provider' => SvgIconProvider::class,
         'source' => 'EXT:xima_typo3_content_audit/Resources/Public/Icons/WidgetsHiddenContent.svg',
     ],
+    'content-audit-widgets-missing-page-fields' => [
+        'provider' => SvgIconProvider::class,
+        'source' => 'EXT:xima_typo3_content_audit/Resources/Public/Icons/WidgetsMissingPageFields.svg',
+    ],
     'content-audit-widgets-missing-image-fields' => [
         'provider' => SvgIconProvider::class,
         'source' => 'EXT:xima_typo3_content_audit/Resources/Public/Icons/WidgetsMissingImageFields.svg',

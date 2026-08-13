@@ -205,6 +205,39 @@
                 <target>Kein Titel</target>
             </trans-unit>
 
+            <trans-unit id="widgets.missing_page_fields.title">
+                <source />
+                <target>Seiten mit fehlenden Feldern</target>
+            </trans-unit>
+            <trans-unit id="widgets.missing_page_fields.description">
+                <source />
+                <target>Listet Seiten, bei denen ein konfigurierbares Feld fehlt, z. B. ein Teaser-Text oder ein Teaser-Bild.</target>
+            </trans-unit>
+            <trans-unit id="widgets.missing_page_fields.results">
+                <source />
+                <target>Seiten ohne »%s«.</target>
+            </trans-unit>
+            <trans-unit id="widgets.missing_page_fields.count">
+                <source />
+                <target>%1$d von %2$d Seiten.</target>
+            </trans-unit>
+            <trans-unit id="widgets.missing_page_fields.empty">
+                <source />
+                <target>Yay! Keine Seiten mit fehlenden Feldern erkannt.</target>
+            </trans-unit>
+            <trans-unit id="widgets.missing_page_fields.page">
+                <source />
+                <target>Seite</target>
+            </trans-unit>
+            <trans-unit id="widgets.missing_page_fields.path">
+                <source />
+                <target>Pfad</target>
+            </trans-unit>
+            <trans-unit id="widgets.missing_page_fields.updated">
+                <source />
+                <target>Zuletzt aktualisiert</target>
+            </trans-unit>
+
             <trans-unit id="widgets.missing_image_fields.title">
                 <source />
                 <target>Bilder mit fehlenden Feldern</target>

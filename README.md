@@ -19,6 +19,8 @@ Available widgets:
 - Long-hidden Content: Display a list of content that has been hidden for a long time and may no longer be relevant
 - Empty Pages: Display a list of pages that have no visible content elements
   - Integrators may configure which page types (doktype) to check and exclude certain pages
+- Pages with missing fields: Lists pages that are missing a configurable field, e.g. a teaser abstract or teaser image
+  - Works with plain text fields as well as image/file fields
 - Images with missing fields: Lists images that are missing important metadata such as alternative text
   - The field may be configured, e.g. to check for missing copyright information instead of alternative text
 - Broken Links: Display pages with broken internal links detected by the TYPO3 linkvalidator
@@ -33,9 +35,11 @@ Available widgets:
 - Most widgets provide a link to show matching pages directly in the backend pagetree,
   to make it easier for editors to find and edit the affected pages (TYPO3 >= 14 only)
 
-✨ Would you like to share important news and announcements with your editorial team
-or add a general welcome message for editors on the dashboard? Check out our
-[dashboard news extension](https://github.com/xima-media/xima-typo3-dashboard-news).
+🎙👉️ You can test all widgets in the included [demo setup with DDEV](#development).
+
+> ✨ Would you like to share important news and announcements with your editorial team
+> or add a general welcome message for editors on the dashboard? Check out our
+> [dashboard news extension](https://github.com/xima-media/xima-typo3-dashboard-news).
 
 ## Requirements
 
@@ -57,19 +61,29 @@ https://github.com/xima-media/xima-typo3-content-audit
 - Add widgets to your dashboard manually
 - Check the result lists and decide what to do with the shown pages - update the content,
   archive or delete the page
+- Use the link below each widget to show matching pages directly in the backend pagetree
 
 ## Configuration
+
+TYPO3 hides dashboard widgets from editors unless allowed for their backend group,
+even if they are part of a preset. Open the backend group record,
+tab »Access Lists«, field »Available Widgets«, and enable them there.
+
+This also lets you decide which widgets to use per project,
+e.g. skip the »Untranslated Pages« widget on a single-language site.
 
 ### Dashboard Preset
 
 The extension provides a preset which includes all widgets at once,
-without the need to add them manually one by one.
+without the need to add them manually to your dashboard one by one.
+When you add a new dashboard, just select the preset `Content Audit`.
 
-- Available in the dashboard creation wizard
-- Can be set as default for new users via TSconfig:
-  ```
-  options.dashboard.dashboardPresetsForNewUsers = tx_ximatypo3contentaudit_dashboard
-  ```
+Integrators may also set this preset as default dashboard for new users via TSconfig,
+using this configuration:
+
+```
+options.dashboard.dashboardPresetsForNewUsers = tx_ximatypo3contentaudit_dashboard
+```
 
 ### Widget Configuration
 
@@ -77,6 +91,9 @@ You may configure the widgets by adjusting the available parameters.
 Copy and paste the `parameters` section from the
 [Services.yaml](./Configuration/Services.yaml) file into your own
 and adjust the values as needed.
+
+To exclude certain pages from the stale pages widget,
+you may add this to your sitepackage:
 
 _EXT:acme_sitepackage/Configuration/Services.yaml_
 ```yaml
@@ -88,16 +105,15 @@ parameters:
 
 ### Adding Multiple Widgets of the Same Type
 
-TYPO3 is not able to let editors add multiple widgets of the same type
-to their dashboard.
-If you want to add multiple widgets with only different configurations,
-you need to create multiple service definitions with different
-key-names and `identifier` fields.
+TYPO3 does not let editors add the same widget twice to a dashboard.
+To show multiple variants of the same widget with different configurations,
+register multiple service definitions with distinct key names and `identifier` fields.
+No custom data provider classes needed, config only.
 
-Example: A second widget showing images with empty copyright fields,
-additionally to the existing one showing images with missing alternative texts.
+Typical use case: add a second »Missing Image Fields« widget
+that checks for missing copyright info instead of alternative texts.
 [Copy and rename the parameter section & widget definition](./Configuration/Services.yaml)
-into your sitepackage (eg. `acme_sitepackage`).
+into your sitepackage (e.g. `acme_sitepackage`) like this:
 
 _EXT:acme_sitepackage/Configuration/Services.yaml_
 ```yaml
@@ -111,17 +127,22 @@ parameters:
     arguments:
       $backendViewFactory: '@TYPO3\CMS\Backend\View\BackendViewFactory'
       $dataProvider: '@Xima\XimaTypo3ContentAudit\Widgets\Provider\MissingImageFieldsDataProvider'
-      $options: '%acme_sitepackage.widgets.missing_image_fields.options%' # use your own parameter here
+      $options: '%acme_sitepackage.widgets.missing_image_fields.options%' # use your own parameters here, see above
     tags:
       - name: dashboard.widget
         identifier: 'acmeSitepackageMissingImageFields' # change this identifier to avoid conflicts
         groupNames: 'content'
-        title: 'LLL:EXT:xima_wfs_sitepackage/Resources/Private/Language/locallang.xlf:widgets.missing_image_fields.title' # use your own language label here
+        title: 'LLL:EXT:xima_wfs_sitepackage/Resources/Private/Language/locallang.xlf:widgets.missing_image_fields.title' # optional: use your own language label here
         description: 'LLL:EXT:xima_typo3_content_audit/Resources/Private/Language/locallang.xlf:widgets.missing_image_fields.description'
         iconIdentifier: 'content-audit-widgets-hidden-content'
         height: 'medium'
         width: 'medium'
 ```
+
+Same trick works for the »Missing Page Fields« widget, for example to catch pages
+missing an Open Graph image (`og_image`) if social media previews matter for your site.
+Just copy the definition, change the identifier and use `missingField: 'og_image'` instead
+of `abstract`. The widget detects on its own that this is an image field and not a text field.
 
 ## Development
 

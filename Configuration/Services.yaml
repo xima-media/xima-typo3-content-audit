@@ -13,6 +13,10 @@ parameters:
   xima_typo3_content_audit.widgets.hidden_content.options:
     refreshAvailable: true
     excludePageUids: []
+  xima_typo3_content_audit.widgets.missing_page_fields.options:
+    refreshAvailable: true
+    missingField: 'abstract'
+    excludePageUids: []
   xima_typo3_content_audit.widgets.missing_image_fields.options:
     refreshAvailable: true
     missingField: 'alternative'
@@ -55,6 +59,7 @@ services:
       $emptyPagesOptions: '%xima_typo3_content_audit.widgets.empty_pages.options%'
       $hiddenContentOptions: '%xima_typo3_content_audit.widgets.hidden_content.options%'
       $untranslatedPagesOptions: '%xima_typo3_content_audit.widgets.untranslated_pages.options%'
+      $missingPageFieldsOptions: '%xima_typo3_content_audit.widgets.missing_page_fields.options%'
     tags:
       - name: event.listener
         identifier: 'xima-typo3-content-audit/pagetree-filter'
@@ -141,6 +146,22 @@ services:
         title: 'LLL:EXT:xima_typo3_content_audit/Resources/Private/Language/locallang.xlf:widgets.missing_image_fields.title'
         description: 'LLL:EXT:xima_typo3_content_audit/Resources/Private/Language/locallang.xlf:widgets.missing_image_fields.description'
         iconIdentifier: 'content-audit-widgets-missing-image-fields'
+        height: 'medium'
+        width: 'medium'
+
+  Xima\XimaTypo3ContentAudit\Widgets\MissingPageFields:
+    class: 'Xima\XimaTypo3ContentAudit\Widgets\MissingPageFields'
+    arguments:
+      $backendViewFactory: '@TYPO3\CMS\Backend\View\BackendViewFactory'
+      $dataProvider: '@Xima\XimaTypo3ContentAudit\Widgets\Provider\MissingPageFieldsDataProvider'
+      $options: '%xima_typo3_content_audit.widgets.missing_page_fields.options%'
+    tags:
+      - name: dashboard.widget
+        identifier: 'contentAuditMissingPageFields'
+        groupNames: 'content'
+        title: 'LLL:EXT:xima_typo3_content_audit/Resources/Private/Language/locallang.xlf:widgets.missing_page_fields.title'
+        description: 'LLL:EXT:xima_typo3_content_audit/Resources/Private/Language/locallang.xlf:widgets.missing_page_fields.description'
+        iconIdentifier: 'content-audit-widgets-missing-page-fields'
         height: 'medium'
         width: 'medium'
 
