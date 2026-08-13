@@ -12,6 +12,7 @@ use Xima\XimaTypo3ContentAudit\Widgets\Provider\EmptyPagesDataProvider;
 use Xima\XimaTypo3ContentAudit\Widgets\Provider\HiddenContentDataProvider;
 use Xima\XimaTypo3ContentAudit\Widgets\Provider\HiddenPagesDataProvider;
 use Xima\XimaTypo3ContentAudit\Widgets\Provider\MergedPageChangeDataProvider;
+use Xima\XimaTypo3ContentAudit\Widgets\Provider\UntranslatedPagesDataProvider;
 
 /**
 * Couple the content audit widgets to the page tree filter and highlight matching pages.
@@ -27,6 +28,7 @@ final class PageTreeFilterListener
     public const TOKEN_EMPTY_PAGES = 'xima-content-audit-empty-pages';
     public const TOKEN_HIDDEN_CONTENT = 'xima-content-audit-hidden-content';
     public const TOKEN_BROKEN_LINKS = 'xima-content-audit-broken-links';
+    public const TOKEN_UNTRANSLATED_PAGES = 'xima-content-audit-untranslated-pages';
 
     private const MARKER_LABEL = 'Content audit match';
     private const MARKER_COLOR = '#5b3cc4';
@@ -44,6 +46,7 @@ final class PageTreeFilterListener
     * @param array<string, mixed> $hiddenPagesOptions
     * @param array<string, mixed> $emptyPagesOptions
     * @param array<string, mixed> $hiddenContentOptions
+    * @param array<string, mixed> $untranslatedPagesOptions
     */
     public function __construct(
         private readonly MergedPageChangeDataProvider $pageChangeDataProvider,
@@ -51,11 +54,13 @@ final class PageTreeFilterListener
         private readonly EmptyPagesDataProvider $emptyPagesDataProvider,
         private readonly HiddenContentDataProvider $hiddenContentDataProvider,
         private readonly BrokenLinksDataProvider $brokenLinksDataProvider,
+        private readonly UntranslatedPagesDataProvider $untranslatedPagesDataProvider,
         private readonly array $stalePagesOptions,
         private readonly array $freshPagesOptions,
         private readonly array $hiddenPagesOptions,
         private readonly array $emptyPagesOptions,
         private readonly array $hiddenContentOptions,
+        private readonly array $untranslatedPagesOptions,
     ) {
     }
 
@@ -109,6 +114,7 @@ final class PageTreeFilterListener
             self::TOKEN_EMPTY_PAGES => $this->matchingEmptyPageUids(),
             self::TOKEN_HIDDEN_CONTENT => $this->matchingHiddenContentPageUids(),
             self::TOKEN_BROKEN_LINKS => $this->pageUids($this->brokenLinksDataProvider->fetchMatchingItems()),
+            self::TOKEN_UNTRANSLATED_PAGES => $this->matchingUntranslatedPageUids(),
             default => [],
         };
 
@@ -162,6 +168,16 @@ final class PageTreeFilterListener
         $this->hiddenContentDataProvider->setExcludePageUids($this->hiddenContentOptions['excludePageUids'] ?? []);
 
         return array_values(array_unique($this->pageUids($this->hiddenContentDataProvider->fetchMatchingItems(), 'pid')));
+    }
+
+    /**
+    * @return list<int>
+    */
+    private function matchingUntranslatedPageUids(): array
+    {
+        $this->untranslatedPagesDataProvider->setExcludePageUids($this->untranslatedPagesOptions['excludePageUids'] ?? []);
+
+        return $this->pageUids($this->untranslatedPagesDataProvider->fetchMatchingItems());
     }
 
     /**

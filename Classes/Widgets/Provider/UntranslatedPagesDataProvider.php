@@ -8,14 +8,10 @@ use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Dashboard\Widgets\ListDataProviderInterface;
 use Xima\XimaTypo3ContentAudit\Service\PageCountProvider;
 use Xima\XimaTypo3ContentAudit\Service\PagePreviewUrlProvider;
+use Xima\XimaTypo3ContentAudit\Service\SiteLanguageProvider;
 
-class EmptyPagesDataProvider implements ListDataProviderInterface
+class UntranslatedPagesDataProvider implements ListDataProviderInterface
 {
-    /**
-    * Pages created within this many days are marked as »New«
-    */
-    protected const NEW_THRESHOLD_DAYS = 7;
-
     private const DISPLAY_LIMIT = 20;
 
     /**
@@ -23,14 +19,10 @@ class EmptyPagesDataProvider implements ListDataProviderInterface
     */
     protected array $excludePageUids = [];
 
-    /**
-    * @var array<int>
-    */
-    protected array $allowedPageTypes = [1];
-
     public function __construct(
         protected readonly PagePreviewUrlProvider $previewUrlProvider,
         private readonly PageCountProvider $pageCountProvider,
+        private readonly SiteLanguageProvider $siteLanguageProvider,
         private readonly \TYPO3\CMS\Core\Database\ConnectionPool $connectionPool
     ) {
     }
@@ -43,12 +35,9 @@ class EmptyPagesDataProvider implements ListDataProviderInterface
         $this->excludePageUids = $excludePageUids;
     }
 
-    /**
-    * @param array<int> $allowedPageTypes
-    */
-    public function setAllowedPageTypes(array $allowedPageTypes): void
+    public function hasTranslationsConfigured(): bool
     {
-        $this->allowedPageTypes = $allowedPageTypes;
+        return $this->siteLanguageProvider->hasAdditionalLanguagesConfigured();
     }
 
     /**
@@ -86,6 +75,11 @@ class EmptyPagesDataProvider implements ListDataProviderInterface
     */
     public function fetchMatchingItems(): array
     {
+        $additionalLanguageUids = $this->siteLanguageProvider->getAdditionalLanguageUids();
+        if ($additionalLanguageUids === []) {
+            return [];
+        }
+
         $queryBuilder = $this->connectionPool->getQueryBuilderForTable('pages');
 
         $queryBuilder
@@ -98,28 +92,30 @@ class EmptyPagesDataProvider implements ListDataProviderInterface
                 'pages.perms_group',
                 'pages.perms_everybody'
             )
-            ->addSelectLiteral('COUNT(' . $queryBuilder->quoteIdentifier('content.uid') . ') as content_count')
+            ->addSelectLiteral('COUNT(' . $queryBuilder->quoteIdentifier('translation.uid') . ') as translation_count')
             ->from('pages')
-            // Select only configured page types
             ->where(
                 $queryBuilder->expr()->eq('pages.sys_language_uid', $queryBuilder->createNamedParameter(0, Connection::PARAM_INT)),
                 $queryBuilder->expr()->in(
                     'pages.doktype',
-                    $queryBuilder->createNamedParameter($this->allowedPageTypes, Connection::PARAM_INT_ARRAY)
+                    $queryBuilder->createNamedParameter([1, 4], Connection::PARAM_INT_ARRAY)
                 )
             )
             ->leftJoin(
                 'pages',
-                'tt_content',
-                'content',
+                'pages',
+                'translation',
                 (string)$queryBuilder->expr()->and(
-                    $queryBuilder->expr()->eq('content.pid', $queryBuilder->quoteIdentifier('pages.uid')),
-                    $queryBuilder->expr()->eq('content.hidden', $queryBuilder->createNamedParameter(0, Connection::PARAM_INT)),
-                    $queryBuilder->expr()->eq('content.deleted', $queryBuilder->createNamedParameter(0, Connection::PARAM_INT))
+                    $queryBuilder->expr()->eq('translation.l10n_parent', $queryBuilder->quoteIdentifier('pages.uid')),
+                    $queryBuilder->expr()->in(
+                        'translation.sys_language_uid',
+                        $queryBuilder->createNamedParameter($additionalLanguageUids, Connection::PARAM_INT_ARRAY)
+                    ),
+                    $queryBuilder->expr()->eq('translation.deleted', $queryBuilder->createNamedParameter(0, Connection::PARAM_INT))
                 )
             )
             ->groupBy('pages.uid')
-            ->having('content_count = 0')
+            ->having('translation_count = 0')
             ->orderBy('updated', 'DESC')
             ->addOrderBy('pages.uid', 'ASC');
 
@@ -152,7 +148,7 @@ class EmptyPagesDataProvider implements ListDataProviderInterface
 
         $queryBuilder = $this->connectionPool->getQueryBuilderForTable('pages');
         $rows = $queryBuilder
-            ->select('uid', 'title as pageTitle', 'slug as pageSlug', 'crdate as created')
+            ->select('uid', 'title as pageTitle', 'slug as pageSlug')
             ->from('pages')
             ->where(
                 $queryBuilder->expr()->in('uid', $queryBuilder->createNamedParameter($pageUids, Connection::PARAM_INT_ARRAY))
@@ -162,11 +158,9 @@ class EmptyPagesDataProvider implements ListDataProviderInterface
 
         $rowsByUid = array_column($rows, null, 'uid');
 
-        $isNewThreshold = time() - self::NEW_THRESHOLD_DAYS * 86400;
         $results = [];
         foreach ($pages as $page) {
             $page = array_merge($page, $rowsByUid[$page['uid']] ?? []);
-            $page['isNew'] = (int)$page['created'] >= $isNewThreshold;
             $page['previewUrl'] = $this->previewUrlProvider->getUrl((int)$page['uid']);
             $results[] = $page;
         }

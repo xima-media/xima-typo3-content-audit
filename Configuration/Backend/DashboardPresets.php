@@ -15,6 +15,7 @@ return [
             'contentAuditHiddenPages',
             'contentAuditHiddenContent',
             'contentAuditEmptyPages',
+            'contentAuditUntranslatedPages',
             'contentAuditMissingImageFields',
             'contentAuditBrokenLinks',
             'contentAuditRecentChanges',

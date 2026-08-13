@@ -41,3 +41,15 @@ parameters:
 			identifier: method.notFound
 			count: 1
 			path: Classes/Widgets/StalePages.php
+
+		-
+			message: '#^Call to an undefined method TYPO3\\CMS\\Dashboard\\Widgets\\ListDataProviderInterface\:\:setExcludePageUids\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: Classes/Widgets/UntranslatedPages.php
+
+		-
+			message: '#^Call to an undefined method TYPO3\\CMS\\Dashboard\\Widgets\\ListDataProviderInterface\:\:hasTranslationsConfigured\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: Classes/Widgets/UntranslatedPages.php

@@ -125,3 +125,13 @@ VALUES
     (301, UNIX_TIMESTAMP(), 3, 2, 301, 'pages', 1, 'content'),
     (302, UNIX_TIMESTAMP(), 3, 1, 300, 'tt_content', 1, 'content'),
     (303, UNIX_TIMESTAMP(), 3, 2, 301, 'tt_content', 1, 'content');
+
+-- German translations for untranslated pages test
+INSERT INTO `pages`
+    (`uid`, `pid`, `title`, `slug`, `sys_language_uid`, `l10n_parent`, `l10n_source`, `perms_userid`, `perms_groupid`, `perms_user`, `perms_group`, `perms_everybody`, `doktype`, `is_siteroot`, `module`, `tstamp`)
+VALUES
+    (400, 1, 'Stale page 1 (DE)', '/de/stale-page-1', 1, 100, 100, 1, 1, 31, 31, 1, 1, 0, '', UNIX_TIMESTAMP()),
+    (401, 1, 'Very stale page 3 (DE)', '/de/very-stale-page-3', 1, 102, 102, 1, 1, 31, 31, 1, 1, 0, '', UNIX_TIMESTAMP()),
+    (402, 1, 'Fresh page 1 (DE)', '/de/fresh-page-1', 1, 103, 103, 1, 1, 31, 31, 1, 1, 0, '', UNIX_TIMESTAMP()),
+    (403, 1, 'Page with many broken links (DE)', '/de/page-with-many-broken-links', 1, 200, 200, 1, 1, 31, 31, 1, 1, 0, '', UNIX_TIMESTAMP()),
+    (404, 1, 'Recently created page (DE)', '/de/recently-created-page', 1, 300, 300, 1, 1, 31, 31, 1, 1, 0, '', UNIX_TIMESTAMP());

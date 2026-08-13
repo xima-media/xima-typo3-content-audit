@@ -10,6 +10,7 @@ VALUES
         "contentAuditHiddenPages": {"identifier": "contentAuditHiddenPages"},
         "contentAuditHiddenContent": {"identifier": "contentAuditHiddenContent"},
         "contentAuditEmptyPages": {"identifier": "contentAuditEmptyPages"},
+        "contentAuditUntranslatedPages": {"identifier": "contentAuditUntranslatedPages"},
         "contentAuditMissingImageFields": {"identifier": "contentAuditMissingImageFields"},
         "contentAuditBrokenLinks": {"identifier": "contentAuditBrokenLinks"},
         "contentAuditRecentChanges": {"identifier": "contentAuditRecentChanges"}
@@ -26,6 +27,7 @@ VALUES
         "contentAuditHiddenPages": {"identifier": "contentAuditHiddenPages"},
         "contentAuditHiddenContent": {"identifier": "contentAuditHiddenContent"},
         "contentAuditEmptyPages": {"identifier": "contentAuditEmptyPages"},
+        "contentAuditUntranslatedPages": {"identifier": "contentAuditUntranslatedPages"},
         "contentAuditMissingImageFields": {"identifier": "contentAuditMissingImageFields"},
         "contentAuditBrokenLinks": {"identifier": "contentAuditBrokenLinks"},
         "contentAuditRecentChanges": {"identifier": "contentAuditRecentChanges"}

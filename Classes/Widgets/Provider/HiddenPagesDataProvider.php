@@ -78,8 +78,9 @@ class HiddenPagesDataProvider implements ListDataProviderInterface
         $queryBuilder
             ->select('uid', 'tstamp as updated', 'perms_userid', 'perms_groupid', 'perms_user', 'perms_group', 'perms_everybody')
             ->from('pages')
-            // Select only pages and shortcuts, no folders etc
+            // Select only pages and shortcuts, no folders etc, default language only
             ->where(
+                $queryBuilder->expr()->eq('sys_language_uid', $queryBuilder->createNamedParameter(0, Connection::PARAM_INT)),
                 $queryBuilder->expr()->in(
                     'doktype',
                     $queryBuilder->createNamedParameter([1, 4], Connection::PARAM_INT_ARRAY)

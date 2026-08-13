@@ -397,6 +397,43 @@
                 <source />
                 <target>Kein Titel</target>
             </trans-unit>
+
+            <trans-unit id="widgets.untranslated_pages.title">
+                <source />
+                <target>Unübersetzte Seiten</target>
+            </trans-unit>
+            <trans-unit id="widgets.untranslated_pages.description">
+                <source />
+                <target>Zeigt Seiten an, die nur in der Standardsprache existieren, obwohl für die Website weitere Sprachen konfiguriert sind.</target>
+            </trans-unit>
+            <trans-unit id="widgets.untranslated_pages.results">
+                <source />
+                <target>Seiten ohne Übersetzung in eine der anderen Sprachen der Website.</target>
+            </trans-unit>
+            <trans-unit id="widgets.untranslated_pages.count">
+                <source />
+                <target>%1$d von %2$d Seiten.</target>
+            </trans-unit>
+            <trans-unit id="widgets.untranslated_pages.empty">
+                <source />
+                <target>Prima! Alle Seiten sind übersetzt.</target>
+            </trans-unit>
+            <trans-unit id="widgets.untranslated_pages.page">
+                <source />
+                <target>Seite</target>
+            </trans-unit>
+            <trans-unit id="widgets.untranslated_pages.path">
+                <source />
+                <target>Pfad</target>
+            </trans-unit>
+            <trans-unit id="widgets.untranslated_pages.updated">
+                <source />
+                <target>Zuletzt aktualisiert</target>
+            </trans-unit>
+            <trans-unit id="widgets.untranslated_pages.translations_required">
+                <source />
+                <target>Dieses Widget benötigt mindestens eine weitere in der Website-Konfiguration eingerichtete Sprache.</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
