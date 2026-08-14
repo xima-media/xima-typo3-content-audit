@@ -19,13 +19,13 @@ Available widgets:
 - Long-hidden Content: Display a list of content that has been hidden for a long time and may no longer be relevant
 - Empty Pages: Display a list of pages that have no visible content elements
   - Integrators may configure which page types (doktype) to check and exclude certain pages
+- Untranslated Pages: Display pages that only exist in the default language
 - Pages with missing fields: Lists pages that are missing a configurable field, e.g. a teaser abstract or teaser image
   - Works with plain text fields as well as image/file fields
 - Images with missing fields: Lists images that are missing important metadata such as alternative text
   - The field may be configured, e.g. to check for missing copyright information instead of alternative text
 - Broken Links: Display pages with broken internal links detected by the TYPO3 linkvalidator
   - **Note:** Requires the `typo3/cms-linkvalidator` extension to be installed and configured
-- Untranslated Pages: Display pages that only exist in the default language
 - Recent Changes: Displays a list of pages and content elements that have been created or
   updated recently, including who made the change
 - Daily Content Mission: Shows daily motivational messages to encourage editors to improve content quality

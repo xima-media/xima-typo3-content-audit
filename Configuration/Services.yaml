@@ -1,6 +1,8 @@
 # yamllint disable rule:line-length
 ---
 parameters:
+  xima_typo3_content_audit.widgets.daily_mission.options:
+    refreshAvailable: true
   xima_typo3_content_audit.widgets.stale_pages.options:
     refreshAvailable: true
     excludePageUids: []
@@ -13,6 +15,13 @@ parameters:
   xima_typo3_content_audit.widgets.hidden_content.options:
     refreshAvailable: true
     excludePageUids: []
+  xima_typo3_content_audit.widgets.empty_pages.options:
+    refreshAvailable: true
+    excludePageUids: []
+    allowedPageTypes: [1]
+  xima_typo3_content_audit.widgets.untranslated_pages.options:
+    refreshAvailable: true
+    excludePageUids: []
   xima_typo3_content_audit.widgets.missing_page_fields.options:
     refreshAvailable: true
     missingField: 'abstract'
@@ -22,16 +31,7 @@ parameters:
     missingField: 'alternative'
   xima_typo3_content_audit.widgets.broken_links.options:
     refreshAvailable: true
-  xima_typo3_content_audit.widgets.daily_mission.options:
-    refreshAvailable: true
-  xima_typo3_content_audit.widgets.empty_pages.options:
-    refreshAvailable: true
-    excludePageUids: []
-    allowedPageTypes: [1]
   xima_typo3_content_audit.widgets.recent_changes.options:
-    refreshAvailable: true
-    excludePageUids: []
-  xima_typo3_content_audit.widgets.untranslated_pages.options:
     refreshAvailable: true
     excludePageUids: []
   xima_typo3_content_audit.widgets.content_statistics.options:
@@ -58,8 +58,8 @@ services:
       $stalePagesOptions: '%xima_typo3_content_audit.widgets.stale_pages.options%'
       $freshPagesOptions: '%xima_typo3_content_audit.widgets.fresh_pages.options%'
       $hiddenPagesOptions: '%xima_typo3_content_audit.widgets.hidden_pages.options%'
-      $emptyPagesOptions: '%xima_typo3_content_audit.widgets.empty_pages.options%'
       $hiddenContentOptions: '%xima_typo3_content_audit.widgets.hidden_content.options%'
+      $emptyPagesOptions: '%xima_typo3_content_audit.widgets.empty_pages.options%'
       $untranslatedPagesOptions: '%xima_typo3_content_audit.widgets.untranslated_pages.options%'
       $missingPageFieldsOptions: '%xima_typo3_content_audit.widgets.missing_page_fields.options%'
     tags:
@@ -70,6 +70,22 @@ services:
         identifier: 'xima-typo3-content-audit/pagetree-filter-marker'
         event: 'TYPO3\CMS\Backend\Controller\Event\AfterPageTreeItemsPreparedEvent'
         method: 'markMatchedPages'
+
+  Xima\XimaTypo3ContentAudit\Widgets\DailyMission:
+    class: 'Xima\XimaTypo3ContentAudit\Widgets\DailyMission'
+    arguments:
+      $backendViewFactory: '@TYPO3\CMS\Backend\View\BackendViewFactory'
+      $dataProvider: '@Xima\XimaTypo3ContentAudit\Widgets\Provider\DailyMissionDataProvider'
+      $options: '%xima_typo3_content_audit.widgets.daily_mission.options%'
+    tags:
+      - name: dashboard.widget
+        identifier: 'contentAuditDailyMission'
+        groupNames: 'content'
+        title: 'LLL:EXT:xima_typo3_content_audit/Resources/Private/Language/locallang.xlf:widgets.daily_mission.title'
+        description: 'LLL:EXT:xima_typo3_content_audit/Resources/Private/Language/locallang.xlf:widgets.daily_mission.description'
+        iconIdentifier: 'content-audit-widgets-daily-mission'
+        height: 'small'
+        width: 'medium'
 
   Xima\XimaTypo3ContentAudit\Widgets\StalePages:
     class: 'Xima\XimaTypo3ContentAudit\Widgets\StalePages'
@@ -135,19 +151,35 @@ services:
         height: 'medium'
         width: 'medium'
 
-  Xima\XimaTypo3ContentAudit\Widgets\MissingImageFields:
-    class: 'Xima\XimaTypo3ContentAudit\Widgets\MissingImageFields'
+  Xima\XimaTypo3ContentAudit\Widgets\EmptyPages:
+    class: 'Xima\XimaTypo3ContentAudit\Widgets\EmptyPages'
     arguments:
       $backendViewFactory: '@TYPO3\CMS\Backend\View\BackendViewFactory'
-      $dataProvider: '@Xima\XimaTypo3ContentAudit\Widgets\Provider\MissingImageFieldsDataProvider'
-      $options: '%xima_typo3_content_audit.widgets.missing_image_fields.options%'
+      $dataProvider: '@Xima\XimaTypo3ContentAudit\Widgets\Provider\EmptyPagesDataProvider'
+      $options: '%xima_typo3_content_audit.widgets.empty_pages.options%'
     tags:
       - name: dashboard.widget
-        identifier: 'contentAuditMissingImageFields'
+        identifier: 'contentAuditEmptyPages'
         groupNames: 'content'
-        title: 'LLL:EXT:xima_typo3_content_audit/Resources/Private/Language/locallang.xlf:widgets.missing_image_fields.title'
-        description: 'LLL:EXT:xima_typo3_content_audit/Resources/Private/Language/locallang.xlf:widgets.missing_image_fields.description'
-        iconIdentifier: 'content-audit-widgets-missing-image-fields'
+        title: 'LLL:EXT:xima_typo3_content_audit/Resources/Private/Language/locallang.xlf:widgets.empty_pages.title'
+        description: 'LLL:EXT:xima_typo3_content_audit/Resources/Private/Language/locallang.xlf:widgets.empty_pages.description'
+        iconIdentifier: 'content-audit-widgets-empty-pages'
+        height: 'medium'
+        width: 'medium'
+
+  Xima\XimaTypo3ContentAudit\Widgets\UntranslatedPages:
+    class: 'Xima\XimaTypo3ContentAudit\Widgets\UntranslatedPages'
+    arguments:
+      $backendViewFactory: '@TYPO3\CMS\Backend\View\BackendViewFactory'
+      $dataProvider: '@Xima\XimaTypo3ContentAudit\Widgets\Provider\UntranslatedPagesDataProvider'
+      $options: '%xima_typo3_content_audit.widgets.untranslated_pages.options%'
+    tags:
+      - name: dashboard.widget
+        identifier: 'contentAuditUntranslatedPages'
+        groupNames: 'content'
+        title: 'LLL:EXT:xima_typo3_content_audit/Resources/Private/Language/locallang.xlf:widgets.untranslated_pages.title'
+        description: 'LLL:EXT:xima_typo3_content_audit/Resources/Private/Language/locallang.xlf:widgets.untranslated_pages.description'
+        iconIdentifier: 'content-audit-widgets-untranslated-pages'
         height: 'medium'
         width: 'medium'
 
@@ -167,6 +199,22 @@ services:
         height: 'medium'
         width: 'medium'
 
+  Xima\XimaTypo3ContentAudit\Widgets\MissingImageFields:
+    class: 'Xima\XimaTypo3ContentAudit\Widgets\MissingImageFields'
+    arguments:
+      $backendViewFactory: '@TYPO3\CMS\Backend\View\BackendViewFactory'
+      $dataProvider: '@Xima\XimaTypo3ContentAudit\Widgets\Provider\MissingImageFieldsDataProvider'
+      $options: '%xima_typo3_content_audit.widgets.missing_image_fields.options%'
+    tags:
+      - name: dashboard.widget
+        identifier: 'contentAuditMissingImageFields'
+        groupNames: 'content'
+        title: 'LLL:EXT:xima_typo3_content_audit/Resources/Private/Language/locallang.xlf:widgets.missing_image_fields.title'
+        description: 'LLL:EXT:xima_typo3_content_audit/Resources/Private/Language/locallang.xlf:widgets.missing_image_fields.description'
+        iconIdentifier: 'content-audit-widgets-missing-image-fields'
+        height: 'medium'
+        width: 'medium'
+
   Xima\XimaTypo3ContentAudit\Widgets\BrokenLinks:
     class: 'Xima\XimaTypo3ContentAudit\Widgets\BrokenLinks'
     arguments:
@@ -180,38 +228,6 @@ services:
         title: 'LLL:EXT:xima_typo3_content_audit/Resources/Private/Language/locallang.xlf:widgets.broken_links.title'
         description: 'LLL:EXT:xima_typo3_content_audit/Resources/Private/Language/locallang.xlf:widgets.broken_links.description'
         iconIdentifier: 'content-audit-widgets-broken-links'
-        height: 'medium'
-        width: 'medium'
-
-  Xima\XimaTypo3ContentAudit\Widgets\DailyMission:
-    class: 'Xima\XimaTypo3ContentAudit\Widgets\DailyMission'
-    arguments:
-      $backendViewFactory: '@TYPO3\CMS\Backend\View\BackendViewFactory'
-      $dataProvider: '@Xima\XimaTypo3ContentAudit\Widgets\Provider\DailyMissionDataProvider'
-      $options: '%xima_typo3_content_audit.widgets.daily_mission.options%'
-    tags:
-      - name: dashboard.widget
-        identifier: 'contentAuditDailyMission'
-        groupNames: 'content'
-        title: 'LLL:EXT:xima_typo3_content_audit/Resources/Private/Language/locallang.xlf:widgets.daily_mission.title'
-        description: 'LLL:EXT:xima_typo3_content_audit/Resources/Private/Language/locallang.xlf:widgets.daily_mission.description'
-        iconIdentifier: 'content-audit-widgets-daily-mission'
-        height: 'small'
-        width: 'medium'
-
-  Xima\XimaTypo3ContentAudit\Widgets\EmptyPages:
-    class: 'Xima\XimaTypo3ContentAudit\Widgets\EmptyPages'
-    arguments:
-      $backendViewFactory: '@TYPO3\CMS\Backend\View\BackendViewFactory'
-      $dataProvider: '@Xima\XimaTypo3ContentAudit\Widgets\Provider\EmptyPagesDataProvider'
-      $options: '%xima_typo3_content_audit.widgets.empty_pages.options%'
-    tags:
-      - name: dashboard.widget
-        identifier: 'contentAuditEmptyPages'
-        groupNames: 'content'
-        title: 'LLL:EXT:xima_typo3_content_audit/Resources/Private/Language/locallang.xlf:widgets.empty_pages.title'
-        description: 'LLL:EXT:xima_typo3_content_audit/Resources/Private/Language/locallang.xlf:widgets.empty_pages.description'
-        iconIdentifier: 'content-audit-widgets-empty-pages'
         height: 'medium'
         width: 'medium'
 
@@ -229,22 +245,6 @@ services:
         description: 'LLL:EXT:xima_typo3_content_audit/Resources/Private/Language/locallang.xlf:widgets.recent_changes.description'
         iconIdentifier: 'content-audit-widgets-recent-changes'
         height: 'large'
-        width: 'medium'
-
-  Xima\XimaTypo3ContentAudit\Widgets\UntranslatedPages:
-    class: 'Xima\XimaTypo3ContentAudit\Widgets\UntranslatedPages'
-    arguments:
-      $backendViewFactory: '@TYPO3\CMS\Backend\View\BackendViewFactory'
-      $dataProvider: '@Xima\XimaTypo3ContentAudit\Widgets\Provider\UntranslatedPagesDataProvider'
-      $options: '%xima_typo3_content_audit.widgets.untranslated_pages.options%'
-    tags:
-      - name: dashboard.widget
-        identifier: 'contentAuditUntranslatedPages'
-        groupNames: 'content'
-        title: 'LLL:EXT:xima_typo3_content_audit/Resources/Private/Language/locallang.xlf:widgets.untranslated_pages.title'
-        description: 'LLL:EXT:xima_typo3_content_audit/Resources/Private/Language/locallang.xlf:widgets.untranslated_pages.description'
-        iconIdentifier: 'content-audit-widgets-untranslated-pages'
-        height: 'medium'
         width: 'medium'
 
   Xima\XimaTypo3ContentAudit\Widgets\ContentStatistics:

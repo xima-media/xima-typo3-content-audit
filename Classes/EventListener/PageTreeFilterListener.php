@@ -26,11 +26,11 @@ final class PageTreeFilterListener
     public const TOKEN_STALE_PAGES = 'xima-content-audit-stale-pages';
     public const TOKEN_FRESH_PAGES = 'xima-content-audit-fresh-pages';
     public const TOKEN_HIDDEN_PAGES = 'xima-content-audit-hidden-pages';
-    public const TOKEN_EMPTY_PAGES = 'xima-content-audit-empty-pages';
     public const TOKEN_HIDDEN_CONTENT = 'xima-content-audit-hidden-content';
-    public const TOKEN_BROKEN_LINKS = 'xima-content-audit-broken-links';
+    public const TOKEN_EMPTY_PAGES = 'xima-content-audit-empty-pages';
     public const TOKEN_UNTRANSLATED_PAGES = 'xima-content-audit-untranslated-pages';
     public const TOKEN_MISSING_PAGE_FIELDS = 'xima-content-audit-missing-page-fields';
+    public const TOKEN_BROKEN_LINKS = 'xima-content-audit-broken-links';
 
     private const MARKER_LABEL = 'Content audit match';
     private const MARKER_COLOR = '#5b3cc4';
@@ -46,24 +46,24 @@ final class PageTreeFilterListener
     * @param array<string, mixed> $stalePagesOptions
     * @param array<string, mixed> $freshPagesOptions
     * @param array<string, mixed> $hiddenPagesOptions
-    * @param array<string, mixed> $emptyPagesOptions
     * @param array<string, mixed> $hiddenContentOptions
+    * @param array<string, mixed> $emptyPagesOptions
     * @param array<string, mixed> $untranslatedPagesOptions
     * @param array<string, mixed> $missingPageFieldsOptions
     */
     public function __construct(
         private readonly MergedPageChangeDataProvider $pageChangeDataProvider,
         private readonly HiddenPagesDataProvider $hiddenPagesDataProvider,
-        private readonly EmptyPagesDataProvider $emptyPagesDataProvider,
         private readonly HiddenContentDataProvider $hiddenContentDataProvider,
-        private readonly BrokenLinksDataProvider $brokenLinksDataProvider,
+        private readonly EmptyPagesDataProvider $emptyPagesDataProvider,
         private readonly UntranslatedPagesDataProvider $untranslatedPagesDataProvider,
         private readonly MissingPageFieldsDataProvider $missingPageFieldsDataProvider,
+        private readonly BrokenLinksDataProvider $brokenLinksDataProvider,
         private readonly array $stalePagesOptions,
         private readonly array $freshPagesOptions,
         private readonly array $hiddenPagesOptions,
-        private readonly array $emptyPagesOptions,
         private readonly array $hiddenContentOptions,
+        private readonly array $emptyPagesOptions,
         private readonly array $untranslatedPagesOptions,
         private readonly array $missingPageFieldsOptions,
     ) {
@@ -116,11 +116,11 @@ final class PageTreeFilterListener
             self::TOKEN_STALE_PAGES => $this->matchingStaleOrFreshPageUids(true, $this->stalePagesOptions),
             self::TOKEN_FRESH_PAGES => $this->matchingStaleOrFreshPageUids(false, $this->freshPagesOptions),
             self::TOKEN_HIDDEN_PAGES => $this->matchingHiddenPageUids(),
-            self::TOKEN_EMPTY_PAGES => $this->matchingEmptyPageUids(),
             self::TOKEN_HIDDEN_CONTENT => $this->matchingHiddenContentPageUids(),
-            self::TOKEN_BROKEN_LINKS => $this->pageUids($this->brokenLinksDataProvider->fetchMatchingItems()),
+            self::TOKEN_EMPTY_PAGES => $this->matchingEmptyPageUids(),
             self::TOKEN_UNTRANSLATED_PAGES => $this->matchingUntranslatedPageUids(),
             self::TOKEN_MISSING_PAGE_FIELDS => $this->matchingMissingPageFieldsUids(),
+            self::TOKEN_BROKEN_LINKS => $this->pageUids($this->brokenLinksDataProvider->fetchMatchingItems()),
             default => [],
         };
 
@@ -153,17 +153,6 @@ final class PageTreeFilterListener
     }
 
     /**
-    * @return list<int>
-    */
-    private function matchingEmptyPageUids(): array
-    {
-        $this->emptyPagesDataProvider->setAllowedPageTypes($this->emptyPagesOptions['allowedPageTypes'] ?? [1]);
-        $this->emptyPagesDataProvider->setExcludePageUids($this->emptyPagesOptions['excludePageUids'] ?? []);
-
-        return $this->pageUids($this->emptyPagesDataProvider->fetchMatchingItems());
-    }
-
-    /**
     * Content elements share pages, so unlike the other providers this
     * deduplicates by pid rather than mapping uid directly.
     *
@@ -174,6 +163,17 @@ final class PageTreeFilterListener
         $this->hiddenContentDataProvider->setExcludePageUids($this->hiddenContentOptions['excludePageUids'] ?? []);
 
         return array_values(array_unique($this->pageUids($this->hiddenContentDataProvider->fetchMatchingItems(), 'pid')));
+    }
+
+    /**
+    * @return list<int>
+    */
+    private function matchingEmptyPageUids(): array
+    {
+        $this->emptyPagesDataProvider->setAllowedPageTypes($this->emptyPagesOptions['allowedPageTypes'] ?? [1]);
+        $this->emptyPagesDataProvider->setExcludePageUids($this->emptyPagesOptions['excludePageUids'] ?? []);
+
+        return $this->pageUids($this->emptyPagesDataProvider->fetchMatchingItems());
     }
 
     /**

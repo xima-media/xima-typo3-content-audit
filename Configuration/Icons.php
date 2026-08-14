@@ -5,6 +5,10 @@ declare(strict_types=1);
 use TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider;
 
 return [
+    'content-audit-widgets-daily-mission' => [
+        'provider' => SvgIconProvider::class,
+        'source' => 'EXT:xima_typo3_content_audit/Resources/Public/Icons/WidgetsDailyMission.svg',
+    ],
     'content-audit-widgets-stale-pages' => [
         'provider' => SvgIconProvider::class,
         'source' => 'EXT:xima_typo3_content_audit/Resources/Public/Icons/WidgetsStalePages.svg',
@@ -21,6 +25,14 @@ return [
         'provider' => SvgIconProvider::class,
         'source' => 'EXT:xima_typo3_content_audit/Resources/Public/Icons/WidgetsHiddenContent.svg',
     ],
+    'content-audit-widgets-empty-pages' => [
+        'provider' => SvgIconProvider::class,
+        'source' => 'EXT:xima_typo3_content_audit/Resources/Public/Icons/WidgetsEmptyPages.svg',
+    ],
+    'content-audit-widgets-untranslated-pages' => [
+        'provider' => SvgIconProvider::class,
+        'source' => 'EXT:xima_typo3_content_audit/Resources/Public/Icons/WidgetsUntranslatedPages.svg',
+    ],
     'content-audit-widgets-missing-page-fields' => [
         'provider' => SvgIconProvider::class,
         'source' => 'EXT:xima_typo3_content_audit/Resources/Public/Icons/WidgetsMissingPageFields.svg',
@@ -33,21 +45,9 @@ return [
         'provider' => SvgIconProvider::class,
         'source' => 'EXT:xima_typo3_content_audit/Resources/Public/Icons/WidgetsBrokenLinks.svg',
     ],
-    'content-audit-widgets-daily-mission' => [
-        'provider' => SvgIconProvider::class,
-        'source' => 'EXT:xima_typo3_content_audit/Resources/Public/Icons/WidgetsDailyMission.svg',
-    ],
-    'content-audit-widgets-empty-pages' => [
-        'provider' => SvgIconProvider::class,
-        'source' => 'EXT:xima_typo3_content_audit/Resources/Public/Icons/WidgetsEmptyPages.svg',
-    ],
     'content-audit-widgets-recent-changes' => [
         'provider' => SvgIconProvider::class,
         'source' => 'EXT:xima_typo3_content_audit/Resources/Public/Icons/WidgetsRecentChanges.svg',
-    ],
-    'content-audit-widgets-untranslated-pages' => [
-        'provider' => SvgIconProvider::class,
-        'source' => 'EXT:xima_typo3_content_audit/Resources/Public/Icons/WidgetsUntranslatedPages.svg',
     ],
     'content-audit-widgets-content-statistics' => [
         'provider' => SvgIconProvider::class,

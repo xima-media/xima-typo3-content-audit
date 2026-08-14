@@ -29,6 +29,40 @@
                 <source>Show all in page tree</source>
             </trans-unit>
 
+            <trans-unit id="widgets.daily_mission.title">
+                <source>Daily Content Mission</source>
+            </trans-unit>
+            <trans-unit id="widgets.daily_mission.description">
+                <source>Daily motivational message to encourage content quality improvements.</source>
+            </trans-unit>
+            <trans-unit id="widgets.daily_mission.heading">
+                <source>🎯 Your Daily Mission</source>
+            </trans-unit>
+            <trans-unit id="widgets.daily_mission.footer">
+                <source>Check other widgets for actionable items</source>
+            </trans-unit>
+            <trans-unit id="widgets.daily_mission.message_monday">
+                <source>Start the week fresh! Check your Stale Pages widget for content that needs attention.</source>
+            </trans-unit>
+            <trans-unit id="widgets.daily_mission.message_tuesday">
+                <source>Make your content accessible! Review the Missing Image Fields widget for images without alt text.</source>
+            </trans-unit>
+            <trans-unit id="widgets.daily_mission.message_wednesday">
+                <source>Midweek cleanup! Check Hidden Pages and Hidden Content widgets for items that can be deleted.</source>
+            </trans-unit>
+            <trans-unit id="widgets.daily_mission.message_thursday">
+                <source>Keep your links healthy! Visit the Broken Links widget to fix navigation issues.</source>
+            </trans-unit>
+            <trans-unit id="widgets.daily_mission.message_friday">
+                <source>Finish strong! Celebrate your Fresh Pages and wrap up any pending content tasks.</source>
+            </trans-unit>
+            <trans-unit id="widgets.daily_mission.message_saturday">
+                <source>It's the weekend! Time to relax. New content tasks will be here next week.</source>
+            </trans-unit>
+            <trans-unit id="widgets.daily_mission.message_sunday">
+                <source>Enjoy your Sunday! See you back on Monday for new content tasks.</source>
+            </trans-unit>
+
             <trans-unit id="widgets.stale_pages.title">
                 <source>Stale Pages</source>
             </trans-unit>
@@ -156,6 +190,59 @@
                 <source>No title</source>
             </trans-unit>
 
+            <trans-unit id="widgets.empty_pages.title">
+                <source>Empty Pages</source>
+            </trans-unit>
+            <trans-unit id="widgets.empty_pages.description">
+                <source>Display a list of pages that have no visible content elements.</source>
+            </trans-unit>
+            <trans-unit id="widgets.empty_pages.results">
+                <source>Pages that have no visible content elements.</source>
+            </trans-unit>
+            <trans-unit id="widgets.empty_pages.count">
+                <source>%1$d of %2$d pages.</source>
+            </trans-unit>
+            <trans-unit id="widgets.empty_pages.empty">
+                <source>Yay! No empty pages detected.</source>
+            </trans-unit>
+            <trans-unit id="widgets.empty_pages.page">
+                <source>Page</source>
+            </trans-unit>
+            <trans-unit id="widgets.empty_pages.path">
+                <source>Path</source>
+            </trans-unit>
+            <trans-unit id="widgets.empty_pages.updated">
+                <source>Last updated</source>
+            </trans-unit>
+
+            <trans-unit id="widgets.untranslated_pages.title">
+                <source>Untranslated Pages</source>
+            </trans-unit>
+            <trans-unit id="widgets.untranslated_pages.description">
+                <source>Display pages that only exist in the default language even though the site has additional languages configured.</source>
+            </trans-unit>
+            <trans-unit id="widgets.untranslated_pages.results">
+                <source>Pages without a translation into any of the site's other languages.</source>
+            </trans-unit>
+            <trans-unit id="widgets.untranslated_pages.count">
+                <source>%1$d of %2$d pages.</source>
+            </trans-unit>
+            <trans-unit id="widgets.untranslated_pages.empty">
+                <source>Yay! All pages have been translated.</source>
+            </trans-unit>
+            <trans-unit id="widgets.untranslated_pages.page">
+                <source>Page</source>
+            </trans-unit>
+            <trans-unit id="widgets.untranslated_pages.path">
+                <source>Path</source>
+            </trans-unit>
+            <trans-unit id="widgets.untranslated_pages.updated">
+                <source>Last updated</source>
+            </trans-unit>
+            <trans-unit id="widgets.untranslated_pages.translations_required">
+                <source>This widget requires at least one additional language to be configured in the site configuration.</source>
+            </trans-unit>
+
             <trans-unit id="widgets.missing_page_fields.title">
                 <source>Pages with missing fields</source>
             </trans-unit>
@@ -240,65 +327,6 @@
                 <source>This widget requires the TYPO3 linkvalidator extension "typo3/cms-linkvalidator". Please ask your system administrator to install it.</source>
             </trans-unit>
 
-            <trans-unit id="widgets.daily_mission.title">
-                <source>Daily Content Mission</source>
-            </trans-unit>
-            <trans-unit id="widgets.daily_mission.description">
-                <source>Daily motivational message to encourage content quality improvements.</source>
-            </trans-unit>
-            <trans-unit id="widgets.daily_mission.heading">
-                <source>🎯 Your Daily Mission</source>
-            </trans-unit>
-            <trans-unit id="widgets.daily_mission.footer">
-                <source>Check other widgets for actionable items</source>
-            </trans-unit>
-            <trans-unit id="widgets.daily_mission.message_monday">
-                <source>Start the week fresh! Check your Stale Pages widget for content that needs attention.</source>
-            </trans-unit>
-            <trans-unit id="widgets.daily_mission.message_tuesday">
-                <source>Make your content accessible! Review the Missing Image Fields widget for images without alt text.</source>
-            </trans-unit>
-            <trans-unit id="widgets.daily_mission.message_wednesday">
-                <source>Midweek cleanup! Check Hidden Pages and Hidden Content widgets for items that can be deleted.</source>
-            </trans-unit>
-            <trans-unit id="widgets.daily_mission.message_thursday">
-                <source>Keep your links healthy! Visit the Broken Links widget to fix navigation issues.</source>
-            </trans-unit>
-            <trans-unit id="widgets.daily_mission.message_friday">
-                <source>Finish strong! Celebrate your Fresh Pages and wrap up any pending content tasks.</source>
-            </trans-unit>
-            <trans-unit id="widgets.daily_mission.message_saturday">
-                <source>It's the weekend! Time to relax. New content tasks will be here next week.</source>
-            </trans-unit>
-            <trans-unit id="widgets.daily_mission.message_sunday">
-                <source>Enjoy your Sunday! See you back on Monday for new content tasks.</source>
-            </trans-unit>
-
-            <trans-unit id="widgets.empty_pages.title">
-                <source>Empty Pages</source>
-            </trans-unit>
-            <trans-unit id="widgets.empty_pages.description">
-                <source>Display a list of pages that have no visible content elements.</source>
-            </trans-unit>
-            <trans-unit id="widgets.empty_pages.results">
-                <source>Pages that have no visible content elements.</source>
-            </trans-unit>
-            <trans-unit id="widgets.empty_pages.count">
-                <source>%1$d of %2$d pages.</source>
-            </trans-unit>
-            <trans-unit id="widgets.empty_pages.empty">
-                <source>Yay! No empty pages detected.</source>
-            </trans-unit>
-            <trans-unit id="widgets.empty_pages.page">
-                <source>Page</source>
-            </trans-unit>
-            <trans-unit id="widgets.empty_pages.path">
-                <source>Path</source>
-            </trans-unit>
-            <trans-unit id="widgets.empty_pages.updated">
-                <source>Last updated</source>
-            </trans-unit>
-
             <trans-unit id="widgets.recent_changes.title">
                 <source>Recent Changes</source>
             </trans-unit>
@@ -325,34 +353,6 @@
             </trans-unit>
             <trans-unit id="widgets.recent_changes.empty_title">
                 <source>No title</source>
-            </trans-unit>
-
-            <trans-unit id="widgets.untranslated_pages.title">
-                <source>Untranslated Pages</source>
-            </trans-unit>
-            <trans-unit id="widgets.untranslated_pages.description">
-                <source>Display pages that only exist in the default language even though the site has additional languages configured.</source>
-            </trans-unit>
-            <trans-unit id="widgets.untranslated_pages.results">
-                <source>Pages without a translation into any of the site's other languages.</source>
-            </trans-unit>
-            <trans-unit id="widgets.untranslated_pages.count">
-                <source>%1$d of %2$d pages.</source>
-            </trans-unit>
-            <trans-unit id="widgets.untranslated_pages.empty">
-                <source>Yay! All pages have been translated.</source>
-            </trans-unit>
-            <trans-unit id="widgets.untranslated_pages.page">
-                <source>Page</source>
-            </trans-unit>
-            <trans-unit id="widgets.untranslated_pages.path">
-                <source>Path</source>
-            </trans-unit>
-            <trans-unit id="widgets.untranslated_pages.updated">
-                <source>Last updated</source>
-            </trans-unit>
-            <trans-unit id="widgets.untranslated_pages.translations_required">
-                <source>This widget requires at least one additional language to be configured in the site configuration.</source>
             </trans-unit>
 
             <trans-unit id="widgets.content_statistics.title">
