@@ -354,6 +354,70 @@
             <trans-unit id="widgets.untranslated_pages.translations_required">
                 <source>This widget requires at least one additional language to be configured in the site configuration.</source>
             </trans-unit>
+
+            <trans-unit id="widgets.content_statistics.title">
+                <source>Content Statistics</source>
+            </trans-unit>
+            <trans-unit id="widgets.content_statistics.description">
+                <source>Shows key facts about the site's content, e.g. number of pages, content elements, users and files - useful as a quick overview or for relaunch planning.</source>
+            </trans-unit>
+            <trans-unit id="widgets.content_statistics.label_pages_total">
+                <source>Pages</source>
+            </trans-unit>
+            <trans-unit id="widgets.content_statistics.label_content_elements_total">
+                <source>Content elements</source>
+            </trans-unit>
+            <trans-unit id="widgets.content_statistics.label_content_element_types_total">
+                <source>Content element types in use</source>
+            </trans-unit>
+            <trans-unit id="widgets.content_statistics.label_avg_content_per_page">
+                <source>Content elements per page (average)</source>
+            </trans-unit>
+            <trans-unit id="widgets.content_statistics.label_page_age">
+                <source>Oldest / newest page</source>
+            </trans-unit>
+            <trans-unit id="widgets.content_statistics.label_page_tree_depth">
+                <source>Page tree depth</source>
+            </trans-unit>
+            <trans-unit id="widgets.content_statistics.age_day">
+                <source>day</source>
+            </trans-unit>
+            <trans-unit id="widgets.content_statistics.age_days">
+                <source>days</source>
+            </trans-unit>
+            <trans-unit id="widgets.content_statistics.age_month">
+                <source>month</source>
+            </trans-unit>
+            <trans-unit id="widgets.content_statistics.age_months">
+                <source>months</source>
+            </trans-unit>
+            <trans-unit id="widgets.content_statistics.age_year">
+                <source>year</source>
+            </trans-unit>
+            <trans-unit id="widgets.content_statistics.age_years">
+                <source>years</source>
+            </trans-unit>
+            <trans-unit id="widgets.content_statistics.label_languages_total">
+                <source>Languages</source>
+            </trans-unit>
+            <trans-unit id="widgets.content_statistics.label_backend_users">
+                <source>Backend users</source>
+            </trans-unit>
+            <trans-unit id="widgets.content_statistics.label_active_backend_users">
+                <source>Active backend users (last 90 days)</source>
+            </trans-unit>
+            <trans-unit id="widgets.content_statistics.label_frontend_users">
+                <source>Frontend users</source>
+            </trans-unit>
+            <trans-unit id="widgets.content_statistics.label_files_total">
+                <source>Files</source>
+            </trans-unit>
+            <trans-unit id="widgets.content_statistics.label_sites_total">
+                <source>Sites configured</source>
+            </trans-unit>
+            <trans-unit id="widgets.content_statistics.label_redirects_total">
+                <source>Redirects</source>
+            </trans-unit>
         </body>
     </file>
 </xliff>

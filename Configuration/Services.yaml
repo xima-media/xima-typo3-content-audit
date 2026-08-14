@@ -34,6 +34,8 @@ parameters:
   xima_typo3_content_audit.widgets.untranslated_pages.options:
     refreshAvailable: true
     excludePageUids: []
+  xima_typo3_content_audit.widgets.content_statistics.options:
+    refreshAvailable: true
 
 services:
   _defaults:
@@ -244,3 +246,19 @@ services:
         iconIdentifier: 'content-audit-widgets-untranslated-pages'
         height: 'medium'
         width: 'medium'
+
+  Xima\XimaTypo3ContentAudit\Widgets\ContentStatistics:
+    class: 'Xima\XimaTypo3ContentAudit\Widgets\ContentStatistics'
+    arguments:
+      $backendViewFactory: '@TYPO3\CMS\Backend\View\BackendViewFactory'
+      $dataProvider: '@Xima\XimaTypo3ContentAudit\Widgets\Provider\ContentStatisticsDataProvider'
+      $options: '%xima_typo3_content_audit.widgets.content_statistics.options%'
+    tags:
+      - name: dashboard.widget
+        identifier: 'contentAuditContentStatistics'
+        groupNames: 'content'
+        title: 'LLL:EXT:xima_typo3_content_audit/Resources/Private/Language/locallang.xlf:widgets.content_statistics.title'
+        description: 'LLL:EXT:xima_typo3_content_audit/Resources/Private/Language/locallang.xlf:widgets.content_statistics.description'
+        iconIdentifier: 'content-audit-widgets-content-statistics'
+        height: 'medium'
+        width: 'small'

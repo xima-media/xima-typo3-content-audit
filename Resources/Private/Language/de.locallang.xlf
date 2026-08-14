@@ -467,6 +467,91 @@
                 <source />
                 <target>Dieses Widget benötigt mindestens eine weitere in der Website-Konfiguration eingerichtete Sprache.</target>
             </trans-unit>
+
+            <trans-unit id="widgets.content_statistics.title">
+                <source />
+                <target>Inhaltsstatistik</target>
+            </trans-unit>
+            <trans-unit id="widgets.content_statistics.description">
+                <source />
+                <target>Zeigt wichtige Kennzahlen zu den Inhalten der Website, z.B. Anzahl der Seiten, Inhaltselemente, Benutzer und Dateien - nützlich für einen schnellen Überblick oder die Relaunch-Planung.</target>
+            </trans-unit>
+            <trans-unit id="widgets.content_statistics.label_pages_total">
+                <source />
+                <target>Seiten</target>
+            </trans-unit>
+            <trans-unit id="widgets.content_statistics.label_content_elements_total">
+                <source />
+                <target>Inhaltselemente</target>
+            </trans-unit>
+            <trans-unit id="widgets.content_statistics.label_content_element_types_total">
+                <source />
+                <target>Verwendete Inhaltselement-Typen</target>
+            </trans-unit>
+            <trans-unit id="widgets.content_statistics.label_avg_content_per_page">
+                <source />
+                <target>Inhaltselemente pro Seite (Durchschnitt)</target>
+            </trans-unit>
+            <trans-unit id="widgets.content_statistics.label_page_age">
+                <source />
+                <target>Älteste / neueste Seite</target>
+            </trans-unit>
+            <trans-unit id="widgets.content_statistics.label_page_tree_depth">
+                <source />
+                <target>Seitenbaumtiefe</target>
+            </trans-unit>
+            <trans-unit id="widgets.content_statistics.age_day">
+                <source />
+                <target>Tag</target>
+            </trans-unit>
+            <trans-unit id="widgets.content_statistics.age_days">
+                <source />
+                <target>Tage</target>
+            </trans-unit>
+            <trans-unit id="widgets.content_statistics.age_month">
+                <source />
+                <target>Monat</target>
+            </trans-unit>
+            <trans-unit id="widgets.content_statistics.age_months">
+                <source />
+                <target>Monate</target>
+            </trans-unit>
+            <trans-unit id="widgets.content_statistics.age_year">
+                <source />
+                <target>Jahr</target>
+            </trans-unit>
+            <trans-unit id="widgets.content_statistics.age_years">
+                <source />
+                <target>Jahre</target>
+            </trans-unit>
+            <trans-unit id="widgets.content_statistics.label_languages_total">
+                <source />
+                <target>Sprachen</target>
+            </trans-unit>
+            <trans-unit id="widgets.content_statistics.label_backend_users">
+                <source />
+                <target>Backend-Benutzer</target>
+            </trans-unit>
+            <trans-unit id="widgets.content_statistics.label_active_backend_users">
+                <source />
+                <target>Aktive Backend-Benutzer (letzte 90 Tage)</target>
+            </trans-unit>
+            <trans-unit id="widgets.content_statistics.label_frontend_users">
+                <source />
+                <target>Frontend-Benutzer</target>
+            </trans-unit>
+            <trans-unit id="widgets.content_statistics.label_files_total">
+                <source />
+                <target>Dateien</target>
+            </trans-unit>
+            <trans-unit id="widgets.content_statistics.label_sites_total">
+                <source />
+                <target>Konfigurierte Websites</target>
+            </trans-unit>
+            <trans-unit id="widgets.content_statistics.label_redirects_total">
+                <source />
+                <target>Weiterleitungen</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

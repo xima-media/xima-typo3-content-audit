@@ -20,6 +20,7 @@ return [
             'contentAuditMissingImageFields',
             'contentAuditBrokenLinks',
             'contentAuditRecentChanges',
+            'contentAuditContentStatistics',
         ],
         'showInWizard' => true,
     ],

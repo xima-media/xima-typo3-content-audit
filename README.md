@@ -30,6 +30,8 @@ Available widgets:
   updated recently, including who made the change
 - Daily Content Mission: Shows daily motivational messages to encourage editors to improve content quality
   - Messages rotate by day of week and reference specific widgets to check
+- Content Statistics: Shows key facts about the site's content, e.g. number of pages, content elements,
+  users and files - useful as a quick overview or for relaunch planning
 
 - Most widgets provide configurations to exclude false positives, e.g. remove the privacy page from stale pages
 - Most widgets provide a link to show matching pages directly in the backend pagetree,

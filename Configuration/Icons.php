@@ -49,4 +49,8 @@ return [
         'provider' => SvgIconProvider::class,
         'source' => 'EXT:xima_typo3_content_audit/Resources/Public/Icons/WidgetsUntranslatedPages.svg',
     ],
+    'content-audit-widgets-content-statistics' => [
+        'provider' => SvgIconProvider::class,
+        'source' => 'EXT:xima_typo3_content_audit/Resources/Public/Icons/WidgetsContentStatistics.svg',
+    ],
 ];

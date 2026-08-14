@@ -14,7 +14,8 @@ VALUES
         "contentAuditMissingPageFields": {"identifier": "contentAuditMissingPageFields"},
         "contentAuditMissingImageFields": {"identifier": "contentAuditMissingImageFields"},
         "contentAuditBrokenLinks": {"identifier": "contentAuditBrokenLinks"},
-        "contentAuditRecentChanges": {"identifier": "contentAuditRecentChanges"}
+        "contentAuditRecentChanges": {"identifier": "contentAuditRecentChanges"},
+        "contentAuditContentStatistics": {"identifier": "contentAuditContentStatistics"}
     }',
     UNIX_TIMESTAMP(),
     UNIX_TIMESTAMP(),
@@ -32,7 +33,8 @@ VALUES
         "contentAuditMissingPageFields": {"identifier": "contentAuditMissingPageFields"},
         "contentAuditMissingImageFields": {"identifier": "contentAuditMissingImageFields"},
         "contentAuditBrokenLinks": {"identifier": "contentAuditBrokenLinks"},
-        "contentAuditRecentChanges": {"identifier": "contentAuditRecentChanges"}
+        "contentAuditRecentChanges": {"identifier": "contentAuditRecentChanges"},
+        "contentAuditContentStatistics": {"identifier": "contentAuditContentStatistics"}
     }',
     UNIX_TIMESTAMP(),
     UNIX_TIMESTAMP(),
