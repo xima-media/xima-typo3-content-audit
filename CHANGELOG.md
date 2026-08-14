@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.8.0] - 2026-08-14
+
+- Feature: Add widget with content statistics
+- Feature: Add widget for missing page fields
+- Feature: Add widget for untranslated pages
+- Feature: Add link to show all results in pagetree (TYPO3 only)
+- Feature: Add match/total counter to all widgets
+- Feature: Apply access checks before cutting result lists
+- Feature: Add anchors to content element widgets
+
 ## [1.7.0] - 2026-08-11
 
 - Feature: Add preview links to matching frontend pages
